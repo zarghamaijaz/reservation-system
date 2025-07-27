@@ -1,0 +1,28 @@
+{
+    "student":{
+        "default":"/student-home",
+        "routes": [
+            "/student-home",
+            "/booking-dates",
+            "/booking-list",
+            "/booked-list"
+        ]
+    },
+    "sign-instructor":{
+        "default":"/sign-instructor-home",
+        "routes": [
+            "/sign-instructor-home",
+            "/all-students",
+            "/student-details"
+        ]
+    },
+    "driving-instructor":{
+        "default":"/driving-instructor-home",
+        "routes": [
+            "/driving-instructor-home",
+            "/all-students",
+            "/add-student",
+            "/student-details"
+        ]
+    }
+}
