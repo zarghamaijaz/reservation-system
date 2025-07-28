@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router';
 import { getJwtData } from '../../utils/jwtData.utils';
 
 import { loginAPI } from '../service/api'
+import Input from '../components/form-elements/Input';
+import FullPageLoader from '../components/FullPageLoader';
 
 const INTITIAL_FORMDATA = {
   username: '',
@@ -11,16 +13,27 @@ const INTITIAL_FORMDATA = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState(INTITIAL_FORMDATA);
 
   async function handleSubmit(e){
     e.preventDefault();
-    const response = await loginAPI(formData);
-    localStorage.setItem('auth', JSON.stringify(response.data));
-    console.log(response)
-    const jwtData = getJwtData();
-    console.log(jwtData);
-    navigate('/')
+    try{
+      setIsLoading(true);
+      const response = await loginAPI(formData);
+      setIsLoading(false);
+      console.log("Mock Login response => ", response);
+      if(response.success){
+        localStorage.setItem('auth', JSON.stringify(response.data));
+        navigate('/');
+      }
+      else{
+        return alert("Invalid credentials!");
+      }
+    }catch(err){
+      console.error(err);
+      setIsLoading(false);
+    }
   }
 
   function handleChange(name){
@@ -29,30 +42,43 @@ const Login = () => {
     }
   }
   return (
+    <>
+    {isLoading && (
+      <FullPageLoader />
+    )}
     <div className='flex h-screen w-screen p-4'>
       <div className='small-container'>
         <div className='card'>
           <form onSubmit={handleSubmit}>
-            <h2 className='card-title'>SSDS</h2>
+            <h2 className='card-title'>Login to SSDS</h2>
             <p className='card-description'>Welcome, please log in with your account.</p>
-            <div className='input-container'>
-              <label htmlFor='username' className='label'>Username</label>
-              <input id='username' className='input' type='text' value={formData.username} onChange={handleChange('username')} placeholder='Enter your username' />
-            </div>
-            <div className='input-container'>
-              <label htmlFor='password' className='label'>Password</label>
-              <input id='password' className='input' type='password' value={formData.password} onChange={handleChange('password')} placeholder='Enter your password' />
-            </div>
+            <Input
+              type='text'
+              placeholder='Enter your username or phone number'
+              label='Username / Phone number' 
+              id='username'
+              value={formData.username}
+              onChange={handleChange('username')}
+            />
+            <Input
+              type='password'
+              placeholder='Enter your password'
+              label='password' 
+              id='password'
+              value={formData.password}
+              onChange={handleChange('password')}
+            />
             <div className='input-container'>
               <button disabled={formData.email === '' || formData.password === ''} className='button button-primary'>Login</button>
             </div>
-            <div className='text-center'>
+            {/* <div className='text-center'>
               <Link to='/signup' className='link link-primary'>Visiting for the first time? Signup here.</Link>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>
     </div>
+    </>
   )
 }
 

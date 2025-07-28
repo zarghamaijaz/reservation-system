@@ -1,6 +1,6 @@
 import {Routes, Route} from 'react-router';
 import Login from './pages/Login';
-import Signup from './pages/Signup';
+// import Signup from './pages/Signup';
 
 
 // Admin pages
@@ -43,7 +43,7 @@ function App() {
       {/* Routes for logged out users only */}
       <Route path='/' element={<GuestRoute/>}>
         <Route path='/login' element={<Login/>} />
-        <Route path='/signup' element={<Signup/>} />
+        {/* <Route path='/signup' element={<Signup/>} /> */}
       </Route>
 
       <Route path='/logout' element={<Logout/>} />
