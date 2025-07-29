@@ -5,8 +5,10 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from 'react-router';
 import { getStudentsListAPI } from '../service/api';
 import { IoPersonAdd } from "react-icons/io5"
+import FullPageLoader from '../components/FullPageLoader';
 
 const AllStudents = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [studentsList, setStudentsList] = useState([]);
   async function handleSubmit(e) {
     e.preventDefault();
@@ -15,15 +17,26 @@ const AllStudents = () => {
   }
 
   async function getStudentsList(){
-    const response = await getStudentsListAPI();
-    if(response.success){
-      setStudentsList(response.data);
+    try{
+      setIsLoading(true);
+      const response = await getStudentsListAPI();
+      setIsLoading(false);
+      if(response.success){
+        setStudentsList(response.data);
+      }
+    }catch(err){
+      console.error(err);
+      setIsLoading(false);
     }
   }
   useEffect(()=>{
     getStudentsList();
   }, []);
   return (
+    <>
+    {isLoading && (
+      <FullPageLoader />
+    )}
     <div className='flex flex-col h-screen w-screen p-4'>
       <Header backLink='/' />
       <div className='aside-links mb-4'>
@@ -86,6 +99,7 @@ const AllStudents = () => {
         </table>
       </div>
     </div>
+    </>
   )
 }
 

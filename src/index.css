@@ -33,6 +33,34 @@ p {
   color: var(--clr-text);
 }
 
+
+.full-page-loader-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 99;
+  inset: 0px;
+  background-color: #0005;
+}
+.full-page-loader-inner{
+  background-color: var(--clr-elements);
+  padding: 1rem;
+}
+.spinner{
+  color: var(--clr-primary);
+  line-height: 100%;
+  font-size: 40px;
+}
+.spinning{
+  animation: spinning 800ms linear infinite;
+}
+@keyframes spinning {
+  to{
+    transform: rotate(360deg);
+  }
+}
+
 .modal-container{
   position: fixed;
   inset: 0;

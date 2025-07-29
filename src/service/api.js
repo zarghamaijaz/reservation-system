@@ -1,3 +1,6 @@
+import { API_URL } from "./constant";
+import request from "./request";
+
 export function loginAPI(data){
     const { username, password } = data;
     const studentData = {
