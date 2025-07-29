@@ -22,6 +22,7 @@ import GuestRoute from './routing/GuestRoute';
 import NotFound from './pages/NotFound';
 import NotAllowed from './pages/NotAllowed';
 import Logout from './pages/Logout';
+import AddTimeSlots from './pages/AddTimeSlots';
 
 function App() {
 
@@ -40,12 +41,16 @@ function App() {
         <Route path='/booking-list' element={<BookingList/>} />
         <Route path='/booked-list' element={<BookedList/>} />
       </Route>
+
+
+      
       {/* Routes for logged out users only */}
       <Route path='/' element={<GuestRoute/>}>
         <Route path='/login' element={<Login/>} />
         <Route path='/signup' element={<Signup/>} />
       </Route>
 
+      <Route path='/add-time-slots' element={<AddTimeSlots/>} />
       <Route path='/logout' element={<Logout/>} />
       <Route path='/not-allowed' element={<NotAllowed/>} />
       <Route path='*' element={<NotFound/>} />
