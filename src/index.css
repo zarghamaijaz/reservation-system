@@ -179,6 +179,10 @@ p {
 .button.button-primary:active {
   background-color: var(--clr-primary-600);
 }
+.button-danger{
+  background-color: var(--clr-danger);
+  color: var(--clr-elements);
+}
 :disabled {
   cursor: not-allowed;
   opacity: 0.5;
@@ -343,16 +347,14 @@ p {
 .time_slot_wrap{
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-end;
   margin-bottom: 1rem;
-  background: #f0defc;
-  border-radius: 8px;
   padding: 8px 4px;
 }
 .time_slot_wrap .start_time,
 .time_slot_wrap .end_time{
-  width: 50%;
-  max-width: max-content;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
@@ -365,4 +367,13 @@ p {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+.time_slot_remove{
+  cursor: pointer;
+  color: var(--clr-danger);
+  line-height: 100%;
+  padding: 0px;
+  border: none;
+  font-size: 1.5rem;
+  background: none;
 }
