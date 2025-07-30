@@ -134,6 +134,10 @@ p {
 .input:focus {
   border-color: var(--clr-primary);
 }
+.input-info{
+  font-size: 0.8rem;
+  color: var(--clr-text);
+}
 
 .button-group {
   display: flex;

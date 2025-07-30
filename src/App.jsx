@@ -5,6 +5,7 @@ import Login from './pages/Login';
 
 // Admin pages
 import DrivingInstructorHome from './pages/DrivingInstructorHome';
+import SignInstructorHome from './pages/SignInstructorHome';
 import AllStudents from './pages/AllStudents';
 import AddNewStudent from './pages/AddNewStudent';
 import StudentDetails from './pages/StudentDetails';
@@ -31,6 +32,7 @@ function App() {
       {/* Routes for only logged in users */}
       <Route path='/' element={<LoggedRoute/>}>
         <Route path='/driving-instructor-home' element={<DrivingInstructorHome/>} />
+        <Route path='/sign-instructor-home' element={<SignInstructorHome/>} />
         <Route path='/all-students' element={<AllStudents/>} />
         <Route path='/add-student' element={<AddNewStudent/>} />
         <Route path='/student-details' element={<StudentDetails/>} />

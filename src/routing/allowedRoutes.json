@@ -13,6 +13,7 @@
         "routes": [
             "/sign-instructor-home",
             "/all-students",
+            "/add-student",
             "/student-details"
         ]
     },
