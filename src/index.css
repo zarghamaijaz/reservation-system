@@ -333,3 +333,32 @@ p {
   display: flex;
   justify-content: flex-end;
 }
+
+
+/* time picker css */
+.time_slot_wrap{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  background: #f0defc;
+  border-radius: 8px;
+  padding: 8px 4px;
+}
+.time_slot_wrap .start_time,
+.time_slot_wrap .end_time{
+  width: 50%;
+  max-width: max-content;
+  display: flex;
+  flex-direction: column;
+}
+.time_slot_wrap .start_time label,
+.time_slot_wrap .end_time label{
+  text-align: center;
+  font-weight: 600;
+}
+ .add_btn_wrap{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

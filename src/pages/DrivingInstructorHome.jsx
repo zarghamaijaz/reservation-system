@@ -21,6 +21,12 @@ const DrivingInstructorHome = () => {
                 A place to create new students
               </p>
             </Link>
+            <Link to='/add-time-slots' className='tile'>
+              <h4 className='tile-title'>Set Time Slots</h4>
+              <p className='tile-description'>
+                A place to set or change time slots
+              </p>
+            </Link>
             <Link className='tile'>
               <h4 className='tile-title'>Need test</h4>
               <p className='tile-description'>
