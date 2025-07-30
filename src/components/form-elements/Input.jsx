@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = ({ label, id, ...otherProps }) => {
+const Input = ({ label, id, info, ...otherProps }) => {
   return (
     <div className="input-container">
       <label htmlFor={id} className="label">
@@ -11,6 +11,7 @@ const Input = ({ label, id, ...otherProps }) => {
         className="input"
         {...otherProps}
       />
+      {info && <div className="input-info">{info}</div>}
     </div>
   );
 };

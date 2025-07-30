@@ -4,7 +4,7 @@ import Input from "../components/form-elements/Input";
 
 const INTITIAL_FORMDATA = {
   name: "",
-  username: "",
+  // username: "",
   phoneNumber: "",
   email: "",
   idCardNumber: ""
@@ -43,17 +43,18 @@ const AddNewStudent = () => {
               <div className="col-100">
                 <p className="card-description mb-4">Please fill out important information.</p>
               </div>
-              <div className="col-50">
+              <div className="col-100">
                 <Input
                   type="text"
-                  placeholder="Enter student's name"
-                  label="Name*" 
+                  placeholder="Student's name"
+                  label="Name*"
+                  info="A unique username will be generated based on this name"
                   id="name"
                   value={formData.name}
                   onChange={handleChange("name")}
                 />
               </div>
-              <div className="col-50">
+              {/* <div className="col-50">
                 <Input
                   type="text"
                   placeholder="Enter student's username"
@@ -62,12 +63,12 @@ const AddNewStudent = () => {
                   value={formData.username}
                   onChange={handleChange("username")}
                 />
-              </div>
+              </div> */}
               <div className="col-100">
                 <Input
                   type="text"
-                  placeholder="Enter student's phone number"
-                  label="Phone Number*" 
+                  placeholder="Student's phone number"
+                  label="Phone Number*"
                   id="phoneNumber"
                   title="Only numbers are allowed"
                   value={formData.phoneNumber}
@@ -80,7 +81,7 @@ const AddNewStudent = () => {
               <div className="col-50">
                 <Input
                   type="email"
-                  placeholder="Enter student's email address"
+                  placeholder="Student's email address"
                   label="Email" 
                   id="email"
                   value={formData.email}
@@ -90,7 +91,7 @@ const AddNewStudent = () => {
               <div className="col-50">
                 <Input
                   type="email"
-                  placeholder="Enter student's ID card number"
+                  placeholder="Student's ID card number"
                   label="ID card number" 
                   id="idCardNumber"
                   value={formData.idCardNumber}
@@ -99,7 +100,7 @@ const AddNewStudent = () => {
               </div>
               <div className="col-100">
                 <div className="input-container">
-                    <button disabled={formData.name === "" || formData.username === "" || formData.phoneNumber === ""} className="button button-primary">Create</button>
+                    <button disabled={formData.name === "" || formData.phoneNumber === ""} className="button button-primary">Create</button>
                 </div>
               </div>
             </div>
