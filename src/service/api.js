@@ -88,3 +88,29 @@ export function getStudentsListAPI(){
         }, 1000,)
     })
 }
+
+export function getTimingsByDayAPI(day){
+    let data = [];
+    if(day === "Monday"){
+        data = [
+            {
+            startTime: "09:00",
+            endTime: "10:00",
+            },
+            {
+            startTime: "10:30",
+            endTime: "11:30",
+            },
+        ]
+    }
+    const responseData = {
+        success: true,
+        message: "Students list fetched",
+        data,
+    };
+    return new Promise((res, rej) => {
+        setTimeout(()=>{
+            res(responseData);
+        }, 1000)
+    })
+}

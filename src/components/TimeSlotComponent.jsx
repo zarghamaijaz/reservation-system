@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import TimePicker from "react-time-picker";
 import { RiDeleteBin6Line } from "react-icons/ri";
-
+import { getTimingsByDayAPI } from "../service/api";
+import FullPageLoader from "./FullPageLoader";
 const defaultTiming = {
   startTime: "",
   endTime: "",
@@ -9,6 +10,26 @@ const defaultTiming = {
 
 const TimeSlotComponent = ({ day }) => {
   const [timings, setTimings] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function getTimingsByDay(){
+    try{
+      setIsLoading(true);
+      const response = await getTimingsByDayAPI(day);
+      setIsLoading(false);
+      if(response.success){
+        setTimings(response.data);
+      }
+    }
+    catch(err){
+      console.log(err);
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(()=>{
+    getTimingsByDay();
+  },[])
 
   function removeSlot(index){
     return function(e){
@@ -29,6 +50,9 @@ const TimeSlotComponent = ({ day }) => {
 
   return day ? (
     <>
+    {isLoading && (
+      <FullPageLoader />
+    )}
       {timings.length === 0 ? (
         <div>There is no timing added yet. Please add a new timing.</div>
       ):timings.map((item, index) => (
