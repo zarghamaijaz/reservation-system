@@ -114,3 +114,31 @@ export function getTimingsByDayAPI(day){
         }, 1000)
     })
 }
+// booking list
+export function getBookingListByDateAPI(date){
+    let data = [];
+        data = [
+            {
+            startTime: "04:00",
+            endTime: "5:00",
+            },
+            {
+            startTime: "6:00",
+            endTime: "7:30",
+            },
+            {
+            startTime: "9:00",
+            endTime: "10:00",
+            },
+        ]
+    const responseData = {
+        success: true,
+        message: "Students list fetched",
+        data,
+    };
+    return new Promise((res, rej) => {
+        setTimeout(()=>{
+            res(responseData);
+        }, 1000)
+    })
+}

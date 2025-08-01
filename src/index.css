@@ -377,3 +377,65 @@ p {
   font-size: 1.5rem;
   background: none;
 }
+.modal-container .card::-webkit-scrollbar{
+  display: none;
+}
+.modal-container .card{
+  height: 90dvh;
+  overflow-y: auto;
+}
+.input-container.date-picker{
+  position: relative;
+}
+.input-container.date-picker .drp_custom_wrap{
+  width: 80%;
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  height: auto;
+  background: #ffffff;
+  box-shadow: 0px 0px 20px 0px #0000004d;
+  transform: translate(-50%, 0px);
+  z-index: 1;
+  
+}
+.input-container.date-picker .drp_custom_wrap .close_drp{
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.input-container.date-picker .drp_custom_wrap .close_drp:hover{
+  background: rgb(194, 194, 194);
+}
+.input-container.date-picker .drp_custom_wrap .close_drp svg{
+  width: 32px;
+  height: 32px;
+}
+.input-container.date-picker .rdp-root .rdp-month{
+  padding: 1rem;
+}
+.input-container.date-picker .rdp-root .rdp-day:hover{
+  background: rgb(194, 194, 194);
+}
+.input-container.date-picker .rdp-root .rdp-day.selected-day{
+  background: rgb(107, 84, 255);
+}
+.input-container.date-picker .date-opener-button{
+  border: 1px solid var(--clr-border);
+  border-radius: 4px;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  width: 100%;
+  background: transparent;
+  color: rgb(117, 117, 117);
+}
+.custom-time-picker .react-time-picker{
+  width: 100%;
+}
