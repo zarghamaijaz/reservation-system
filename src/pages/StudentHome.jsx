@@ -15,11 +15,15 @@ const StudentHome = () => {
                 Select a day for your booking.
               </p>
             </Link>
-          </div>
-          <div className="col-50">
             <Link to='/booked-list' className="tile">
               <h4 className="tile-title">My lessons</h4>
               <p className="tile-description">View your booked lessons.</p>
+            </Link>
+          </div>
+          <div className="col-50">
+            <Link to='/change-password' className="tile">
+              <h4 className="tile-title">Change password</h4>
+              <p className="tile-description">Change your password.</p>
             </Link>
           </div>
         </div>

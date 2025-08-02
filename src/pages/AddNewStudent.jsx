@@ -1,21 +1,34 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import Input from "../components/form-elements/Input";
+import FullPageLoader from "../components/FullPageLoader";
+import { addNewStudentAPI } from "../service/api";
 
 const INTITIAL_FORMDATA = {
   name: "",
-  // username: "",
+  password: "",
   phoneNumber: "",
   email: "",
   idCardNumber: ""
 };
 
 const AddNewStudent = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState(INTITIAL_FORMDATA);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("===== CALL API HERE =====");
+    try{
+      setIsLoading(true);
+      const response = await addNewStudentAPI(formData);
+      setIsLoading(false);
+      if(response.success){
+        alert(response.message);
+      }
+    }catch(err){
+      console.error(err);
+      setIsLoading(false)
+    }
   }
   function handleChange(name, type){
       return function(e){
@@ -33,6 +46,8 @@ const AddNewStudent = () => {
   }
 
   return (
+    <>
+    {isLoading && <FullPageLoader />}
     <div className="flex flex-col h-screen w-screen p-4">
       <Header backLink="/" />
       <div className="small-container">
@@ -54,16 +69,17 @@ const AddNewStudent = () => {
                   onChange={handleChange("name")}
                 />
               </div>
-              {/* <div className="col-50">
+              <div className="col-100">
                 <Input
                   type="text"
-                  placeholder="Enter student's username"
-                  label="Username*" 
-                  id="username"
-                  value={formData.username}
-                  onChange={handleChange("username")}
+                  placeholder="Enter student's password"
+                  label="Password*" 
+                  id="password"
+                  value={formData.password}
+                  onChange={handleChange("password")}
+                  info="The student will use this password to login. Please ask your student to change this password after their first login."
                 />
-              </div> */}
+              </div>
               <div className="col-100">
                 <Input
                   type="text"
@@ -100,7 +116,7 @@ const AddNewStudent = () => {
               </div>
               <div className="col-100">
                 <div className="input-container">
-                    <button disabled={formData.name === "" || formData.phoneNumber === ""} className="button button-primary">Create</button>
+                    <button disabled={formData.name === "" || formData.password === "" || formData.phoneNumber === ""} className="button button-primary">Create</button>
                 </div>
               </div>
             </div>
@@ -108,6 +124,7 @@ const AddNewStudent = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

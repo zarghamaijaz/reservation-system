@@ -47,6 +47,12 @@ const DrivingInstructorHome = () => {
             </Link>
           </div>
           <div className='col-50'>
+            <Link to="/change-password" className='tile'>
+              <h4 className='tile-title'>Change password</h4>
+              <p className='tile-description'>
+                Change your account password.
+              </p>
+            </Link>
             <Link className='tile'>
               <h4 className='tile-title'>Invoices</h4>
               <p className='tile-description'>

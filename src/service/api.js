@@ -3,6 +3,15 @@ import request from "./request";
 
 export function loginAPI(data){
     const { username, password } = data;
+    
+    // Actual API
+    return request({
+        url: `${API_URL}/auth/login`,
+        method: "POST",
+        data
+    })
+
+    // Mock API
     const studentData = {
         username: 'john',
         role: 'student'
@@ -36,6 +45,20 @@ export function loginAPI(data){
         setTimeout(()=>{
             res(responseData);
         }, 1000);
+    })
+}
+export function addNewStudentAPI(data){
+    return request({
+        url: `${API_URL}/auth/addNewStudent`,
+        method: "POST",
+        data,
+    })
+}
+export function changePasswordAPI(data){
+    return request({
+        url: `${API_URL}/auth/changePassword`,
+        method: "POST",
+        data,
     })
 }
 

@@ -5,7 +5,8 @@
             "/student-home",
             "/booking-dates",
             "/booking-list",
-            "/booked-list"
+            "/booked-list",
+            "/change-password"
         ]
     },
     "sign-instructor":{
@@ -14,7 +15,8 @@
             "/sign-instructor-home",
             "/all-students",
             "/add-student",
-            "/student-details"
+            "/student-details",
+            "/change-password"
         ]
     },
     "driving-instructor":{
@@ -23,7 +25,8 @@
             "/driving-instructor-home",
             "/all-students",
             "/add-student",
-            "/student-details"
+            "/student-details",
+            "/change-password"
         ]
     }
 }

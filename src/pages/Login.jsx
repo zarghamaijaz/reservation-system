@@ -22,9 +22,9 @@ const Login = () => {
       setIsLoading(true);
       const response = await loginAPI(formData);
       setIsLoading(false);
-      console.log("Mock Login response => ", response);
+      console.log("Login response => ", response);
       if(response.success){
-        localStorage.setItem('auth', JSON.stringify(response.data));
+        localStorage.setItem('auth', response.data);
         navigate('/');
       }
       else{

@@ -16,6 +16,9 @@ import BookingList from './pages/BookingList';
 import BookedList from './pages/BookedList';
 import BookingDates from './pages/BookingDates';
 
+// Shared pages
+import ChangePassword from './pages/ChangePassword';
+
 
 
 import LoggedRoute from './routing/LoggedRoute';
@@ -42,6 +45,9 @@ function App() {
         <Route path='/booking-dates' element={<BookingDates/>} />
         <Route path='/booking-list' element={<BookingList/>} />
         <Route path='/booked-list' element={<BookedList/>} />
+
+        {/* Shared routes */}
+        <Route path='/change-password' element={<ChangePassword/>} />
       </Route>
 
 
