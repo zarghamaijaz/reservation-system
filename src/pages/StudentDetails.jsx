@@ -4,6 +4,10 @@ import { TfiCheckBox } from 'react-icons/tfi'
 import { MdCancelPresentation } from 'react-icons/md'
 import { IoMdClose } from 'react-icons/io'
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { DayPicker } from "react-day-picker";
+import { FaChevronDown } from "react-icons/fa";
+import { FaChevronUp } from "react-icons/fa6";
+import TimePicker from 'react-time-picker'
 
 const Detail = ({ name, value }) => {
     return (
@@ -16,6 +20,48 @@ const Detail = ({ name, value }) => {
 
 const StudentDetails = () => {
     const [addLessonForm, setAddLessonForm] =  useState(false);
+    const [showDRP,setShowDRP] = useState(false)
+    // const [selectedDate, setSelectedDate] = useState(null);
+    // const [startTime, setStartTime] = useState();
+    // const [endTime, setEndTime] = useState();
+    // const [price, setprice] = useState();
+    const [formData, setFormData] = useState({
+        startTime: '',
+        endTime: '',
+        price: '',
+        date: "", 
+    });
+    const handleChange = (field, value) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+    };
+    const formatDate = (date)=>{
+        return date?.toLocaleDateString('en-US', {
+        weekday: 'long',   // Monday
+        day: 'numeric',    // 11
+        month: 'long'      // August
+        })
+    }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // normalize time
+    // const twoWeeksLater = addDays(today, 13);
+    
+    // Create allowed dates (14 days, excluding weekends)
+    // const allowedDates = Array.from({ length: 14 }, (_, i) => addDays(today, i)).filter(
+    // (date) => date.getDay() !== 0 && date.getDay() !== 6
+    // );
+
+
+    // const handleSelect = (date) => {
+    // if (!date) return;
+    // // Only allow selecting if in allowedDates
+    // // const isAllowed = allowedDates.some((d) => isSameDay(d, date));
+    // // if (isAllowed) {
+    // // }
+    // setSelectedDate(date);
+    // console.log('Selected:', date.toDateString());
+    // };
+
+
   return (
     <>
     {addLessonForm && (
@@ -29,17 +75,50 @@ const StudentDetails = () => {
                         <label className='label'>Description</label>
                         <input className='input' type='text' placeholder='Enter description' />
                     </div>
-                    <div className='input-container'>
-                        <label className='label'>Date</label>
-                        <input className='input' type='text' placeholder='Enter date' />
+                    <div className='input-container date-picker'>
+                        <button onClick={()=>{setShowDRP(!showDRP)}} className='date-opener-button'>Select Date {formData.date ? `(${formatDate(formData.date)})` : ""} <span className="icon-wrap">{showDRP ?  <FaChevronUp /> : <FaChevronDown />}</span></button>
+                        {/* <input className='input' type='text' placeholder='Enter date' /> */}
+                        {
+                            showDRP ? 
+                            (
+                                <div className="drp_custom_wrap">
+                                <button onClick={()=>{setShowDRP(false)}} className='close_drp'>
+                                    <IoMdClose />
+                                </button>
+                                <DayPicker
+                                    mode="single"
+                                    selected={formData.date}
+                                    onSelect={(e)=>{handleChange("date",e)}}
+                                    disabled={[
+                                    { dayOfWeek: [0, 6] }, 
+                                    ]}
+                                    modifiersClassNames={{
+                                    selected: 'selected-day',
+                                    today: 'today-highlight',
+                                    disabled: 'disabled-day',
+                                }}
+                                showOutsideDays={false}
+                                />
+                                </div>
+                            )
+                            :
+                            null
+                        }
+
                     </div>
-                    <div className='input-container'>
+                    <div className='input-container custom-time-picker'>
                         <label className='label'>Start time</label>
-                        <input className='input' type='text' placeholder='Enter start time' />
+                        <TimePicker
+                            value={formData.startTime}
+                            onChange={(e)=>{handleChange("startTime",e)}}
+                            />
                     </div>
-                    <div className='input-container'>
+                    <div className='input-container custom-time-picker'>
                         <label className='label'>End time</label>
-                        <input className='input' type='text' placeholder='Enter end time' />
+                        <TimePicker
+                            value={formData.endTime}
+                            onChange={(e)=>{handleChange("endTime",e)}}
+                        />
                     </div>
                     <div className='input-container'>
                         <label className='label'>Price (USD)</label>
