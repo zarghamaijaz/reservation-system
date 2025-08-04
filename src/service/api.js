@@ -67,6 +67,10 @@ export function getMyInfoAPI(){
 }
 
 export function getStudentsListAPI(){
+    return request({
+        url: `${API_URL}/auth/students`,
+        method: "GET",
+    });
     const responseData = {
         success: true,
         message: "Students list fetched",
@@ -142,16 +146,19 @@ export function getBookingListByDateAPI(date){
     let data = [];
         data = [
             {
-            startTime: "04:00",
-            endTime: "5:00",
+                _id: "1",
+                startTime: "04:00",
+                endTime: "5:00",
             },
             {
-            startTime: "6:00",
-            endTime: "7:30",
+                _id: "2",
+                startTime: "6:00",
+                endTime: "7:30",
             },
             {
-            startTime: "9:00",
-            endTime: "10:00",
+                _id: "3",
+                startTime: "9:00",
+                endTime: "10:00",
             },
         ]
     const responseData = {
@@ -163,5 +170,26 @@ export function getBookingListByDateAPI(date){
         setTimeout(()=>{
             res(responseData);
         }, 1000)
+    })
+}
+
+export function bookSlotAPI(data){
+    return request({
+        url: `${API_URL}/booking/`,
+        method: "POST",
+        data
+    })
+}
+export function changeBookingStatusAPI(data){
+    return request({
+        url: `${API_URL}/booking/${data.id}`,
+        method: "PUT",
+        data
+    })
+}
+export function getBookingRequestsAPI(){
+    return request({
+        url: `${API_URL}/booking/`,
+        method: "GET",
     })
 }

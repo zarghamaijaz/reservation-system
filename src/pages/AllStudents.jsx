@@ -46,10 +46,10 @@ const AllStudents = () => {
       <div className='table-container'>
         <div className='table-filters'>
           <form onSubmit={handleSubmit} className='table-filter'>
-            <input type="text" name="" id="" className='table-filter-input' placeholder='Search by name, id, or phone' />
+            <input type="text" name="" id="" className='table-filter-input' placeholder='Search by name, username, or phone number' />
             <button className='table-filter-button'>Search</button>
           </form>
-          <div className='table-record-count'>Total records based on search: 100</div>
+          {/* <div className='table-record-count'>Total records based on search: 100</div> */}
         </div>
         <table className='table'>
           <thead>
@@ -72,7 +72,7 @@ const AllStudents = () => {
                   <div className='table-cell'>{item.username}</div>
                 </td>
                 <td>
-                  <div className='table-cell'>{item.phoneNumber}</div>
+                  <div className='table-cell'>{item.phone_number}</div>
                 </td>
                 <td>
                   <div className='table-cell'>{item.idCardNumber}</div>

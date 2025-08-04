@@ -1,12 +1,12 @@
 
-const BookNowCard = ({timeStart,timeEnd,date}) => {
+const BookNowCard = ({timeStart, timeEnd,date, onBook}) => {
     
   return (
     <div className="col-50">
         <div className="tile">
-            <h4 className="tile-title">{date}</h4>
-            <p className="tile-description">{timeStart} to {timeEnd}</p>
-            <button className="button button-primary">Book now</button>
+            <h4 className="tile-title">{timeStart} to {timeEnd}</h4>
+            {/* <p className="tile-description"></p> */}
+            <button className="button button-primary" onClick={onBook}>Book now</button>
         </div>
     </div>
   )

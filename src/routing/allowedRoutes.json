@@ -16,7 +16,8 @@
             "/all-students",
             "/add-student",
             "/student-details",
-            "/change-password"
+            "/change-password",
+            "/set-time-slots"
         ]
     },
     "driving-instructor":{
@@ -26,7 +27,9 @@
             "/all-students",
             "/add-student",
             "/student-details",
-            "/change-password"
+            "/change-password",
+            "/booking-requests",
+            "/set-time-slots"
         ]
     }
 }

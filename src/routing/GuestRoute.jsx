@@ -8,7 +8,7 @@ const GuestRoute = () => {
   const jwtData = getJwtData();
   useEffect(() => {
     if (jwtData) {
-      navigate("/");
+      navigate("/booking-dates");
     } else {
       setIsAllowed(true);
     }

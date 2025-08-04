@@ -9,6 +9,7 @@ import SignInstructorHome from './pages/SignInstructorHome';
 import AllStudents from './pages/AllStudents';
 import AddNewStudent from './pages/AddNewStudent';
 import StudentDetails from './pages/StudentDetails';
+import BookingRequests from './pages/BookingRequests';
 
 // Student pages
 import StudentHome from './pages/StudentHome';
@@ -39,11 +40,11 @@ function App() {
         <Route path='/all-students' element={<AllStudents/>} />
         <Route path='/add-student' element={<AddNewStudent/>} />
         <Route path='/student-details' element={<StudentDetails/>} />
+        <Route path='/set-time-slots' element={<SetTimeSlots/>} />
+        <Route path='/booking-requests' element={<BookingRequests/>} />
 
         {/* Student routes */}
         <Route path='/student-home' element={<StudentHome/>} />
-        <Route path='/booking-dates' element={<BookingDates/>} />
-        <Route path='/booking-list' element={<BookingList/>} />
         <Route path='/booked-list' element={<BookedList/>} />
 
         {/* Shared routes */}
@@ -58,7 +59,8 @@ function App() {
         {/* <Route path='/signup' element={<Signup/>} /> */}
       </Route>
 
-      <Route path='/set-time-slots' element={<SetTimeSlots/>} />
+      <Route path='/booking-dates' element={<BookingDates/>} />
+      <Route path='/booking-list' element={<BookingList/>} />
       <Route path='/logout' element={<Logout/>} />
       <Route path='/not-allowed' element={<NotAllowed/>} />
       <Route path='*' element={<NotFound/>} />

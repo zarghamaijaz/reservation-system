@@ -121,7 +121,7 @@ const StudentDetails = () => {
                         />
                     </div>
                     <div className='input-container'>
-                        <label className='label'>Price (USD)</label>
+                        <label className='label'>Price (Euro)</label>
                         <input className='input' type='text' placeholder='Enter lesson price' />
                     </div>
                     <div className='input-container'>
@@ -179,7 +179,7 @@ const StudentDetails = () => {
                                 <div className='table-cell'>03:30</div>
                             </td>
                             <td>
-                                <div className='table-cell'>$60</div>
+                                <div className='table-cell'>€60</div>
                             </td>
                             <td>
                                 <div className='table-cell'>
@@ -208,7 +208,7 @@ const StudentDetails = () => {
                                 <div className='table-cell'>03:30</div>
                             </td>
                             <td>
-                                <div className='table-cell'>$50</div>
+                                <div className='table-cell'>€50</div>
                             </td>
                             <td>
                                 <div className='table-cell'>
@@ -237,7 +237,7 @@ const StudentDetails = () => {
                                 <div className='table-cell'>03:30</div>
                             </td>
                             <td>
-                                <div className='table-cell'>$45</div>
+                                <div className='table-cell'>€45</div>
                             </td>
                             <td>
                                 <div className='table-cell'>

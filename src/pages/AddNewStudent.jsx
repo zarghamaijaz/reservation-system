@@ -106,7 +106,7 @@ const AddNewStudent = () => {
               </div>
               <div className="col-50">
                 <Input
-                  type="email"
+                  type="text"
                   placeholder="Student's ID card number"
                   label="ID card number" 
                   id="idCardNumber"

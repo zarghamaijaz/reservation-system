@@ -21,13 +21,19 @@ const DrivingInstructorHome = () => {
                 A place to create new students
               </p>
             </Link>
+            <Link to='/booking-requests' className='tile'>
+              <h4 className='tile-title'>Booking requests</h4>
+              <p className='tile-description'>
+                View, approve, or reject booking requests
+              </p>
+            </Link>
             <Link to='/set-time-slots' className='tile'>
               <h4 className='tile-title'>Set Time Slots</h4>
               <p className='tile-description'>
                 A place to set or change time slots
               </p>
             </Link>
-            <Link className='tile'>
+            {/* <Link className='tile'>
               <h4 className='tile-title'>Need test</h4>
               <p className='tile-description'>
                 List of students who&apos;s test is required.
@@ -44,7 +50,7 @@ const DrivingInstructorHome = () => {
               <p className='tile-description'>
                 List of students who have passed the test.
               </p>
-            </Link>
+            </Link> */}
           </div>
           <div className='col-50'>
             <Link to="/change-password" className='tile'>
