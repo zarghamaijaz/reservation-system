@@ -8,7 +8,7 @@ import TimePicker from 'react-time-picker'
 import Swal from 'sweetalert2'
 import LessonRow from '../components/LessonRow'
 import { getAssignedLessonsApi } from '../service/api';
-
+import FullPageLoader from '../components/FullPageLoader';
 
 
 const Detail = ({ name, value }) => {
@@ -25,6 +25,7 @@ const StudentDetails = () => {
     const [addLessonForm, setAddLessonForm] =  useState(false);
     const [showDRP,setShowDRP] = useState(false)
     const [assignedLessons, setAssignedLessons] =  useState([]);
+    const [loading, setLoading] =  useState(false);
     // const [selectedDate, setSelectedDate] = useState(null);
     // const [startTime, setStartTime] = useState();
     // const [endTime, setEndTime] = useState();
@@ -42,7 +43,9 @@ const StudentDetails = () => {
     }, []);
 
     const getAssignedLessons = async () => {
+        setLoading(true)
         const response = await getAssignedLessonsApi()
+        setLoading(false)
 
         if(response.success){
             console.log(response.data)
@@ -107,6 +110,9 @@ const StudentDetails = () => {
 
   return (
     <>
+    {loading && (
+      <FullPageLoader />
+    )}
     {addLessonForm && (
         <div className='modal-container'>
             <div className='small-container'>
