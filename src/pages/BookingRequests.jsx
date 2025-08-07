@@ -5,6 +5,9 @@ import { ImCross } from "react-icons/im";
 import { Link } from 'react-router';
 import { getBookingRequestsAPI, changeBookingStatusAPI } from '../service/api';
 import FullPageLoader from '../components/FullPageLoader';
+import { FcApprove } from "react-icons/fc";
+import Swal from 'sweetalert2';
+
 
 const BookingRequests = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +17,17 @@ const BookingRequests = () => {
     console.log('==== Implement search logic here ====')
     
   }
-
+  const confirmAction = (id,decision)=>{
+    Swal.fire({
+      icon: "warning",
+      title: "Confirm",
+      text: "Are you sure want to delete or approve",
+    }).then(res=>{
+      if(res.isConfirmed){
+        changeStatus(id,decision)
+      }
+    })
+  }
   function changeStatus(id, decision){
     return async function(){
         try{
@@ -101,13 +114,16 @@ const BookingRequests = () => {
                   <div className='table-cell'>
                     {item.status === "pending" && (
                         <div className='table-actions'>
-                        <button onClick={changeStatus(item.id, "completed")} className='table-action action-primary'>
+                        <button onClick={()=>{confirmAction(item.id, "completed")}} className='table-action action-primary'>
                             <FaCheck />
                         </button>
-                        <button onClick={changeStatus(item.id, "cancelled")} className='table-action action-danger'>
+                        <button onClick={()=>{confirmAction(item.id, "cancelled")}} className='table-action action-danger'>
                             <ImCross />
                         </button>
                         </div>
+                    )}
+                    {item.status === "completed" && (
+                        <FcApprove />
                     )}
                   </div>
                 </td>

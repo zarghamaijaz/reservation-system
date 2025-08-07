@@ -193,3 +193,43 @@ export function getBookingRequestsAPI(){
         method: "GET",
     })
 }
+
+
+
+export function getAssignedLessonsApi(){
+    const responseData = {
+        success: true,
+        message: "Students list fetched",
+        data:[
+                {   id:1,
+                    description:"Descriptions from mock api",
+                    date:"06/08/2025",
+                    timeFrom:"02:00",
+                    timeTo:"03:30",
+                    amount:300,
+                    isPaid:true,
+                },
+                {   id:2,
+                    description:"Descriptions from mock api 2",
+                    date:"06/08/2025",
+                    timeFrom:"02:00",
+                    timeTo:"03:30",
+                    amount:200,
+                    isPaid:true,
+                },
+                {   id:3,
+                    description:"Descriptions from mock api 3",
+                    date:"06/08/2025",
+                    timeFrom:"02:00",
+                    timeTo:"03:30",
+                    amount:400,
+                    isPaid:false,
+                },
+        ]
+    }
+    return new Promise((res, rej) => {
+        setTimeout(()=>{
+            res(responseData);
+        }, 1000)
+    })
+}

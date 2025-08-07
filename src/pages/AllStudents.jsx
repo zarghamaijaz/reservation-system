@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import { getStudentsListAPI } from '../service/api';
 import { IoPersonAdd } from "react-icons/io5"
 import FullPageLoader from '../components/FullPageLoader';
+import Swal from 'sweetalert2';
 
 const AllStudents = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +15,13 @@ const AllStudents = () => {
     e.preventDefault();
     console.log('==== Implement search logic here ====')
     
+  }
+  const confirmAction = ()=>{
+    Swal.fire({
+    icon: "warning",
+    title: "Confirm",
+    text: "Are you sure want to delete",
+    })
   }
 
   async function getStudentsList(){
@@ -86,7 +94,7 @@ const AllStudents = () => {
                       <Link to='/student-details' className='table-action action-primary'>
                         <BiDetail />
                       </Link>
-                      <button className='table-action action-danger'>
+                      <button onClick={()=>{confirmAction()}} className='table-action action-danger'>
                         <RiDeleteBin6Line />
                       </button>
                     </div>

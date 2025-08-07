@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Input from "../components/form-elements/Input";
 import FullPageLoader from "../components/FullPageLoader";
 import { addNewStudentAPI } from "../service/api";
+import Swal from "sweetalert2";
 
 const INTITIAL_FORMDATA = {
   name: "",
@@ -23,11 +24,20 @@ const AddNewStudent = () => {
       const response = await addNewStudentAPI(formData);
       setIsLoading(false);
       if(response.success){
-        alert(response.message);
+        Swal.fire({
+          icon: "success",
+          title: "Successs",
+          text: response.message,
+        });
       }
     }catch(err){
       console.error(err);
       setIsLoading(false)
+      Swal.fire({
+        icon: "error",
+        title: "Server Error",
+        text: err.message,
+      });
     }
   }
   function handleChange(name, type){

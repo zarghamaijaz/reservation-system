@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router';
 import { getJwtData } from '../../utils/jwtData.utils';
-
+import Swal from 'sweetalert2';
 import { loginAPI } from '../service/api'
 import Input from '../components/form-elements/Input';
 import FullPageLoader from '../components/FullPageLoader';
@@ -19,6 +19,7 @@ const Login = () => {
   async function handleSubmit(e){
     e.preventDefault();
     try{
+      console.log("sending request")
       setIsLoading(true);
       const response = await loginAPI(formData);
       setIsLoading(false);
@@ -33,6 +34,11 @@ const Login = () => {
     }catch(err){
       console.error(err);
       setIsLoading(false);
+      Swal.fire({
+        icon: "error",
+        title: "Server Error",
+        text: err.message,
+      });
     }
   }
 

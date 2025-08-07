@@ -9,6 +9,7 @@ import BookNowCard from "../components/form-elements/BookNowCard";
 import { IoMdClose } from "react-icons/io";
 import Input from "../components/form-elements/Input";
 import { getJwtData } from "../../utils/jwtData.utils";
+import Swal from "sweetalert2";
 
 const INTITIAL_FORMDATA = {
   name: "",
@@ -41,7 +42,7 @@ const BookingList = () => {
 
   async function handleBookSlot(e) {
     e.preventDefault();
-    try{
+    try {
       const payload = {
         name: jwtData ? jwtData.name : formData.name,
         phonenumber: jwtData ? jwtData.phone_number : formData.phoneNumber,
@@ -53,13 +54,27 @@ const BookingList = () => {
       }
       setIsLoading(true);
       const response = await bookSlotAPI(payload);
+      if(response.success){
+        Swal.fire({
+          icon: "success",
+          title: "Session booked",
+          text: response.message,
+        });
+        setBookSlotPopup(false);
+      }
       console.log(response);
       setIsLoading(false);
-    }catch(err){
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Error occured",
+        text: "An error occured on the server."
+      });
       console.error(err);
       setIsLoading(false);
     }
   }
+
 
   useEffect(() => {
     getBookingListByDate();
@@ -82,6 +97,7 @@ const BookingList = () => {
         setIsLoading(false);
       });
   };
+  
 
   return (
     <>
@@ -128,7 +144,7 @@ const BookingList = () => {
               />
               <div className="button-group">
                 <button
-                  disabled={ !jwtData ? (formData.name === "" || formData.phoneNumber === "") : null}
+                  disabled={!jwtData ? (formData.name === "" || formData.phoneNumber === "") : null}
                   onClick={handleBookSlot}
                   className="button button-primary"
                 >
@@ -146,17 +162,17 @@ const BookingList = () => {
           <div className="row">
             {bookingList.length > 0
               ? bookingList.map((l) => {
-                  return (
-                    <BookNowCard
-                      key={l._id}
-                      timeStart={l.startTime}
-                      timeEnd={l.endTime}
-                      onBook={() => {
-                        setBookSlotPopup(l);
-                      }}
-                    />
-                  );
-                })
+                return (
+                  <BookNowCard
+                    key={l._id}
+                    timeStart={l.startTime}
+                    timeEnd={l.endTime}
+                    onBook={() => {
+                      setBookSlotPopup(l);
+                    }}
+                  />
+                );
+              })
               : ""}
             {/* <div className="col-50">
             <div className="tile">
