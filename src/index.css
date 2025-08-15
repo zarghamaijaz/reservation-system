@@ -344,7 +344,7 @@ p {
 
 
 /* time picker css */
-.time_slot_wrap{
+/* .time_slot_wrap{
   width: 100%;
   display: flex;
   gap: 1rem;
@@ -439,4 +439,105 @@ p {
 }
 .custom-time-picker .react-time-picker{
   width: 100%;
+} */
+ .custom-main-wrap{
+  width: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+  display: block;
+  padding-top: 2rem;
+ }
+ .heading-wrap .heading{
+  font-size: 1.7rem;
+  font-weight: 600;
+  text-align: center;
+ }
+
+.custom-cards-wrap{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-inline: 1rem;
+  justify-content: center;
+
+}
+.custom-card{
+  width: 100%;
+  max-width: 200px;
+  cursor: pointer;
+}
+.custom-main-wrap .input-container{
+  max-width: 300px;
+}
+.custom-main-wrap .form_wrap{
+  padding-inline: 1rem;
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+}
+.custom-main-wrap .form_wrap form{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  max-width: 500px;
+  background: #fff;
+  box-shadow: 0px 0px 20px 0px #0000004d;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.custom-main-wrap .form_wrap form > .input-container{
+  width: 100%;
+  max-width: calc((100% - 0.7rem)/2);
+}
+.custom-main-wrap .check-inputs-wrap .input-container{
+  border: 1px solid rgb(181, 181, 181);
+  margin: 0;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+.custom-main-wrap .check-inputs-wrap{
+  display: flex;
+  gap: 0.5rem;
+  background: var(--clr-primary-100);
+  padding: 0.5rem ;
+  border-radius: 8px;
+}
+.custom-main-wrap .form_wrap form .btn-wrap {
+  display: flex;
+  justify-content: center;
+}
+.custom-main-wrap .form_wrap form .btn-wrap button{
+  border: none;
+  background: var(--clr-primary-600);
+  color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 8px;
+  min-width: 100px;
+  cursor: pointer;
+}
+.table_wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+}
+.table_wrap table{
+  table-layout: fixed;
+  border: 1px solid #1c1d22;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+.table_wrap table thead th,
+.table_wrap table tbody td{
+  vertical-align: middle;
+  border-right: 1px solid #1c1d22;
+  border-bottom: 1px solid #1c1d22;
+  padding: 4px 8px;
+}
+.table_wrap table thead th:first-of-type{
+  width: 40px;
+}
+.table_wrap table tbody td:first-of-type{
+  text-align: center;
 }

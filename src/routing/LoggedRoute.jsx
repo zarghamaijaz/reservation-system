@@ -4,10 +4,12 @@ import { getJwtData } from "../../utils/jwtData.utils";
 import allowedRoutes from "../routing/allowedRoutes.json";
 
 const LoggedRoute = () => {
+
   const navigate = useNavigate();
   const location = useLocation();
   const [isAllowed, setIsAllowed] = useState(false);
   const jwtData = getJwtData();
+
   useEffect(() => {
     if (jwtData) {
       const allowedRoutesToCurrentUser = allowedRoutes[jwtData.role];
@@ -25,6 +27,7 @@ const LoggedRoute = () => {
       navigate("/login");
     }
   }, [location.pathname]);
+  
   return isAllowed ? <Outlet /> : <div>Please wait...</div>;
 };
 
