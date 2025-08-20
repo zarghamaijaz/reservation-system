@@ -110,7 +110,7 @@ const Expenses = () => {
                             </td>
                             <td>
                                 <div className="table-cell">
-                                    <Input type="number" value={item.amount} onChange={e=>{
+                                    <Input containerClass="m-0" type="number" value={item.amount} onChange={e=>{
                                         const value = e.target.value;
                                         const newData = tableRows.map((row, i) => {
                                             if(i === index){
@@ -127,7 +127,7 @@ const Expenses = () => {
                             </td>
                             <td>
                                 <div className="table-cell">
-                                    <Input min={0} max={20} type="number" value={item.vat} onChange={e=>{
+                                    <Input containerClass="m-0" min={0} max={20} type="number" value={item.vat} onChange={e=>{
                                         const value = e.target.value;
                                         const newData = tableRows.map((row, i) => {
                                             if(i === index){

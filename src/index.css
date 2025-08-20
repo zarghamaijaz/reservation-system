@@ -144,6 +144,14 @@ p {
   color: var(--clr-text);
 }
 
+.select{
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--clr-border);
+  border-radius: 0.25rem;
+}
+
 .button-group {
   display: flex;
   justify-content: center;
@@ -356,7 +364,7 @@ p {
 
 
 /* time picker css */
-/* .time_slot_wrap{
+.time_slot_wrap{
   width: 100%;
   display: flex;
   gap: 1rem;

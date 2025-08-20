@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = ({ label, id, info, limit, onChange, ...otherProps }) => {
+const Input = ({ label, id, info, limit, onChange, containerClass, ...otherProps }) => {
   function handleChange(e){
     if(limit){
       const length = e.target.value.length;
@@ -13,7 +13,7 @@ const Input = ({ label, id, info, limit, onChange, ...otherProps }) => {
     }
   }
   return (
-    <div className="input-container">
+    <div className={`input-container ${containerClass}`}>
       <label htmlFor={id} className="label">
         {label}
       </label>

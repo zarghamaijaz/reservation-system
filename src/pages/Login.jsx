@@ -77,10 +77,6 @@ const Login = () => {
             <div className='input-container'>
               <button disabled={formData.email === '' || formData.password === ''} className='button button-primary'>Login</button>
             </div>
-            <div className='text-center'>
-              <div>Or</div>
-              <Link to='/booking-dates' className='link link-primary'>Click here to book your very first session.</Link>
-            </div>
           </form>
         </div>
       </div>
