@@ -9,19 +9,16 @@ const DrivingInstructorHome = () => {
       <div className='small-container'>
         <div className='row'>
           <div className='col-50'>
-            <Link to='/all-students' className='tile'>
-              <h4 className='tile-title'>All students</h4>
-              <p className='tile-description'>
-                A place to view and manage your students.
-              </p>
+            <Link to='/add-customer' className='tile'>
+              <h4 className='tile-title'>New</h4>
             </Link>
-            <Link to='/add-student' className='tile'>
-              <h4 className='tile-title'>Add new student</h4>
-              <p className='tile-description'>
-                A place to create new students
-              </p>
+            <Link to='/all-customers' className='tile'>
+              <h4 className='tile-title'>All customer list</h4>
             </Link>
-            <Link to='/booking-requests' className='tile'>
+            <Link to='/all-customers' className='tile'>
+              <h4 className='tile-title'>Finished Customers</h4>
+            </Link>
+            {/* <Link to='/booking-requests' className='tile'>
               <h4 className='tile-title'>Booking requests</h4>
               <p className='tile-description'>
                 View, approve, or reject booking requests
@@ -32,50 +29,23 @@ const DrivingInstructorHome = () => {
               <p className='tile-description'>
                 A place to set or change time slots
               </p>
-            </Link>
-            {/* <Link className='tile'>
-              <h4 className='tile-title'>Need test</h4>
-              <p className='tile-description'>
-                List of students who&apos;s test is required.
-              </p>
-            </Link>
-            <Link className='tile'>
-              <h4 className='tile-title'>Test</h4>
-              <p className='tile-description'>
-                List of students who&apos;s test is required.
-              </p>
-            </Link>
-            <Link className='tile'>
-              <h4 className='tile-title'>Finished</h4>
-              <p className='tile-description'>
-                List of students who have passed the test.
-              </p>
             </Link> */}
           </div>
           <div className='col-50'>
-            <Link to="/change-password" className='tile'>
-              <h4 className='tile-title'>Change password</h4>
-              <p className='tile-description'>
-                Change your account password.
-              </p>
+            <Link className='tile'>
+              <h4 className='tile-title'>Create Invoice</h4>
             </Link>
             <Link className='tile'>
-              <h4 className='tile-title'>Invoices</h4>
-              <p className='tile-description'>
-                View and manage your invoices.
-              </p>
+              <h4 className='tile-title'>Invoices Folder</h4>
             </Link>
-            <Link className='tile'>
-              <h4 className='tile-title'>Analytics</h4>
-              <p className='tile-description'>
-                View analytics and reports.
-              </p>
+            <Link to="/expenses" className='tile'>
+              <h4 className='tile-title'>Expenses</h4>
             </Link>
-            <Link className='tile'>
-              <h4 className='tile-title'>Calendar</h4>
-              <p className='tile-description'>
-                View your bookings on a calendar.
-              </p>
+            <Link to="/vat" className='tile'>
+              <h4 className='tile-title'>VAT</h4>
+            </Link>
+            <Link to="/profit-loss" className='tile'>
+              <h4 className='tile-title'>Profit-Loss</h4>
             </Link>
           </div>
         </div>

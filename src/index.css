@@ -83,6 +83,11 @@ p {
   max-width: 600px;
   margin: auto;
 }
+.medium-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+}
 
 .section-title {
   font-weight: 400;
@@ -142,7 +147,6 @@ p {
 .button-group {
   display: flex;
   justify-content: center;
-  align-items: center;
   margin-block: 1rem;
   gap: 1rem;
 }
@@ -208,10 +212,12 @@ p {
 }
 
 .tile {
+  cursor: pointer;
   margin-bottom: 1rem;
   border-radius: 0.25rem;
   border: 1px solid var(--clr-border);
   display: block;
+  width: 100%;
   padding: 1rem;
   background-color: var(--clr-elements);
 }
@@ -253,6 +259,12 @@ p {
   padding: 1rem;
   width: 100%;
   table-layout: fixed;
+}
+.table.bordered{
+  border-spacing: 0px;
+}
+.table.bordered td{
+  border: 1px solid var(--clr-border);
 }
 
 .table th {
@@ -381,7 +393,7 @@ p {
   display: none;
 }
 .modal-container .card{
-  height: 90dvh;
+  max-height: 90dvh;
   overflow-y: auto;
 }
 .input-container.date-picker{
@@ -436,6 +448,44 @@ p {
   background: transparent;
   color: rgb(117, 117, 117);
 }
+
+.select{
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--clr-border);
+  border-radius: 0.25rem;
+}
+
+.checkbox-container{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.checkbox{
+  height: 25px;
+  width: 25px;
+  border: 1px solid var(--clr-border);
+  background-color: transparent;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+  color: white;
+  cursor: pointer;
+}
+.checkbox.checked{
+  background-color: var(--clr-primary);
+}
 .custom-time-picker .react-time-picker{
   width: 100%;
+}
+
+.pill{
+  height: 20px;
+  width: 20px;
+  background-color: var(--clr-text-muted);
+  border-radius: 50%;
+}
+.pill.active{
+  background-color: var(--clr-danger);
 }

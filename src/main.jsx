@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import 'react-day-picker/dist/style.css';
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 import './calendar.css'
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
