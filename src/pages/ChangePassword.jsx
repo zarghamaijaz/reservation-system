@@ -6,7 +6,7 @@ import { getJwtData } from "../../utils/jwtData.utils";
 import { changePasswordAPI } from "../service/api";
 import Input from "../components/form-elements/Input";
 import FullPageLoader from "../components/FullPageLoader";
-
+import Swal from "sweetalert2";
 const INTITIAL_FORMDATA = {
   password: "",
   repeatPassword: "",
@@ -24,8 +24,13 @@ const ChangePassword = () => {
       const response = await changePasswordAPI(formData);
       setIsLoading(false);
       if (response.success) {
+         Swal.fire({
+          icon: "success",
+          title: "Successful",
+          text: `${response.message || "Password changed "}`
+          })
+        // return alert(response.message);
           navigate('/');
-          return alert(response.message);
       } else {
         return alert("Invalid credentials!");
       }
@@ -33,6 +38,19 @@ const ChangePassword = () => {
       console.error(err);
       setIsLoading(false);
     }
+  }
+  const confirmAction = (e)=>{
+    e.preventDefault()
+      Swal.fire({
+      icon: "warning",
+      title: "Change Password",
+      text: "Are you sure want to change password"
+      }).then(res=>{
+        if(res.isConfirmed){
+          console.log('confirmed')
+          handleSubmit(e)
+        }
+      })
   }
 
   function handleChange(name) {
@@ -47,7 +65,7 @@ const ChangePassword = () => {
         <Header backLink="/" />
         <div className="small-container">
           <div className="card">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={confirmAction}>
               <h2 className="card-title">Change password</h2>
               <p className="card-description">
                 Change your password to make sure only you can access your
@@ -77,6 +95,8 @@ const ChangePassword = () => {
                     formData.password !== formData.repeatPassword
                   }
                   className="button button-primary"
+                  // type="button"
+                  // onClick={(e)=>{confirmAction(e)}}
                 >
                   Save
                 </button>

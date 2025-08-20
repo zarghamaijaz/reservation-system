@@ -356,7 +356,7 @@ p {
 
 
 /* time picker css */
-.time_slot_wrap{
+/* .time_slot_wrap{
   width: 100%;
   display: flex;
   gap: 1rem;
@@ -394,13 +394,15 @@ p {
 }
 .modal-container .card{
   max-height: 90dvh;
+  max-height: 90dvh;
   overflow-y: auto;
 }
 .input-container.date-picker{
   position: relative;
 }
 .input-container.date-picker .drp_custom_wrap{
-  width: 80%;
+  width: 100%;
+  max-width: 300px;
   position: absolute;
   top: 120%;
   left: 50%;

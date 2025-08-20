@@ -17,6 +17,13 @@ const AllCustomers = () => {
     console.log('==== Implement search logic here ====')
     
   }
+  const confirmAction = ()=>{
+    Swal.fire({
+    icon: "warning",
+    title: "Confirm",
+    text: "Are you sure want to delete",
+    })
+  }
 
   async function getStudentsList(){
     try{
@@ -100,7 +107,7 @@ const AllCustomers = () => {
                       <Link to='/customer-details' className='table-action action-primary'>
                         <BiDetail />
                       </Link>
-                      <button className='table-action action-danger'>
+                      <button onClick={()=>{confirmAction()}} className='table-action action-danger'>
                         <RiDeleteBin6Line />
                       </button>
                     </div>

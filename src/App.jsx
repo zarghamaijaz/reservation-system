@@ -54,7 +54,8 @@ function App() {
         {/* <Route path='/booked-list' element={<BookedList/>} /> */}
 
         {/* Shared routes */}
-        <Route path='/change-password' element={<ChangePassword/>} />
+        {/* <Route path='/change-password' element={<ChangePassword/>} /> */}
+
       </Route>
 
 
@@ -62,6 +63,10 @@ function App() {
       {/* Routes for logged out users only */}
       <Route path='/' element={<GuestRoute/>}>
         <Route path='/login' element={<Login/>} />
+        <Route path='/admin-panel' element={<AdminPanel/>} />
+        <Route path='/all-students' element={<StudentList/>} />
+        <Route path='/create-new-student' element={<NewStudent/>} />
+        <Route path='/expenses' element={<Expenses/>} />
         {/* <Route path='/signup' element={<Signup/>} /> */}
       </Route>
 
@@ -69,7 +74,7 @@ function App() {
       {/* <Route path='/booking-list' element={<BookingList/>} /> */}
       <Route path='/logout' element={<Logout/>} />
       <Route path='/not-allowed' element={<NotAllowed/>} />
-      <Route path='*' element={<NotFound/>} />
+      <Route path='*' element={<NotFound/>} /> */}
       {/* Routes for all users redardless of login status */}
 
     </Routes>
