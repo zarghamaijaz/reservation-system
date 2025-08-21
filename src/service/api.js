@@ -44,12 +44,10 @@ export function loginAPI(data) {
     }, 1000);
   });
 }
-export function addNewStudentAPI(data) {
-  // return request({
-  //     url: `${API_URL}/auth/addNewStudent`,
-  //     method: "POST",
-  //     data,
-  // })
+
+
+// Customers
+export function addNewCustomerAPI(data) {
   const response = {
     success: true,
     message: "Customer added successfully",
@@ -60,85 +58,6 @@ export function addNewStudentAPI(data) {
     }, 1000);
   });
 }
-export function getProfitLossStatsAPI(data) {
-  const response = {
-    success: true,
-    message: "Stats fetched successfully",
-    data: {
-      totalInvoicesIssued: 2000,
-      totalExpensePaid: 1000,
-      profit: 1000,
-    }
-  };
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      res(response);
-    }, 1000);
-  });
-}
-export function getVATStatsAPI(data) {
-  const response = {
-    success: true,
-    message: "Stats fetched successfully",
-    data: {
-      issued:{
-        items: [
-        {
-          invoice: "00372",
-          description: "Ali Ahmed",
-          amount: "40000",
-          vat: "7600",
-        }
-      ],
-      total: {
-        amount: 1190,
-        vat: 190,
-      }
-      },
-      expenses:{
-        items: [
-        {
-          invoice: "00372",
-          description: "Fuel",
-          amount: "50",
-          vat: "9",
-        },
-        {
-          invoice: "00373",
-          description: "Parts",
-          amount: "200",
-          vat: "36",
-        },
-        {
-          invoice: "00374",
-          description: "Fuel",
-          amount: "50",
-          vat: "9",
-        },
-      ],
-      total: {
-        amount: 1000,
-        vat: 140,
-      }
-      },
-    }
-  };
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      res(response);
-    }, 1000);
-  });
-}
-export function changePasswordAPI(data) {
-  return request({
-    url: `${API_URL}/auth/changePassword`,
-    method: "POST",
-    data,
-  });
-}
-
-export function getMyInfoAPI() {}
-
 export function getCustomersListAPI() {
   // return request({
   //     url: `${API_URL}/auth/students`,
@@ -177,6 +96,119 @@ export function getCustomersListAPI() {
   return new Promise((res, rej) => {
     setTimeout(() => {
       res(responseData);
+    }, 1000);
+  });
+}
+export function getCustomerDetailsAPI(data) {
+  const response = {
+    success: true,
+    message: "Customer details fetched!",
+    data: {
+      name: "Zargham",
+      idDigit: "9",
+      idValue: "010203",
+      category: "CE",
+      carNoPlate: "55660",
+      phoneNumber: "03174429967",
+      // Sending UTC dated to simulate an actual mongodb response
+      dateOfBirth: "2025-05-22T10:44:06.245+00:00",
+      visaExpire: "2025-05-22T10:44:06.245+00:00",
+      learningExpire: "2025-05-22T10:44:06.245+00:00",
+      testStatus: "needtest1",
+    },
+  };
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res(response);
+    }, 1000);
+  });
+}
+export function updateCustomerDetailsAPI(data) {
+  const response = {
+    success: true,
+    message: "Customer updated successfully",
+  };
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res(response);
+    }, 1000);
+  });
+}
+
+
+
+
+
+
+
+
+
+export function getProfitLossStatsAPI(data) {
+  const response = {
+    success: true,
+    message: "Stats fetched successfully",
+    data: {
+      totalInvoicesIssued: 2000,
+      totalExpensePaid: 1000,
+      profit: 1000,
+    },
+  };
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res(response);
+    }, 1000);
+  });
+}
+export function getVATStatsAPI(data) {
+  const response = {
+    success: true,
+    message: "Stats fetched successfully",
+    data: {
+      issued: {
+        items: [
+          {
+            invoice: "00372",
+            description: "Ali Ahmed",
+            amount: "40000",
+            vat: "7600",
+          },
+        ],
+        total: {
+          amount: 1190,
+          vat: 190,
+        },
+      },
+      expenses: {
+        items: [
+          {
+            invoice: "00372",
+            description: "Fuel",
+            amount: "50",
+            vat: "9",
+          },
+          {
+            invoice: "00373",
+            description: "Parts",
+            amount: "200",
+            vat: "36",
+          },
+          {
+            invoice: "00374",
+            description: "Fuel",
+            amount: "50",
+            vat: "9",
+          },
+        ],
+        total: {
+          amount: 1000,
+          vat: 140,
+        },
+      },
+    },
+  };
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res(response);
     }, 1000);
   });
 }

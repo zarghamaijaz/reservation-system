@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import Header from "../components/Header";
 import Input from "../components/form-elements/Input";
 import FullPageLoader from "../components/FullPageLoader";
-import { addNewStudentAPI } from "../service/api";
+import { addNewCustomerAPI } from "../service/api";
 import DatePicker from "react-date-picker";
 import Checkbox from "../components/form-elements/Checkbox";
 
@@ -29,7 +29,7 @@ const AddNewCustomer = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await addNewStudentAPI(formData);
+      const response = await addNewCustomerAPI(formData);
       setIsLoading(false);
       if (response.success) {
         navigate("/all-customers");
@@ -58,7 +58,7 @@ const AddNewCustomer = () => {
       {isLoading && <FullPageLoader />}
       <div className="flex flex-col h-screen w-screen p-4">
         <Header backLink="/" />
-        <div className="medium-container">
+        <div className="small-container">
           <div className="card">
             <h2 className="card-title">Add customer</h2>
             <form onSubmit={handleSubmit}>
@@ -147,43 +147,6 @@ const AddNewCustomer = () => {
                     onChange={handleChange("phoneNumber", "phoneNumber")}
                   />
                 </div>
-                <h2 className="section-title">Prices</h2>
-                <div className="table-container mb-8">
-                  <table className="table bordered">
-                    <thead>
-                      <tr>
-                        <th>
-                          <div className="table-cell">Lesson</div>
-                        </th>
-                        <th>
-                          <div className="table-cell">Test reservation</div>
-                        </th>
-                        <th>
-                          <div className="table-cell">Test</div>
-                        </th>
-                        <th className="table-action-head">
-                          <div className="table-cell">Other</div>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div className="table-cell">Lesson 1</div>
-                        </td>
-                        <td>
-                          <div className="table-cell">Reservation 1</div>
-                        </td>
-                        <td>
-                          <div className="table-cell">Test 1</div>
-                        </td>
-                        <td>
-                          <div className="table-cell">Other 1</div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
                 <div className="col-33">
                   <Checkbox label="Need Test 1" onClick={e=>setOption("needtest1")} checked={option === "needtest1"}/>
                 </div>
@@ -192,18 +155,6 @@ const AddNewCustomer = () => {
                 </div>
                 <div className="col-33">
                   <Checkbox label="Test 3" onClick={e=>setOption("needtest3")} checked={option === "needtest3"}/>
-                </div>
-                <div className="col-33">
-                  <Checkbox label="Have Test 1" onClick={e=>setOption("havetest1")} checked={option === "havetest1"}/>
-                </div>
-                <div className="col-33">
-                  <Checkbox label="Test 2" onClick={e=>setOption("havetest2")} checked={option === "havetest2"}/>
-                </div>
-                <div className="col-33">
-                  <Checkbox label="Test 3" onClick={e=>setOption("havetest3")} checked={option === "havetest3"}/>
-                </div>
-                <div className="col-33">
-                  <Checkbox label="Fail" onClick={e=>setOption("fail")} checked={option === "fail"}/>
                 </div>
                 <div className="col-100">
                   <div className="input-container mt-8">

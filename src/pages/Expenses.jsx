@@ -6,16 +6,21 @@ import DatePicker from "react-date-picker";
 import Input from "../components/form-elements/Input";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-
-const INITIAL_STANDART_DATA = {
-    salary1: false,
-    salary2: false,
-    salary3: false,
-    socialInsurance1: false,
-    socialInsurance2: false,
-    socialInsurance3: false,
-    accountant:false,
-    rent:false,
+const INTITIAL_FORMDATA = {
+    salary1:{
+        amount:"",
+        socialInsurance: "",
+    },
+    salary2:{
+        amount:"",
+        socialInsurance: "",
+    },
+    salary3:{
+        amount:"",
+        socialInsurance: "",
+    },
+    accountant:"",
+    rent: "",
 }
 const INITIAL_EXPENSE_ROW_DATA = {
     date: new Date(),
@@ -26,7 +31,7 @@ const INITIAL_EXPENSE_ROW_DATA = {
 }
 const Expenses = () => {
     const [option, setOption] = useState("");
-    const [standartData, setStandartData] = useState(INITIAL_STANDART_DATA);
+    const [formData, setFormData] = useState(INTITIAL_FORMDATA);
     const [tableRows, setTableRows] = useState([INITIAL_EXPENSE_ROW_DATA]);
     function calculateVAT(item){
         try{
@@ -180,7 +185,7 @@ const Expenses = () => {
                 </tbody>
             </table>
             <div className="button-group">
-                <button onClick={()=>setOption("")} className="button button-primary-outline">back</button>
+                <button onClick={()=>setOption("")} className="button button-primary-outline">Back</button>
                 <button onClick={()=>setTableRows(prev => [...prev, INITIAL_EXPENSE_ROW_DATA])} className="button button-primary-outline">Add new row</button>
                 <button onClick={()=>setOption("")} className="button button-primary">Save</button>
             </div>
@@ -190,28 +195,28 @@ const Expenses = () => {
             <div className="card">
                 <div className="row">
                     <div className="col-50">
-                        <Checkbox label="Salary 1" checked={standartData.salary1} onClick={() => setStandartData(prev=>({...prev, salary1: !prev.salary1}))}/>
+                        <Input label="Salary 1" placeholder="Enter salary 1" type="number" value={formData.salary1.amount} onChange={e => setFormData(prev => ({...prev, salary1: {...prev.salary1, amount: e.target.value} }))} />
                     </div>
                     <div className="col-50">
-                        <Checkbox label="Social insurance" checked={standartData.socialInsurance1} onClick={() => setStandartData(prev=>({...prev, socialInsurance1: !prev.socialInsurance1}))}/>
+                        <Input label="Social insurance" placeholder="Enter social insurance" type="number" value={formData.salary1.socialInsurance} onChange={e => setFormData(prev => ({...prev, salary1: {...prev.salary1, socialInsurance: e.target.value} }))} />
                     </div>
                     <div className="col-50">
-                        <Checkbox label="Salary 2" checked={standartData.salary2} onClick={() => setStandartData(prev=>({...prev, salary2: !prev.salary2}))}/>
+                        <Input label="Salary 2" placeholder="Enter salary 2" type="number" value={formData.salary2.amount} onChange={e => setFormData(prev => ({...prev, salary2: {...prev.salary2, amount: e.target.value} }))} />
                     </div>
                     <div className="col-50">
-                        <Checkbox label="Social insurance" checked={standartData.socialInsurance2} onClick={() => setStandartData(prev=>({...prev, socialInsurance2: !prev.socialInsurance2}))}/>
+                        <Input label="Social insurance" placeholder="Enter social insurance" type="number" value={formData.salary2.socialInsurance} onChange={e => setFormData(prev => ({...prev, salary2: {...prev.salary2, socialInsurance: e.target.value} }))} />
                     </div>
                     <div className="col-50">
-                        <Checkbox label="Salary 3" checked={standartData.salary3} onClick={() => setStandartData(prev=>({...prev, salary3: !prev.salary3}))}/>
+                        <Input label="Salary 1" placeholder="Enter salary 1" type="number" value={formData.salary3.amount} onChange={e => setFormData(prev => ({...prev, salary3: {...prev.salary3, amount: e.target.value} }))} />
                     </div>
                     <div className="col-50">
-                        <Checkbox label="Social insurance" checked={standartData.socialInsurance3} onClick={() => setStandartData(prev=>({...prev, socialInsurance3: !prev.socialInsurance3}))}/>
+                        <Input label="Social insurance" placeholder="Enter social insurance" type="number" value={formData.salary3.socialInsurance} onChange={e => setFormData(prev => ({...prev, salary3: {...prev.salary3, socialInsurance: e.target.value} }))} />
                     </div>
                     <div className="col-50">
-                        <Checkbox label="Accountant" checked={standartData.accountant} onClick={() => setStandartData(prev=>({...prev, accountant: !prev.accountant}))}/>
+                        <Input label="Accountant" placeholder="Enter accountant amount" type="number" value={formData.accountant} onChange={e => setFormData(prev => ({...prev, accountant: e.target.value }))} />
                     </div>
                     <div className="col-50">
-                        <Checkbox label="Rent" checked={standartData.rent} onClick={() => setStandartData(prev=>({...prev, rent: !prev.rent}))}/>
+                        <Input label="Rent" placeholder="Enter rent amount" type="number" value={formData.rent} onChange={e => setFormData(prev => ({...prev, rent: e.target.value }))} />
                     </div>
                     <div className="col-100">
                         <div className="button-group">

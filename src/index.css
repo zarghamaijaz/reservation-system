@@ -63,6 +63,7 @@ p {
 
 .modal-container{
   position: fixed;
+  z-index: 2;
   inset: 0;
   display: flex;
   background-color: #0005;
@@ -251,7 +252,12 @@ p {
 }
 
 .header {
+  padding-top: 1rem;
   margin-bottom: 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--clr-bg);
 }
 .header-links {
   display: flex;

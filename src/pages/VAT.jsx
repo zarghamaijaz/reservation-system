@@ -3,8 +3,10 @@ import Header from "../components/Header";
 import DatePicker from "react-date-picker";
 import { getVATStatsAPI } from "../service/api";
 import FullPageLoader from "../components/FullPageLoader";
+import { useNavigate } from "react-router";
 
 const VAT = () => {
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
@@ -145,6 +147,7 @@ const VAT = () => {
                 </div>
                 <div className="col-100">
                     <div className="button-group">
+                        <button onClick={()=>navigate("/")} className="button button-primary-outline">Cancel</button>
                         <button onClick={handleSubmit} className="button button-primary">Find</button>
                     </div>
                 </div>
