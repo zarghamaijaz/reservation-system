@@ -112,6 +112,10 @@
     padding: 0.5rem;
     width: 33%;
 }
+.col-66{
+    padding: 0.5rem;
+    width: 66%;
+}
 .col-50{
     padding: 0.5rem;
     width: 50%;

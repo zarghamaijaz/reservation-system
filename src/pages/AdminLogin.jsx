@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router';
 import { getJwtData } from '../../utils/jwtData.utils';
 import Swal from 'sweetalert2';
-import { loginAPI } from '../service/api'
+import { adminLoginAPI } from '../service/api'
 import Input from '../components/form-elements/Input';
 import FullPageLoader from '../components/FullPageLoader';
 
@@ -11,7 +11,7 @@ const INTITIAL_FORMDATA = {
   password: '',
 }
 
-const Login = () => {
+const AdminLogin = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState(INTITIAL_FORMDATA);
@@ -21,7 +21,7 @@ const Login = () => {
     try{
       console.log("sending request")
       setIsLoading(true);
-      const response = await loginAPI(formData);
+      const response = await adminLoginAPI(formData);
       setIsLoading(false);
       console.log("Login response => ", response);
       if(response.token){
@@ -56,8 +56,8 @@ const Login = () => {
       <div className='small-container'>
         <div className='card'>
           <form onSubmit={handleSubmit}>
-            <h2 className='card-title'>Login to SSDS</h2>
-            <p className='card-description'>Welcome, please log in with your account.</p>
+            <h2 className='card-title'>Admin Login</h2>
+            <p className='card-description'>Welcome, please log in with your admin account.</p>
             <Input
               type='text'
               placeholder='Enter your username or phone number'
@@ -85,4 +85,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default AdminLogin

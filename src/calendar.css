@@ -1,7 +1,9 @@
-.react-date-picker{
+.react-date-picker,
+.react-time-picker {
   width: 100%;
 }
-.react-date-picker__wrapper{
+.react-date-picker__wrapper,
+.react-time-picker__wrapper{
   border-color: var(--clr-border);
   padding: 0.2rem;
   border-radius: 0.25rem;

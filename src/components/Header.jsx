@@ -5,12 +5,12 @@ import { getJwtData } from '../../utils/jwtData.utils'
 const Header = ({ backLink }) => {
   const jwtData = getJwtData();
   if(jwtData){
-    const { username, role } = jwtData;
+    const { name, username, role } = jwtData;
     return (
       <header className='header'>
           <div className='header-links'>
               <Link className='link link-primary' to={backLink}>Go back</Link>
-              <div>Logged in as {`${username} (${role})`}</div>
+              <div>Logged in as {`${name ? name : username} (${role})`}</div>
               <Link to='/logout' className='link link-danger'>Logout</Link>
           </div>
       </header>

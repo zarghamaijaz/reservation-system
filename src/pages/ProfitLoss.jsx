@@ -15,10 +15,15 @@ const ProfitLoss = () => {
     try {
       setIsLoading(true);
       e.preventDefault();
-      const response = await getProfitLossStatsAPI();
+      const payload = {
+        start_date: startDate,
+        end_date: endDate,
+      }
+      const response = await getProfitLossStatsAPI(payload);
       setIsLoading(false);
-      if (response.success) {
-        setData(response.data);
+      if (response) {
+        console.log(response)
+        setData(response);
       }
     } catch (err) {
       console.error(err);
@@ -52,18 +57,18 @@ const ProfitLoss = () => {
                     <div className="detail-container">
                       <div className="detail-name">Total invoices issued</div>
                       <div className="detail-value">
-                        {data.totalInvoicesIssued}
+                        {data.total_revenue}
                       </div>
                     </div>
                     <div className="detail-container">
                       <div className="detail-name">Total expense paid</div>
                       <div className="detail-value">
-                        {data.totalExpensePaid}
+                        {data.total_expenses}
                       </div>
                     </div>
                     <div className="detail-container">
                       <div className="detail-name">Profit</div>
-                      <div className="detail-value">{data.profit}</div>
+                      <div className="detail-value">{data.profit_loss}</div>
                     </div>
                   </div>
                 </>

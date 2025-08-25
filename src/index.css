@@ -89,6 +89,9 @@ p {
   max-width: 1200px;
   margin: auto;
 }
+.student-details-container{
+  flex-grow: 1;
+}
 
 .section-title {
   font-weight: 400;
@@ -250,7 +253,14 @@ p {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+.home-header{
+  display: flex;
+  justify-content: space-between;
+}
+.logo-text{
+  color: var(--clr-primary);
+  font-weight: 400;
+}
 .header {
   padding-top: 1rem;
   margin-bottom: 2rem;
@@ -267,7 +277,12 @@ p {
 /* .table-container{
   margin-top: 2rem;
 } */
-
+.main-content{
+  margin-top: 100px;
+}
+.description{
+  margin-block: 2rem;
+}
 .table {
   background-color: white;
   padding: 1rem;
@@ -503,5 +518,31 @@ p {
   border-radius: 50%;
 }
 .pill.active{
+  background-color: var(--clr-danger);
+}
+
+.booking-list-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+.booking-header{
+  flex: 1 0 100%;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.booking-title{
+  font-size: 1.2rem;
+  color: var(--clr-primary);
+}
+
+.booking-button{
+  cursor: pointer;
+  flex: 0 0 25%;
+  padding: 0.5rem;
+  border: 2px solid var(--clr-bg);
+  background-color: var(--clr-primary);
+  color: white;
+}
+.booking-button.booked{
   background-color: var(--clr-danger);
 }

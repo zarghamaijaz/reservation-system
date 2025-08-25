@@ -6,6 +6,7 @@ import FullPageLoader from "../components/FullPageLoader";
 import { addNewCustomerAPI } from "../service/api";
 import DatePicker from "react-date-picker";
 import Checkbox from "../components/form-elements/Checkbox";
+import Swal from "sweetalert2";
 
 const INTITIAL_FORMDATA = {
   name: "",
@@ -29,14 +30,28 @@ const AddNewCustomer = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await addNewCustomerAPI(formData);
+      const payload = {
+        ...formData,
+        dateOfBirth,
+        visaExpire,
+        learningExpire,
+        option,
+      }
+      const response = await addNewCustomerAPI(payload);
       setIsLoading(false);
-      if (response.success) {
-        navigate("/all-customers");
+      if (response.error) {
+        const {error} = response;
+        return Swal.fire(error.type, error.message, "error");
+      }
+      else{
+        Swal.fire("Customer added", "The customer was added successfully and you are rediredted to customer's list", "info");
+        return navigate("/all-customers");
       }
     } catch (err) {
       console.error(err);
       setIsLoading(false);
+      const {error} = err;
+      return Swal.fire(error.type, error.message, "error");
     }
   }
   function handleChange(name, type) {

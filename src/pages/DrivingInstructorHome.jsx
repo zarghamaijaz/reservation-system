@@ -32,12 +32,12 @@ const DrivingInstructorHome = () => {
             </Link> */}
           </div>
           <div className='col-50'>
-            <Link className='tile'>
+            {/* <Link className='tile'>
               <h4 className='tile-title'>Create Invoice</h4>
             </Link>
             <Link className='tile'>
               <h4 className='tile-title'>Invoices Folder</h4>
-            </Link>
+            </Link> */}
             <Link to="/expenses" className='tile'>
               <h4 className='tile-title'>Expenses</h4>
             </Link>

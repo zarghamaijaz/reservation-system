@@ -78,7 +78,7 @@ const CustomerLessons = () => {
                 />
               </div>
               <Input
-                label="Price (Euro)"
+                label="Price (€)"
                 onChange={handleChange("price")}
                 value={formData.price}
                 className="input"

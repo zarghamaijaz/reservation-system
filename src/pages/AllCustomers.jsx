@@ -3,11 +3,13 @@ import Header from '../components/Header'
 import { BiDetail } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from 'react-router';
-import { getCustomersListAPI } from '../service/api';
+import { getCustomersListAPI, deleteCustomerAPI, printNeedTestAPI } from '../service/api';
 import { IoPersonAdd } from "react-icons/io5"
 import { IoMdPrint } from "react-icons/io";
 import FullPageLoader from '../components/FullPageLoader';
 import Pill from "../components/Pill"
+import Swal from 'sweetalert2';
+import { countDaysFromNow, getLocalStringDateFromUTCString } from '../../utils/date.utils';
 
 const AllCustomers = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,12 +19,28 @@ const AllCustomers = () => {
     console.log('==== Implement search logic here ====')
     
   }
-  const confirmAction = ()=>{
-    Swal.fire({
-    icon: "warning",
-    title: "Confirm",
-    text: "Are you sure want to delete",
-    })
+  async function exportNeedTest(e){
+    e.preventDefault();
+    setIsLoading(true);
+    const response = await printNeedTestAPI();
+    setIsLoading(false);
+    // Extract filename from headers (if provided)
+    let filename = "Customers-need-test.csv";
+
+    // Create a Blob from the response
+    const blob = new Blob([response], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+
+    // Create a link and trigger download
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    link.remove();
+    window.URL.revokeObjectURL(url);
   }
 
   async function getStudentsList(){
@@ -30,12 +48,33 @@ const AllCustomers = () => {
       setIsLoading(true);
       const response = await getCustomersListAPI();
       setIsLoading(false);
-      if(response.success){
-        setStudentsList(response.data);
+      if(response.students && response.students.length > 0){
+        setStudentsList(response.students);
       }
+      else return Swal.fire("No customers found", "Unable to find any customer in the database", "error");
     }catch(err){
       console.error(err);
       setIsLoading(false);
+    }
+  }
+
+  function handleDelete(customerId) {
+    return function(e){
+      e.preventDefault();
+      Swal.fire({
+        title: "Do you want to delete the customer?",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        confirmButtonColor: "red",
+        denyButtonText: `Cancel`
+      }).then(async (result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire("Saved!", "", "success");
+          const response = await deleteCustomerAPI(customerId);
+          getStudentsList();
+        }
+      });
     }
   }
   useEffect(()=>{
@@ -50,16 +89,16 @@ const AllCustomers = () => {
       <Header backLink='/' />
       <div className='aside-links mb-4'>
         <Link to='/add-customer' className='button button-primary-outline button-fit flex items-center gap-2'>
-        <IoPersonAdd/> Add new Student</Link>
+        <IoPersonAdd/> Add new customer</Link>
       </div>
       <div className='table-container'>
-        <div className='table-filters'>
+        {/* <div className='table-filters'>
           <form onSubmit={handleSubmit} className='table-filter'>
             <input type="text" name="" id="" className='table-filter-input' placeholder='Search by name, username, or phone number' />
             <button className='table-filter-button'>Search</button>
           </form>
-          {/* <div className='table-record-count'>Total records based on search: 100</div> */}
-        </div>
+          <div className='table-record-count'>Total records based on search: 100</div>
+        </div> */}
         <table className='table bordered'>
           <thead>
             <tr>
@@ -81,10 +120,10 @@ const AllCustomers = () => {
                   <div className='table-cell'>{item.name}</div>
                 </td>
                 <td>
-                  <div className='table-cell'>{item.idCardNumber}</div>
+                  <div className='table-cell'>{item.idDigit}-{item.idValue}</div>
                 </td>
                 <td>
-                  <div className='table-cell'>{item.dateOfBirth}</div>
+                  <div className='table-cell'>{getLocalStringDateFromUTCString(item.dateOfBirth)}</div>
                 </td>
                 <td>
                   <div className='table-cell'>{item.category}</div>
@@ -93,21 +132,21 @@ const AllCustomers = () => {
                   <div className='table-cell'>{item.carNoPlate}</div>
                 </td>
                 <td>
-                  <div className='table-cell'><Pill active={item.needTest}/></div>
+                  <div className='table-cell'><Pill active={item.option && item.option.includes("needtest")}/></div>
                 </td>
                 <td>
-                  <div className='table-cell'>{item.haveTest}</div>
+                  <div className='table-cell'>{getLocalStringDateFromUTCString(item.testDate)}</div>
                 </td>
                 <td>
-                  <div className='table-cell'><Pill active={item.visaExpire}/></div>
+                  <div className='table-cell'><Pill active={countDaysFromNow(item.visaExpire) < 20}/></div>
                 </td>
                 <td>
                   <div className='table-cell'>
                     <div className='table-actions'>
-                      <Link to='/customer-details' className='table-action action-primary'>
+                      <Link to={`/customer-details?customer-id=${item.id}`} className='table-action action-primary'>
                         <BiDetail />
                       </Link>
-                      <button onClick={()=>{confirmAction()}} className='table-action action-danger'>
+                      <button onClick={handleDelete(item.id)} className='table-action action-danger'>
                         <RiDeleteBin6Line />
                       </button>
                     </div>
@@ -121,7 +160,7 @@ const AllCustomers = () => {
       </div>
       <div className='button-group'>
         <Link to="/" className='button button-primary-outline'>Back</Link>
-        <button to="/" className='button button-primary flex items-center gap-2'>
+        <button onClick={exportNeedTest} className='button button-primary flex items-center gap-2'>
           <IoMdPrint />
           <span>Print need test</span>
         </button>

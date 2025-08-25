@@ -24,7 +24,7 @@ const LoggedRoute = () => {
         navigate('/not-allowed');
       }
     } else {
-      navigate("/login");
+      navigate("/home");
     }
   }, [location.pathname]);
   

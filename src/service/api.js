@@ -1,15 +1,23 @@
 import { API_URL } from "./constant";
 import request from "./request";
 
+
+export function adminLoginAPI(data){
+  return request({
+    url: `${API_URL}/admin/login`,
+    method: "POST",
+    data
+  })
+}
 export function loginAPI(data) {
   const { username, password } = data;
 
   // Actual API
-  // return request({
-  //     url: `${API_URL}/auth/login`,
-  //     method: "POST",
-  //     data
-  // })
+  return request({
+      url: `${API_URL}/auth/login`,
+      method: "POST",
+      data
+  })
 
   // Mock API
   const studentData = {
@@ -45,9 +53,14 @@ export function loginAPI(data) {
   });
 }
 
-
 // Customers
 export function addNewCustomerAPI(data) {
+  return request({
+    method: "POST",
+    url: `${API_URL}/students`,
+    data,
+  });
+
   const response = {
     success: true,
     message: "Customer added successfully",
@@ -59,10 +72,10 @@ export function addNewCustomerAPI(data) {
   });
 }
 export function getCustomersListAPI() {
-  // return request({
-  //     url: `${API_URL}/auth/students`,
-  //     method: "GET",
-  // });
+  return request({
+    url: `${API_URL}/students`,
+    method: "GET",
+  });
   const responseData = {
     success: true,
     message: "Students list fetched",
@@ -100,6 +113,10 @@ export function getCustomersListAPI() {
   });
 }
 export function getCustomerDetailsAPI(data) {
+  return request({
+    method: "GET",
+    url: `${API_URL}/students/${data}`,
+  });
   const response = {
     success: true,
     message: "Customer details fetched!",
@@ -123,7 +140,40 @@ export function getCustomerDetailsAPI(data) {
     }, 1000);
   });
 }
-export function updateCustomerDetailsAPI(data) {
+export function deleteCustomerAPI(data) {
+  return request({
+    method: "DELETE",
+    url: `${API_URL}/students/${data}`,
+  });
+  const response = {
+    success: true,
+    message: "Customer details fetched!",
+    data: {
+      name: "Zargham",
+      idDigit: "9",
+      idValue: "010203",
+      category: "CE",
+      carNoPlate: "55660",
+      phoneNumber: "03174429967",
+      // Sending UTC dated to simulate an actual mongodb response
+      dateOfBirth: "2025-05-22T10:44:06.245+00:00",
+      visaExpire: "2025-05-22T10:44:06.245+00:00",
+      learningExpire: "2025-05-22T10:44:06.245+00:00",
+      testStatus: "needtest1",
+    },
+  };
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res(response);
+    }, 1000);
+  });
+}
+export function updateCustomerDetailsAPI(customerId, data) {
+  return request({
+    method: "PUT",
+    url: `${API_URL}/students/${customerId}`,
+    data,
+  });
   const response = {
     success: true,
     message: "Customer updated successfully",
@@ -134,16 +184,45 @@ export function updateCustomerDetailsAPI(data) {
     }, 1000);
   });
 }
+export function printNeedTestAPI() {
+  return request({
+    url: `${API_URL}/students/export/test-students`,
+    method: "GET",
+    responseType: "blob",
+    withCredentials: true,
+  });
+}
 
+// Customer Lessons
 
+export function getCustomerLessonsAPI(customerId) {
+  return request({
+    method: "GET",
+    url: `${API_URL}/lessons?studentId=${customerId}`,
+  });
+}
+export function addCustomerLessonsAPI(customerId, data) {
+  return request({
+    method: "POST",
+    url: `${API_URL}/lessons/${customerId}`,
+    data,
+  });
+}
 
-
-
-
-
-
+export function updateCustomerLessonsAPI(customerId, data) {
+  return request({
+    method: "PUT",
+    url: `${API_URL}/lessons/${customerId}`,
+    data,
+  });
+}
 
 export function getProfitLossStatsAPI(data) {
+  return request({
+    method: "POST",
+    url:`${API_URL}/expenses/reports/profit-loss`,
+    data,
+  })
   const response = {
     success: true,
     message: "Stats fetched successfully",
@@ -160,6 +239,11 @@ export function getProfitLossStatsAPI(data) {
   });
 }
 export function getVATStatsAPI(data) {
+  return request({
+    method: "POST",
+    url:`${API_URL}/expenses/reports/vat`,
+    data,
+  })
   const response = {
     success: true,
     message: "Stats fetched successfully",
@@ -213,67 +297,39 @@ export function getVATStatsAPI(data) {
   });
 }
 
-export function getTimingsByDayAPI(day) {
-  let data = [];
-  if (day === "Monday") {
-    data = [
-      {
-        startTime: "09:00",
-        endTime: "10:00",
-      },
-      {
-        startTime: "10:30",
-        endTime: "11:30",
-      },
-    ];
-  }
-  const responseData = {
-    success: true,
-    message: "Students list fetched",
-    data,
-  };
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      res(responseData);
-    }, 1000);
-  });
-}
 // booking list
-export function getBookingListByDateAPI(date) {
-  let data = [];
-  data = [
-    {
-      _id: "1",
-      startTime: "04:00",
-      endTime: "5:00",
-    },
-    {
-      _id: "2",
-      startTime: "6:00",
-      endTime: "7:30",
-    },
-    {
-      _id: "3",
-      startTime: "9:00",
-      endTime: "10:00",
-    },
-  ];
-  const responseData = {
-    success: true,
-    message: "Students list fetched",
+export function getBookingListByDateAPI(data) {
+  return request({
+    method: "POST",
+    url: `${API_URL}/bookings/availability`,
     data,
-  };
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      res(responseData);
-    }, 1000);
-  });
+  })
+}
+export function getMyBookingsAPI(data) {
+  return request({
+    method: "GET",
+    url: `${API_URL}/bookings/my-bookings`,
+    data,
+  })
+}
+export function getUnpaidAmountAPI(studentId) {
+  return request({
+    method: "GET",
+    url: `${API_URL}/students/${studentId}/unpaid-amount`,
+  })
 }
 
 export function bookSlotAPI(data) {
   return request({
-    url: `${API_URL}/booking/`,
+    url: `${API_URL}/bookings/book`,
     method: "POST",
+    data,
+  });
+}
+export function cancelBookingAPI(data) {
+  return request({
+    url: `${API_URL}/bookings/cancel/${data}`,
+    method: "DELETE",
     data,
   });
 }
@@ -290,3 +346,42 @@ export function getBookingRequestsAPI() {
     method: "GET",
   });
 }
+
+
+
+// Expenses
+
+export function getExpenseAPI(data){
+  return request({
+    method: "GET",
+    url:`${API_URL}/expenses?start_date=${data.startDate}&end_date=${data.endDate}`,
+    data,
+  })
+}
+export function addMonthlyExpenseAPI(data){
+  return request({
+    method: "POST",
+    url:`${API_URL}/expenses/monthly`,
+    data,
+  })
+}
+export function deleteMonthlyExpenseAPI(id){
+  return request({
+    method: "DELETE",
+    url:`${API_URL}/expenses/monthly/${id}`,
+  })
+}
+export function addDailyExpenseAPI(data){
+  return request({
+    method: "POST",
+    url:`${API_URL}/expenses/daily`,
+    data,
+  })
+}
+export function deleteDailyExpenseAPI(id){
+  return request({
+    method: "DELETE",
+    url:`${API_URL}/expenses/daily/${id}`,
+  })
+}
+

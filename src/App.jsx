@@ -21,6 +21,12 @@ import GuestRoute from './routing/GuestRoute';
 import NotFound from './pages/NotFound';
 import NotAllowed from './pages/NotAllowed';
 import Logout from './pages/Logout';
+import StudentMain from './pages/StudentMain';
+import BookAppointment from './pages/BookAppointment';
+import MyAppointments from './pages/MyAppointments';
+import AdminLogin from './pages/AdminLogin';
+import LoginTypes from './pages/LoginTypes';
+import Home from './pages/Home';
 
 function App() {
 
@@ -39,12 +45,18 @@ function App() {
 
         {/* Student routes */}
         <Route path='/student-home' element={<StudentHome/>} />
+        <Route path='/student-main' element={<StudentMain/>} />
+        <Route path='/book-appointment' element={<BookAppointment/>} />
+        <Route path='/my-appointments' element={<MyAppointments/>} />
       </Route>
 
 
       
       {/* Routes for logged out users only */}
       <Route path='/' element={<GuestRoute/>}>
+        <Route path='/home' element={<Home/>} />
+        <Route path='/login-types' element={<LoginTypes/>} />
+        <Route path='/admin-login' element={<AdminLogin/>} />
         <Route path='/login' element={<Login/>} />
       </Route>
 

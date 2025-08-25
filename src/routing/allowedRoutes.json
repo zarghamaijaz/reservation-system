@@ -3,10 +3,9 @@
         "default":"/student-home",
         "routes": [
             "/student-home",
-            "/booking-dates",
-            "/booking-list",
-            "/booked-list",
-            "/change-password"
+            "/student-main",
+            "/book-appointment",
+            "/my-appointments"
         ]
     },
     "driving-instructor":{

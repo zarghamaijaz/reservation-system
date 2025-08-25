@@ -1,102 +1,72 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
-import { TfiCheckBox } from "react-icons/tfi";
-import { MdCancelPresentation } from "react-icons/md";
-import { IoMdClose, IoMdPrint } from "react-icons/io";
+import Checkbox from "../components/form-elements/Checkbox"
+import { IoMdPrint } from "react-icons/io";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { PiStudentFill } from "react-icons/pi";
 import TimePicker from "react-time-picker";
 import DatePicker from "react-date-picker";
 import Input from "../components/form-elements/Input";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
+import { addCustomerLessonsAPI, getCustomerLessonsAPI, updateCustomerLessonsAPI } from "../service/api";
+import Swal from "sweetalert2";
+import FullPageLoader from "../components/FullPageLoader";
+
+const INITIAL_LESSON_ROW_DATA = {
+  description:"",
+  date: "",
+  from: "",
+  to: "",
+  notes: "",
+  amount:"",
+  paidStatus: false,
+}
 
 const CustomerLessons = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchParams] = useSearchParams();
+  const customerId = searchParams.get("customer-id");
   const navigate = useNavigate();
-  const [addLessonForm, setAddLessonForm] = useState(false);
-  const [startDate, setStartDate] = useState("");
-  const [formData, setFormData] = useState({
-    description: "",
-    price: "",
-  });
-  function handleChange(name, type) {
-    return function (e) {
-      const input = e.target.value;
-      // Only allow digits
-      if (type === "phoneNumber") {
-        if (/^\d*$/.test(input)) {
-          return setFormData((prev) => ({ ...prev, [name]: input }));
-        }
-      } else {
-        return setFormData((prev) => ({ ...prev, [name]: input }));
+  const [tableRows, setTableRows] = useState([]);
+  if(!customerId){
+    navigate("/all-customers");
+  }
+
+  async function getCustomerLessons(){
+    setIsLoading(true);
+    const response = await getCustomerLessonsAPI(customerId);
+    setIsLoading(false);
+    if(response.lessons && response.lessons.length > 0){
+      setTableRows(response.lessons)
+    }
+    console.log(response)
+  }
+
+  useEffect(()=>{
+    getCustomerLessons();
+  }, [])
+
+  async function handleSubmit(e){
+    try{
+      setIsLoading(true);
+      const payload = {
+        lessons: tableRows.map(item => ({...item, date: item.date}))
       }
-    };
+      console.log(payload)
+      const response = await addCustomerLessonsAPI(customerId, payload);
+      Swal.fire("Lessons updated", "The lessons are updated successfully", "success");
+      setIsLoading(false);
+      console.log(response);
+    }catch(err){
+      setIsLoading(false);
+      console.error(err);
+      return Swal.fire("Error", "An error occured", "error");
+    }
   }
 
   return (
     <>
-      {addLessonForm && (
-        <div className="modal-container">
-          <div className="small-container">
-            <div className="card">
-              <button
-                onClick={(e) => setAddLessonForm(false)}
-                className="modal-close"
-              >
-                <IoMdClose />
-              </button>
-              <h1 className="card-title">Add lesson</h1>
-              <p className="card-description">
-                Create a lesson for this customer
-              </p>
-              <Input
-                label="Description"
-                onChange={handleChange("description")}
-                value={formData.description}
-                className="input"
-                type="text"
-                placeholder="Enter description"
-              />
-              <div className="input-container">
-                <label className="label">Date of birth</label>
-                <DatePicker onChange={setStartDate} value={startDate} />
-              </div>
-              <div className="input-container custom-time-picker">
-                <label className="label">Start time</label>
-                <TimePicker
-                  value={formData.startTime}
-                  onChange={(e) => {
-                    handleChange("startTime", e);
-                  }}
-                />
-              </div>
-              <div className="input-container custom-time-picker">
-                <label className="label">End time</label>
-                <TimePicker
-                  value={formData.endTime}
-                  onChange={(e) => {
-                    handleChange("endTime", e);
-                  }}
-                />
-              </div>
-              <Input
-                label="Price (Euro)"
-                onChange={handleChange("price")}
-                value={formData.price}
-                className="input"
-                type="text"
-                placeholder="Enter lesson price"
-              />
-              <div className="input-container">
-                <button
-                  onClick={(e) => setAddLessonForm(false)}
-                  className="button button-primary"
-                >
-                  Add lesson
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {isLoading && <FullPageLoader/>}
       <div className="flex flex-col h-screen w-screen p-4">
         <Header backLink="/customer-details" />
         <div className="student-details-container">
@@ -121,7 +91,7 @@ const CustomerLessons = () => {
                     <div className="table-cell">Notes</div>
                   </th>
                   <th>
-                    <div className="table-cell">Amount</div>
+                    <div className="table-cell">Amount (€)</div>
                   </th>
                   <th className="table-action-head">
                     <div className="table-cell">Paid</div>
@@ -129,143 +99,146 @@ const CustomerLessons = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <div className="table-cell">
-                      Lesson description to be added here
-                    </div>
-                  </td>
-                  <td>
-                    <div className="table-cell">01/8/2025</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">02:00</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">03:30</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">Notes go here</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">€60</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">
-                      <div className="table-actions">
-                        <button className="table-action action-primary">
-                          <TfiCheckBox />
-                        </button>
-                        <button className="table-action action-danger">
-                          <RiDeleteBin6Line />
-                        </button>
+                {tableRows.map((item, index )=> (
+                  <tr key={index}>
+                    <td>
+                      <div className="table-cell">
+                        <Input placeholder="E.g. Parallel parking etc" containerClass="m-0" type="text" value={item.description} onChange={e=>{
+                          const value = e.target.value;
+                          const newData = tableRows.map((row, i) => {
+                            if(i === index){
+                              return {...row, description: value}
+                            }
+                            else return row;
+                          });
+                          setTableRows(newData);
+                        }}/>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="table-cell">
-                      Lesson description to be added here
-                    </div>
-                  </td>
-                  <td>
-                    <div className="table-cell">01/8/2025</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">02:00</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">03:30</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">Notes go here</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">€50</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">
-                      <div className="table-actions">
-                        <button className="table-action action-danger">
-                          <MdCancelPresentation />
-                        </button>
-                        <button className="table-action action-danger">
-                          <RiDeleteBin6Line />
-                        </button>
+                    </td>
+                    <td>
+                      <div className="table-cell">
+                          <DatePicker onChange={value => {
+                              const newData = tableRows.map((row, i)=>{
+                                  if(i === index){
+                                      return {...row, date: value?.toISOString().split("T")[0]}
+                                  }
+                                  else return row;
+                              })
+                              setTableRows(newData);
+                          }} value={item.date} />
                       </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="table-cell">
-                      Lesson description to be added here
-                    </div>
-                  </td>
-                  <td>
-                    <div className="table-cell">01/8/2025</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">02:00</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">03:30</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">Notes go here</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">€45</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">
-                      <div className="table-actions">
-                        <button className="table-action action-danger">
-                          <MdCancelPresentation />
-                        </button>
-                        <button className="table-action action-danger">
-                          <RiDeleteBin6Line />
-                        </button>
+                    </td>
+                    <td>
+                      <div className="table-cell">
+                        <TimePicker
+                          format="HH:mm"
+                          value={item.from}
+                          onChange={value => {
+                              const newData = tableRows.map((row, i)=>{
+                                  if(i === index){
+                                      return {...row, from: value}
+                                  }
+                                  else return row;
+                              })
+                              setTableRows(newData);
+                          }}
+                        />
                       </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="table-cell"></div>
-                  </td>
-                  <td>
-                    <div className="table-cell"></div>
-                  </td>
-                  <td>
-                    <div className="table-cell"></div>
-                  </td>
-                  <td>
-                    <div className="table-cell"></div>
-                  </td>
-                  <td>
-                    <div className="table-cell"></div>
-                  </td>
-                  <td>
-                    <div className="table-cell">Total: €155</div>
-                  </td>
-                  <td>
-                    <div className="table-cell"></div>
-                  </td>
-                </tr>
+                    </td>
+                    <td>
+                      <div className="table-cell">
+                        <TimePicker
+                          format="HH:mm"
+                          value={item.to}
+                          onChange={value => {
+                              const newData = tableRows.map((row, i)=>{
+                                  if(i === index){
+                                      return {...row, to: value}
+                                  }
+                                  else return row;
+                              })
+                              setTableRows(newData);
+                          }}
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div className="table-cell">
+                        <Input placeholder="Leave a note for customer" containerClass="m-0" type="text" value={item.notes} onChange={e=>{
+                          const value = e.target.value;
+                          const newData = tableRows.map((row, i) => {
+                            if(i === index){
+                              return {...row, notes: value}
+                            }
+                            else return row;
+                          });
+                          setTableRows(newData);
+                        }}/>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="table-cell">
+                        <Input placeholder="Amount in €" containerClass="m-0" type="number" value={item.amount} onChange={e=>{
+                          const value = e.target.value;
+                          const newData = tableRows.map((row, i) => {
+                            if(i === index){
+                              return {...row, amount: value}
+                            }
+                            else return row;
+                          });
+                          setTableRows(newData);
+                        }}/>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="table-cell">
+                        <div className="table-actions">
+                          <Checkbox
+                            checked={item.paidStatus}
+                            onClick={e => {
+                              const newData = tableRows.map((row, i) => {
+                                if(i === index){
+                                  return {...row, paidStatus: !row.paidStatus}
+                                }
+                                else return row;
+                              });
+                              setTableRows(newData);
+                            }}
+                          />
+                          <button onClick={e => {
+                            const newData = tableRows.filter((_, i) => {
+                                if(i === index){
+                                  return false;
+                                }
+                                else return true;
+                            });
+                            setTableRows(newData);
+                        }} className='table-action action-danger'>
+                            <RiDeleteBin6Line />
+                        </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
+            <div className="button-group">
+              <button onClick={()=>setTableRows(prev => [...prev, INITIAL_LESSON_ROW_DATA])} className="button button-primary-outline" >Add new lesson</button>
+              <button onClick={handleSubmit} className="button button-primary" >Save details</button>
+            </div>
           </div>
-          <div className="button-group">
-            <button onClick={(e) => navigate("/customer-details")} className="button button-primary-outline" >Back</button>
-            <button onClick={(e) => setAddLessonForm(true)} className="button button-primary-outline" >Add lesson</button>
-            <button className="button button-primary-outline flex items-center gap-2" >
-              <IoMdPrint />
-              <span>Print invoice</span>
-            </button>
-            <button className="button button-primary">Finish</button>
-          </div>
+        </div>
+        <div className="button-group">
+          <button onClick={(e) => navigate("/customer-details")} className="button button-primary-outline" >Back</button>
+          <button className="button button-primary-outline flex items-center gap-2" >
+            <IoMdPrint />
+            <span>Print invoice</span>
+          </button>
+          <button className="button button-primary flex items-center gap-2">
+            <PiStudentFill />
+            <span>Finish</span>
+          </button>
         </div>
       </div>
     </>

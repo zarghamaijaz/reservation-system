@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import Header from "../components/Header";
 import Input from "../components/form-elements/Input";
 import FullPageLoader from "../components/FullPageLoader";
@@ -8,6 +8,7 @@ import {
   updateCustomerDetailsAPI,
 } from "../service/api";
 import DatePicker from "react-date-picker";
+import TimePicker from "react-time-picker";
 import Checkbox from "../components/form-elements/Checkbox";
 import { getLocalDateFromUTCString } from "../../utils/date.utils";
 import Swal from "sweetalert2";
@@ -22,40 +23,56 @@ const INTITIAL_FORMDATA = {
   dateOfBirth: "",
   visaExpire: "",
   learningExpire: "",
-  testStatus: "",
+  option: "",
 };
 
 const CustomerDetails = () => {
+  const [searchParams] = useSearchParams();
+  const customerId = searchParams.get("customer-id");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState(INTITIAL_FORMDATA);
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [visaExpire, setVisaExpire] = useState("");
   const [learningExpire, setLearningExpire] = useState("");
+  const [testDate, setTestDate] = useState("");
+  const [testStartTime, setTestStartTime] = useState("");
+  const [testEndTime, setTestEndTime] = useState("");
   const [option, setOption] = useState("");
+  if(!customerId){
+    navigate("/all-customers");
+  }
 
   async function fetchCustomerDetails() {
     try {
       setIsLoading(true);
-      const response = await getCustomerDetailsAPI();
+      const response = await getCustomerDetailsAPI(customerId);
       setIsLoading(false);
-      if (response.success) {
-        setFormData(response.data);
+      if (response) {
+        setFormData(response);
         const newDateOfBirth = getLocalDateFromUTCString(
-          response.data.dateOfBirth
+          response.dateOfBirth
         );
         setDateOfBirth(newDateOfBirth);
         const newVisaExpire = getLocalDateFromUTCString(
-          response.data.visaExpire
+          response.visaExpire
         );
         setVisaExpire(newVisaExpire);
         const newLearningExpire = getLocalDateFromUTCString(
-          response.data.learningExpire
+          response.learningExpire
         );
         setLearningExpire(newLearningExpire);
+
+        if(response.testDate){
+          const newTestDate = getLocalDateFromUTCString(
+            response.testDate
+          );
+          setTestDate(newTestDate);
+
+        }
       }
-      if (response.data.testStatus) {
-        setOption(response.data.testStatus);
+      if (response.option) {
+        setOption(response.option);
       }
     } catch (err) {
       console.error(err);
@@ -70,20 +87,46 @@ const CustomerDetails = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      setIsLoading(true);
       // We can store the API response from the getCustomerDetails in a different state or a variable.
       // We can compare the values with that and add only the values in the payload object that were modified.
       // This way our request will work as a PATCH instead of PUT
-
+      
       const payload = {
-        // Add only modified values or add all
+        name: formData.name,
+        idDigit: formData.idDigit,
+        idValue: formData.idValue,
+        category: formData.category,
+        carNoPlate: formData.carNoPlate,
+        dateOfBirth,
+        visaExpire,
+        learningExpire,
+        testDate,
+        testStartTime,
+        testEndTime,
+        option,
       };
-      const response = await updateCustomerDetailsAPI(payload);
-      if (response.success) {
+      // if(payload.testDate === "" || payload.testDate === null || payload.testDate === undefined){
+        //   payload.testDate = undefined
+        // }
+      if(payload.testDate){
+        if(!payload.testStartTime){
+          return Swal.fire("validation error", "Please specify a test start time", "error");
+        }
+        if(!payload.testEndTime){
+          return Swal.fire("validation error", "Please specify a test end time", "error");
+        }
+      }
+      setIsLoading(true);
+      const response = await updateCustomerDetailsAPI(customerId, payload);
+      if (response.error) {
+        const {error} = response;
+        return Swal.fire(error.message, error.type, "error");
+      }
+      else{
         navigate("/all-customers");
         Swal.fire({
           title: "Changes saved",
-          text: response.message,
+          text: "You have been redirected to all customers page.",
           icon: "success",
         });
       }
@@ -91,6 +134,8 @@ const CustomerDetails = () => {
     } catch (err) {
       console.error(err);
       setIsLoading(false);
+      const {error} = err;
+      return Swal.fire(error.message, error.type, "error");
     }
   }
   function handleChange(name, type) {
@@ -207,6 +252,35 @@ const CustomerDetails = () => {
                       onChange={handleChange("phoneNumber", "phoneNumber")}
                     />
                   </div>
+                  <div className="col-100">
+                    <div className="input-container">
+                      <label className="label">Test date</label>
+                      <DatePicker
+                        onChange={setTestDate}
+                        value={testDate}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-50">
+                    <div className="input-container">
+                      <label className="label">Test start time</label>
+                      <TimePicker
+                        format="HH:mm"
+                        onChange={setTestStartTime}
+                        value={testStartTime}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-50">
+                    <div className="input-container">
+                      <label className="label">Test end time</label>
+                      <TimePicker
+                        format="HH:mm"
+                        onChange={setTestEndTime}
+                        value={testEndTime}
+                      />
+                    </div>
+                  </div>
                   <div className="col-33">
                     <Checkbox
                       label="Need Test 1"
@@ -243,7 +317,7 @@ const CustomerDetails = () => {
                       <button
                         onClick={(e) => {
                           e.preventDefault();
-                          navigate("/customer-lessons");
+                          navigate(`/customer-lessons?customer-id=${customerId}`);
                         }}
                         className="button button-primary"
                       >
