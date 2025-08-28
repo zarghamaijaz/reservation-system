@@ -9,8 +9,9 @@
 :root {
   --clr-bg: #f0f0ff;
   --clr-primary-100: #f5e4ff;
-  --clr-primary: #1E88E5;
-  --clr-primary-600: #1367b1;
+  --clr-primary: #fb3133;
+  --clr-primary-600: #c12629;
+  --clr-yellow: #ffcc24;
   --clr-border: #b5b5b5;
   --clr-elements: white;
   --clr-text: #414141;
@@ -26,11 +27,13 @@ a {
 
 body {
   background-color: var(--clr-bg);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 p {
   color: var(--clr-text);
+}
+img{
+  width: 100%;
 }
 
 
@@ -256,7 +259,14 @@ p {
 .home-header{
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
 }
+.home-header-logo-container{
+  width: 150px;
+  flex-shrink: 0;
+}
+
 .logo-text{
   color: var(--clr-primary);
   font-weight: 400;
@@ -279,6 +289,21 @@ p {
 } */
 .main-content{
   margin-top: 100px;
+}
+.main-title{
+  font-size: 3rem;
+  font-weight: 500;
+  margin-bottom: 0.5em;
+}
+.secondary-title{
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 1em;
+}
+.small-title{
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.6em;
 }
 .description{
   margin-block: 2rem;
@@ -545,4 +570,190 @@ p {
 }
 .booking-button.booked{
   background-color: var(--clr-danger);
+}
+
+
+.hero-section{
+  min-height: 75vh;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+}
+.hero-bg{
+  z-index: -2;
+  position: absolute;
+  inset: 0;
+}
+.hero-bg-overlay{
+  z-index: -1;
+  position: absolute;
+  inset: 0;
+  background-color: black;
+  opacity: 0.35;
+}
+.hero--bg-img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.hero-content{
+  margin: auto;
+}
+
+.yellow-bg-title{
+  background-color: var(--clr-yellow);
+  padding: 1rem;
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.hero-text-container{
+  background-color: white;
+  padding: 1rem;
+}
+
+
+.process-container{
+  margin-bottom: 50px;
+  padding-inline: 20px;
+  max-width: 1200px;
+  margin-inline: auto;
+  display: flex;
+  gap: 2rem;
+}
+
+.process-icon{
+  font-size: 30px;
+  color: var(--clr-primary);
+  margin-bottom: 25px;
+}
+
+.process-number{
+  line-height: 50%;
+  position: absolute;
+  top: 0px;
+  right: 0;
+  color: var(--clr-primary);
+  font-size: 200px;
+  opacity: 0.07;
+  pointer-events: none;
+
+}
+
+.process-item{
+  overflow: hidden;
+  position: relative;
+  flex: 1 0 25%;
+  background-color: white;
+  box-shadow: 0px 0px 20px #0002;
+  padding: 2rem 1rem;
+}
+
+.process-title{
+  font-size: 1.2rem;
+  margin-bottom: 0.75em;
+}
+.process-description{
+  font-weight: 500;
+}
+
+
+
+.content-container{
+  padding-inline: 20px;
+  max-width: 1200px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  margin-bottom: 50px;
+}
+.content{
+  margin-block: 50px;
+}
+.content-left,
+.content-right{
+  width: 50%;
+  flex-shrink: 0;
+  margin-block: 50px;
+}
+
+.content-title{
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+.content-description{
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+.cta-buttons{
+  display: flex;
+  gap: 1rem;
+}
+.cta-button{
+  display: block;
+  width: fit-content;
+  font-size: 1.2rem;
+  padding: 0.8rem 2rem;
+  border: 2px solid transparent;
+  min-width: 120px;
+  background-color: var(--clr-primary);
+  color: white;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+.cta-button.outlined{
+  background: white;
+  border: 2px solid transparent;
+  color: var(--clr-primary);
+}
+.cta-button.outlined:hover{
+  border-color: var(--clr-primary);
+}
+
+.content-image{
+  width: 100%;
+  object-fit: cover;
+  box-shadow: 10px 10px 0px white, 20px 20px 0px var(--clr-primary) ;
+}
+
+.founders{
+  margin-inline: auto;
+  background-color: white;
+  padding: 2rem;
+  margin-bottom: 50px;
+  box-shadow: 0px 0px 20px #0002;
+  width: 100%;
+  max-width: 1200px;
+}
+.founders-image-container{
+  margin-inline: auto;
+  margin-bottom: 1.5rem;
+  height: 200px;
+  width: 200px;
+  overflow: hidden;
+  display: block;
+  border-radius: 50%;
+  border: 5px solid var(--clr-primary);
+}
+.founders-image{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.founders-content{
+  text-align: center;
+}
+.founders-name{
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 1em;
+}
+.founders-description{
+  font-weight: 500;
+  font-size: 1.2rem;
+  margin-bottom: 1em;
 }

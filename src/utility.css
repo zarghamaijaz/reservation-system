@@ -51,6 +51,18 @@
 .mb-8{
     margin-bottom: 2rem;
 }
+.mt-huge{
+    margin-top: 100px;
+}
+@media screen and (max-width: 769px) {
+    .mt-huge{
+        margin-top: 50px;
+    }
+    
+}
+.mb-medium{
+    margin-bottom: 33px;
+}
 
 /* Padding */
 .p-4{

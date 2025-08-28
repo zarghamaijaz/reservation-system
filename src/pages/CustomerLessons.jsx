@@ -8,7 +8,7 @@ import TimePicker from "react-time-picker";
 import DatePicker from "react-date-picker";
 import Input from "../components/form-elements/Input";
 import { useNavigate, useSearchParams } from "react-router";
-import { addCustomerLessonsAPI, getCustomerLessonsAPI, updateCustomerLessonsAPI } from "../service/api";
+import { addCustomerLessonsAPI, getCustomerLessonsAPI, updateCustomerDetailsAPI } from "../service/api";
 import Swal from "sweetalert2";
 import FullPageLoader from "../components/FullPageLoader";
 
@@ -62,6 +62,33 @@ const CustomerLessons = () => {
       console.error(err);
       return Swal.fire("Error", "An error occured", "error");
     }
+  }
+
+  function markCustomerToFinished() {
+    Swal.fire({
+      title: "Mark finished?",
+      text: "This will mark the customer as finished and will move them to the finished list.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try{
+          const payload = {
+            option: "finished"
+          }
+          setIsLoading(true);
+          const response = await updateCustomerDetailsAPI(customerId, payload);
+          setIsLoading(false);
+        }catch(err){
+          setIsLoading(false);
+          console.error(err);
+          return Swal.fire("Error", "An error occured", "error");
+        }
+      }
+    });
   }
 
   return (
@@ -235,7 +262,7 @@ const CustomerLessons = () => {
             <IoMdPrint />
             <span>Print invoice</span>
           </button>
-          <button className="button button-primary flex items-center gap-2">
+          <button onClick={markCustomerToFinished} className="button button-primary flex items-center gap-2">
             <PiStudentFill />
             <span>Finish</span>
           </button>

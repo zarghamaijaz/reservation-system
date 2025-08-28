@@ -1,46 +1,99 @@
 import React from "react";
-import { Link } from "react-router";
+import HomeHeader from "../components/HomeHeader";
+import { IoBookOutline, IoCarSportOutline  } from "react-icons/io5";
+import { BsSignpost2 } from "react-icons/bs";
+import { PiGraduationCapLight } from "react-icons/pi";
 
 const Home = () => {
   return (
-    <div className="medium-container">
-      <div className="flex flex-col h-screen w-screen p-4">
-        <header className="home-header">
-          <div className="home-header-logo-container">
-            <h2 className="logo-text">Stelios Driving School</h2>
+    <div className="home">
+      <div className="medium-container">
+        <HomeHeader/>
+      </div>
+      <div className="text-center mt-huge mb-medium">
+        <h2 className="main-title">Stelios Driving School</h2>
+        <p className="small-title">Your safe and enjoyable driving journey starts here.</p>
+      </div>
+      <div className="hero-section">
+        <div className="hero-bg-overlay"></div>
+        <div className="hero-bg">
+          <img src="assets/images/banner.jpg" alt="" className="hero--bg-img" />
+        </div>
+        <div className="hero-content text-center">
+          <h2 className="yellow-bg-title">What can you learn from us?</h2>
+          <div className="hero-text-container">
+            <p className="small-title">At Stelios Driving School, we offer classes for all kinds of vehicles and for all ages.</p>
+            <p className="small-title">We also teach you about road safety to make sure you get on the road with confidence.</p>
           </div>
-          <div className="home-header-buttons">
-            <Link to="/login-types" className="button button-primary">
-              Login
-            </Link>
+        </div>
+      </div>
+      <div className="text-center mt-huge">
+        <h2 className="secondary-title">Here's our teaching process.</h2>
+        <div className="process-container">
+          <div className="process-item">
+            <div className="process-icon">
+              <IoBookOutline />
+            </div>
+            <h4 className="process-number">1</h4>
+            <h3 className="process-title">Book an appointment</h3>
+            <p className="process-description">Visit us and book an appointment with one of our instructors.</p>
           </div>
-        </header>
-        <div className="main-content">
-          <div className="card">
-            <h2 className="card-title">About Stelios</h2>
-            <p className="description">
-              Stelios has 10 years previous experience working for the Limassol
-              Transport Department as a technician and examiner. His experience
-              in the Transport Department raised his awareness of areas that
-              could be improved and he felt he wanted to do more to help
-              increase driving standards in the area that's why he started his own driving school in 2018.
-            </p>
-            <p className="description">
-              Many new drivers do not feel confident which can affect their
-              ability to drive safely. Stelios felt that by using his previous
-              experience and becoming a qualified driving instructor he could
-              make a positive change towards improving road safety in Limassol.
-            </p>
-            <p className="description">
-              Stelios is a very patient and calm instructor. He loves his job
-              and takes pride in providing driving lessons to ensure all his
-              students pass with the highest standards.
-            </p>
-            <h2 className="card-title">Want to book a lesson?</h2>
-            <p className="description">Please feel free to give us a call to ask any questions or book a lesson.</p>
-            <h2 className="card-title">Our location</h2>
-            <p className="description">Stelios Stylianou Driving School, located on Epidamou 2 , 3070 in Limassol Cyprus, is a premier driving institution dedicated to fostering safe and responsible driving skills. Currently operational, the school has earned an impressive average rating highlighting its commitment to excellence and student satisfaction.</p>
+          <div className="process-item">
+            <div className="process-icon">
+              <BsSignpost2 />
+            </div>
+            <h4 className="process-number">2</h4>
+            <h3 className="process-title">Learn road signs</h3>
+            <p className="process-description">We will make sure yor are aware of road signs and safety.</p>
           </div>
+          <div className="process-item">
+            <div className="process-icon">
+              <IoCarSportOutline />
+            </div>
+            <h4 className="process-number">3</h4>
+            <h3 className="process-title">Learn to drive</h3>
+            <p className="process-description">Now it is time to learn how to drive. Level up your driving skills.</p>
+          </div>
+          <div className="process-item">
+            <div className="process-icon">
+              <PiGraduationCapLight />
+            </div>
+            <h4 className="process-number">4</h4>
+            <h3 className="process-title">Pass the driving test</h3>
+            <p className="process-description">After finished your lessons you will be able to pass the driving test with ease.</p>
+          </div>
+        </div>
+      </div>
+      <div className="text-center mt-huge">
+        <h2 className="secondary-title">Are you ready to get started?</h2>
+      </div>
+      <div className="content-container">
+        <div className="content-left">
+          <div className="content">
+            <h3 className="content-title">Excellent</h3>
+            <p className="content-description">You are one step closer to a safe and enjoyable driving experience. Click the button below to get started.</p>
+            <div className="cta-buttons">
+              <a href="#" className="cta-button">Book a lesson</a>
+              <a href="#" className="cta-button outlined">Already booked</a>
+            </div>
+          </div>
+        </div>
+        <div className="content-right">
+          <img src="assets/images/learn-driving.jpg" alt="" className="content-image" />
+        </div>
+      </div>
+      <div className="text-center mt-huge">
+        <h2 className="secondary-title">Meet the founders</h2>
+      </div>
+      <div className="founders">
+        <div className="founders-image-container">
+          <img src="assets/images/founders.jpg" alt="" className="founders-image" />
+        </div>
+        <div className="founders-content">
+          <h4 className="founders-name">Mr and Mrs Stelios</h4>
+          <p className="founders-description">They have 10 years of experience in the Limassol Transport Department.</p>
+          <p className="founders-description">Mr Stelios worked as a technician and examiner from 2008 to 2018. After that, he decided to start his own driving school in 2018. Since then, he has taught thousands of drivers and improved their driving skills.</p>
+          <p className="founders-description">Mrs Stelios is a very patient and calm instructor. She loves her job and takes pride in providing driving lessons to ensure all her students pass with the highest standards.</p>
         </div>
       </div>
     </div>
