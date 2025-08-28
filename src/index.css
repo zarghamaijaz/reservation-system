@@ -266,6 +266,10 @@ img{
   width: 150px;
   flex-shrink: 0;
 }
+.home-header-links{
+  display: flex;
+  gap: 1rem;
+}
 
 .logo-text{
   color: var(--clr-primary);
@@ -645,7 +649,7 @@ img{
 .process-item{
   overflow: hidden;
   position: relative;
-  flex: 1 0 25%;
+  flex: 1 1 25%;
   background-color: white;
   box-shadow: 0px 0px 20px #0002;
   padding: 2rem 1rem;
@@ -704,6 +708,7 @@ img{
   color: white;
   border-radius: 0.5rem;
   text-align: center;
+  box-shadow: 0px 2px 5px #0003;
 }
 .cta-button.outlined{
   background: white;
@@ -720,14 +725,24 @@ img{
   box-shadow: 10px 10px 0px white, 20px 20px 0px var(--clr-primary) ;
 }
 
-.founders{
-  margin-inline: auto;
-  background-color: white;
-  padding: 2rem;
-  margin-bottom: 50px;
-  box-shadow: 0px 0px 20px #0002;
+
+.founders-container{
+  padding-inline: 20px;
+  display: flex;
+  gap: 2rem;
   width: 100%;
   max-width: 1200px;
+  margin-inline: auto;
+  margin-bottom: 50px;
+}
+
+.founders{
+  transition: border-color 150ms;
+  border: 1px solid transparent;
+  flex: 1 1 50%;
+  background-color: white;
+  padding: 2rem;
+  box-shadow: 0px 0px 20px #0002;
 }
 .founders-image-container{
   margin-inline: auto;
@@ -747,10 +762,17 @@ img{
 .founders-content{
   text-align: center;
 }
+.founders:hover{
+  border-color: var(--clr-primary);
+}
+.founders:hover .founders-name{
+  color: var(--clr-primary);
+}
 .founders-name{
   font-size: 2rem;
   font-weight: 500;
   margin-bottom: 1em;
+  transition: color 150ms;
 }
 .founders-description{
   font-weight: 500;

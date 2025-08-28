@@ -1,4 +1,18 @@
 @media screen and (max-width: 769px) {
+    .home-header{
+        padding-inline: 0.5rem;
+    }
+    .home-header-logo-container{
+        width: 80px;
+    }
+    .home-header-links{
+        gap: 0.2rem;
+        font-size: 0.75rem;
+    }
+    .home-header-buttons .button{
+        font-size: 0.75rem;
+        padding: 0.5em 1em;
+    }
     .process-container{
         flex-wrap: wrap;
         gap: 1rem;
@@ -31,7 +45,7 @@
         font-size: 2rem;
     }
     .secondary-title{
-        font-size: 1.35rem;
+        font-size: 1.5rem;
     }
     .small-title{
         font-size: 1rem;
@@ -40,7 +54,7 @@
         margin-block: 0px;
     }
     .yellow-bg-title{
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     .hero-content{
         max-width: 90%;
@@ -52,17 +66,21 @@
         font-size: 0.875rem;
         margin-bottom: 1rem;
     }
+    .founders-container{
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
     .founders{
-        max-width: 90%;
+        padding: 1rem;
     }
     .founders-image-container{
         height: 150px;
         width: 150px;
     }
     .founders-name{
-        font-size: 1.5rem;
+        font-size: 1.15rem;
     }
     .founders-description{
-        font-size: 1rem;
+        font-size: 0.875rem;
     }
 }

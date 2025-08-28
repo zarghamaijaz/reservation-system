@@ -85,15 +85,27 @@ const Home = () => {
       <div className="text-center mt-huge">
         <h2 className="secondary-title">Meet the founders</h2>
       </div>
-      <div className="founders">
-        <div className="founders-image-container">
-          <img src="assets/images/founders.jpg" alt="" className="founders-image" />
+      <div className="founders-container">
+        <div className="founders">
+          {/* <div className="founders-image-container">
+            <img src="assets/images/founders.jpg" alt="" className="founders-image" />
+          </div> */}
+          <div className="founders-content">
+            <h4 className="founders-name">Mr Stelios</h4>
+            <p className="founders-description">Stelios has 10 years of experience in the Limassol Transport Department.</p>
+            <p className="founders-description">He worked as a technician and examiner from 2008 to 2018. After that, he decided to start his own driving school in 2018. Since then, he has taught thousands of drivers and improved their driving skills.</p>
+          </div>
         </div>
-        <div className="founders-content">
-          <h4 className="founders-name">Mr and Mrs Stelios</h4>
-          <p className="founders-description">They have 10 years of experience in the Limassol Transport Department.</p>
-          <p className="founders-description">Mr Stelios worked as a technician and examiner from 2008 to 2018. After that, he decided to start his own driving school in 2018. Since then, he has taught thousands of drivers and improved their driving skills.</p>
-          <p className="founders-description">Mrs Stelios is a very patient and calm instructor. She loves her job and takes pride in providing driving lessons to ensure all her students pass with the highest standards.</p>
+        <div className="founders">
+          {/* <div className="founders-image-container">
+            <img src="assets/images/founders.jpg" alt="" className="founders-image" />
+          </div> */}
+          <div className="founders-content">
+            <h4 className="founders-name">Mrs Stelios</h4>
+            <p className="founders-description">Mrs Stelios works alongside her husband.</p>
+            <p className="founders-description">She specializes in road signs and road safety.</p>
+            <p className="founders-description">She is a very patient and calm instructor. She loves her job and takes pride in providing driving lessons to ensure all her students pass with the highest standards.</p>
+          </div>
         </div>
       </div>
     </div>
