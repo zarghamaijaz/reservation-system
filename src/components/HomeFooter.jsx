@@ -7,10 +7,10 @@ const HomeFooter = () => {
       <nav className="footer-nav">
         <ul className="footer-links">
           <li className="footer-link">
-            <Link>Home</Link>
+            <Link to="/home">Home</Link>
           </li>
           <li className="footer-link">
-            <Link>About us</Link>
+            <Link to="/about">About us</Link>
           </li>
           <li className="footer-link">
             <a href="assets/guides/road-signs.pdf" target="_blank">Download road signs (PDF)</a>

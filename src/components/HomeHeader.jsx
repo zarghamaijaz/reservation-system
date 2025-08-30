@@ -11,9 +11,9 @@ const HomeHeader = () => {
   }
   return (
     <header className="home-header">
-      <div className="home-header-logo-container">
+      <Link to="/home" className="home-header-logo-container">
         <img src="assets/images/logo.png" alt="" />
-      </div>
+      </Link>
       <div className="home-header-links">
         <Link to="/home" className="link">Home</Link>
         <Link to="/about" className="link">About us</Link>
