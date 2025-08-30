@@ -1,8 +1,11 @@
 import React from "react";
 import HomeHeader from "../components/HomeHeader";
 import { IoBookOutline, IoCarSportOutline  } from "react-icons/io5";
-import { BsSignpost2 } from "react-icons/bs";
+import { BsSignpost2, BsTelephone } from "react-icons/bs";
 import { PiGraduationCapLight } from "react-icons/pi";
+import HomeFooter from "../components/HomeFooter";
+import { SlLocationPin } from "react-icons/sl";
+import { Link } from "react-router";
 
 const Home = () => {
   return (
@@ -52,7 +55,7 @@ const Home = () => {
             </div>
             <h4 className="process-number">3</h4>
             <h3 className="process-title">Learn to drive</h3>
-            <p className="process-description">Now it is time to learn how to drive. Level up your driving skills.</p>
+            <p className="process-description">Now it is time to learn how to drive and level up your driving skills.</p>
           </div>
           <div className="process-item">
             <div className="process-icon">
@@ -60,7 +63,7 @@ const Home = () => {
             </div>
             <h4 className="process-number">4</h4>
             <h3 className="process-title">Pass the driving test</h3>
-            <p className="process-description">After finished your lessons you will be able to pass the driving test with ease.</p>
+            <p className="process-description">After finishing your lessons you will be able to pass the driving test with ease.</p>
           </div>
         </div>
       </div>
@@ -83,7 +86,7 @@ const Home = () => {
         </div>
       </div>
       <div className="text-center mt-huge">
-        <h2 className="secondary-title">Meet the founders</h2>
+        <h2 className="secondary-title">Meet the founder</h2>
       </div>
       <div className="founders-container">
         <div className="founders">
@@ -94,20 +97,90 @@ const Home = () => {
             <h4 className="founders-name">Mr Stelios</h4>
             <p className="founders-description">Stelios has 10 years of experience in the Limassol Transport Department.</p>
             <p className="founders-description">He worked as a technician and examiner from 2008 to 2018. After that, he decided to start his own driving school in 2018. Since then, he has taught thousands of drivers and improved their driving skills.</p>
+            <Link className="link link-primary" to="/about">Continue reading</Link>
           </div>
         </div>
-        <div className="founders">
-          {/* <div className="founders-image-container">
+        {/* Only need to display one founder */}
+        {/* <div className="founders">
+          <div className="founders-image-container">
             <img src="assets/images/founders.jpg" alt="" className="founders-image" />
-          </div> */}
+          </div>
           <div className="founders-content">
             <h4 className="founders-name">Mrs Stelios</h4>
             <p className="founders-description">Mrs Stelios works alongside her husband.</p>
             <p className="founders-description">She specializes in road signs and road safety.</p>
             <p className="founders-description">She is a very patient and calm instructor. She loves her job and takes pride in providing driving lessons to ensure all her students pass with the highest standards.</p>
           </div>
+        </div> */}
+      </div>
+      <div  id="location" className="text-center mt-huge">
+        <h2 className="secondary-title">Our location</h2>
+      </div>
+      <div className="location-container">
+        <div className="location-card">
+          <div className="location-icon">
+            <SlLocationPin/>
+          </div>
+          <h3 className="location-name">Stelios Stylianou Driving School</h3>
+          <p className="location-description">Located on Epidamou 2 , 3070 in Limassol Cyprus</p>
+          <div className="location-icon">
+            <BsTelephone/>
+          </div>
+          <h3 className="location-name">Stelios Stylianou</h3>
+          <a href="tel:+35797760000" className="location-description link link-primary">+357 97 760000</a>
         </div>
       </div>
+      <div className="text-center mt-huge">
+        <h2 className="secondary-title">Explore our gallery</h2>
+      </div>
+      <div className="image-gallery-container">
+        <div className="image-gallery-inner horizontal">
+          <div className="image-gallery-item">
+            <img src="assets/images/gallery/cars1.jpg" alt="" />
+          </div>
+        </div>
+        <div className="image-gallery-inner">
+          <div className="image-gallery-item">
+            <img src="assets/images/gallery/cars2.jpg" alt="" />
+          </div>
+        </div>
+        <div className="image-gallery-inner">
+          <div className="image-gallery-item">
+            <img src="assets/images/gallery/suzuki1.jpg" alt="" />
+          </div>
+        </div>
+        <div className="image-gallery-inner">
+          <div className="image-gallery-item">
+            <img src="assets/images/gallery/suzuki2.jpg" alt="" />
+          </div>
+        </div>
+        <div className="image-gallery-inner">
+          <div className="image-gallery-item">
+            <img src="assets/images/gallery/toyota1.jpg" alt="" />
+          </div>
+        </div>
+        <div className="image-gallery-inner">
+          <div className="image-gallery-item">
+            <img src="assets/images/gallery/toyota2.jpg" alt="" />
+          </div>
+        </div>
+        <div className="image-gallery-inner">
+          <div className="image-gallery-item">
+            <img src="assets/images/gallery/truck1.jpg" alt="" />
+          </div>
+        </div>
+        <div className="image-gallery-inner">
+          <div className="image-gallery-item">
+            <img src="assets/images/gallery/bike1.jpg" alt="" />
+          </div>
+        </div>
+        <div className="image-gallery-inner horizontal">
+          <div className="image-gallery-item">
+            <img src="assets/images/gallery/truck2.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <HomeFooter/>
     </div>
   );
 };

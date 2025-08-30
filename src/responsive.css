@@ -1,17 +1,24 @@
 @media screen and (max-width: 769px) {
     .home-header{
         padding-inline: 0.5rem;
+        flex-wrap: wrap;
     }
     .home-header-logo-container{
         width: 80px;
     }
     .home-header-links{
+        margin-top: 1rem;
+        flex-grow: 1;
+        order: 1;
         gap: 0.2rem;
         font-size: 0.75rem;
     }
     .home-header-buttons .button{
         font-size: 0.75rem;
         padding: 0.5em 1em;
+    }
+    .footer-nav{
+        font-size: 0.875rem;
     }
     .process-container{
         flex-wrap: wrap;

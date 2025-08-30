@@ -27,6 +27,7 @@ import MyAppointments from './pages/MyAppointments';
 import AdminLogin from './pages/AdminLogin';
 import LoginTypes from './pages/LoginTypes';
 import Home from './pages/Home';
+import About from './pages/About';
 
 function App() {
 
@@ -55,6 +56,7 @@ function App() {
       {/* Routes for logged out users only */}
       <Route path='/' element={<GuestRoute/>}>
         <Route path='/home' element={<Home/>} />
+        <Route path='/about' element={<About/>} />
         <Route path='/login-types' element={<LoginTypes/>} />
         <Route path='/admin-login' element={<AdminLogin/>} />
         <Route path='/login' element={<Login/>} />
