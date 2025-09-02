@@ -13,6 +13,7 @@
         "routes": [
             "/driving-instructor-home",
             "/all-customers",
+            "/finished-customers",
             "/add-customer",
             "/customer-details",
             "/customer-lessons",

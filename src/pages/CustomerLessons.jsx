@@ -8,7 +8,7 @@ import TimePicker from "react-time-picker";
 import DatePicker from "react-date-picker";
 import Input from "../components/form-elements/Input";
 import { useNavigate, useSearchParams } from "react-router";
-import { addCustomerLessonsAPI, getCustomerLessonsAPI, updateCustomerDetailsAPI } from "../service/api";
+import { addCustomerLessonsAPI, getCustomerLessonsAPI, updateCustomerDetailsAPI, printCustomerInvoiceAPI } from "../service/api";
 import Swal from "sweetalert2";
 import FullPageLoader from "../components/FullPageLoader";
 
@@ -30,6 +30,29 @@ const CustomerLessons = () => {
   const [tableRows, setTableRows] = useState([]);
   if(!customerId){
     navigate("/all-customers");
+  }
+  async function printInvoice(e){
+    e.preventDefault();
+    setIsLoading(true);
+    const response = await printCustomerInvoiceAPI(customerId);
+    setIsLoading(false);
+    // Extract filename from headers (if provided)
+    let filename = "Customers-need-test.pdf";
+
+    // Create a Blob from the response
+    const blob = new Blob([response], { type: "application/pdf" });
+    const url = window.URL.createObjectURL(blob);
+
+    // Create a link and trigger download
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    link.remove();
+    window.URL.revokeObjectURL(url);
   }
 
   async function getCustomerLessons(){
@@ -258,7 +281,7 @@ const CustomerLessons = () => {
         </div>
         <div className="button-group">
           <button onClick={(e) => navigate("/customer-details")} className="button button-primary-outline" >Back</button>
-          <button className="button button-primary-outline flex items-center gap-2" >
+          <button onClick={printInvoice} className="button button-primary-outline flex items-center gap-2" >
             <IoMdPrint />
             <span>Print invoice</span>
           </button>

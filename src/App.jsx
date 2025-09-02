@@ -28,6 +28,7 @@ import AdminLogin from './pages/AdminLogin';
 import LoginTypes from './pages/LoginTypes';
 import Home from './pages/Home';
 import About from './pages/About';
+import FinishedCustomers from './pages/FinishedCustomers';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
       <Route path='/' element={<LoggedRoute/>}>
         <Route path='/driving-instructor-home' element={<DrivingInstructorHome/>} />
         <Route path='/all-customers' element={<AllCustomers/>} />
+        <Route path='/finished-customers' element={<FinishedCustomers/>} />
         <Route path='/add-customer' element={<AddNewCustomer/>} />
         <Route path='/customer-details' element={<CustomerDetails/>} />
         <Route path='/customer-lessons' element={<CustomerLessons/>} />

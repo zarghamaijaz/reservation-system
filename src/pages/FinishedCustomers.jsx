@@ -3,15 +3,15 @@ import Header from '../components/Header'
 import { BiDetail } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from 'react-router';
-import { getCustomersListAPI, deleteCustomerAPI, printNeedTestAPI } from '../service/api';
+import { getFinishedCustomersListAPI, deleteCustomerAPI, printNeedTestAPI } from '../service/api';
 import { IoPersonAdd } from "react-icons/io5"
 import { IoMdPrint } from "react-icons/io";
 import FullPageLoader from '../components/FullPageLoader';
 import Pill from "../components/Pill"
 import Swal from 'sweetalert2';
-import { convertUTCToLocal, countDaysFromNow } from '../../utils/date.utils';
+import { countDaysFromNow, getLocalStringDateFromUTCString } from '../../utils/date.utils';
 
-const AllCustomers = () => {
+const FinishedCustomers = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [studentsList, setStudentsList] = useState([]);
   async function handleSubmit(e) {
@@ -19,34 +19,11 @@ const AllCustomers = () => {
     console.log('==== Implement search logic here ====')
     
   }
-  async function exportNeedTest(e){
-    e.preventDefault();
-    setIsLoading(true);
-    const response = await printNeedTestAPI();
-    setIsLoading(false);
-    // Extract filename from headers (if provided)
-    let filename = "Customers-need-test.csv";
-
-    // Create a Blob from the response
-    const blob = new Blob([response], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-
-    // Create a link and trigger download
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", filename);
-    document.body.appendChild(link);
-    link.click();
-
-    // Cleanup
-    link.remove();
-    window.URL.revokeObjectURL(url);
-  }
 
   async function getStudentsList(){
     try{
       setIsLoading(true);
-      const response = await getCustomersListAPI();
+      const response = await getFinishedCustomersListAPI();
       setIsLoading(false);
       if(response.students && response.students.length > 0){
         setStudentsList(response.students);
@@ -87,10 +64,6 @@ const AllCustomers = () => {
     )}
     <div className='flex flex-col h-screen w-screen p-4'>
       <Header backLink='/' />
-      <div className='aside-links mb-4'>
-        <Link to='/add-customer' className='button button-primary-outline button-fit flex items-center gap-2'>
-        <IoPersonAdd/> Add new customer</Link>
-      </div>
       <div className='table-container'>
         {/* <div className='table-filters'>
           <form onSubmit={handleSubmit} className='table-filter'>
@@ -109,8 +82,6 @@ const AllCustomers = () => {
               <th><div className='table-cell'>No plate</div></th>
               <th><div className='table-cell'>Need test</div></th>
               <th><div className='table-cell'>Have test</div></th>
-              <th><div className='table-cell'>Start time</div></th>
-              <th><div className='table-cell'>End time</div></th>
               <th><div className='table-cell'>Alert</div></th>
               <th className='table-action-head'><div className='table-cell'>Open</div></th>
             </tr>
@@ -125,7 +96,7 @@ const AllCustomers = () => {
                   <div className='table-cell'>{item.idDigit}-{item.idValue}</div>
                 </td>
                 <td>
-                  <div className='table-cell'>{convertUTCToLocal(item.dateOfBirth, "date")}</div>
+                  <div className='table-cell'>{getLocalStringDateFromUTCString(item.dateOfBirth)}</div>
                 </td>
                 <td>
                   <div className='table-cell'>{item.category}</div>
@@ -137,13 +108,7 @@ const AllCustomers = () => {
                   <div className='table-cell'><Pill active={item.option && item.option.includes("needtest")}/></div>
                 </td>
                 <td>
-                  <div className='table-cell'>{convertUTCToLocal(item.testDate, "date")}</div>
-                </td>
-                <td>
-                  <div className='table-cell'>{convertUTCToLocal(item.testStartTime, "time")}</div>
-                </td>
-                <td>
-                  <div className='table-cell'>{convertUTCToLocal(item.testEndTime, "time")}</div>
+                  <div className='table-cell'>{getLocalStringDateFromUTCString(item.testDate)}</div>
                 </td>
                 <td>
                   <div className='table-cell'><Pill active={countDaysFromNow(item.visaExpire) < 20}/></div>
@@ -168,14 +133,10 @@ const AllCustomers = () => {
       </div>
       <div className='button-group'>
         <Link to="/" className='button button-primary-outline'>Back</Link>
-        <button onClick={exportNeedTest} className='button button-primary flex items-center gap-2'>
-          <IoMdPrint />
-          <span>Print need test</span>
-        </button>
       </div>
     </div>
     </>
   )
 }
 
-export default AllCustomers
+export default FinishedCustomers

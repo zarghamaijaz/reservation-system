@@ -18,7 +18,7 @@ const HomeFooter = () => {
         </ul>
       </nav>
       <div className="footer-copyright">
-        <p className="footer-copyright-text">Copyright &copy; 2023</p>
+        <p className="footer-copyright-text">Copyright &copy; {new Date().getFullYear()}</p>
       </div>
     </footer>
   );

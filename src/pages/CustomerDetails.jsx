@@ -10,7 +10,7 @@ import {
 import DatePicker from "react-date-picker";
 import TimePicker from "react-time-picker";
 import Checkbox from "../components/form-elements/Checkbox";
-import { getLocalDateFromUTCString } from "../../utils/date.utils";
+import { combineDateTimeToUTC, getLocalDateFromUTCString } from "../../utils/date.utils";
 import Swal from "sweetalert2";
 
 const INTITIAL_FORMDATA = {
@@ -116,6 +116,13 @@ const CustomerDetails = () => {
           return Swal.fire("validation error", "Please specify a test end time", "error");
         }
       }
+
+      payload.testStartTime = combineDateTimeToUTC(testDate, testStartTime).toISOString();
+      payload.testEndTime = combineDateTimeToUTC(testDate, testEndTime).toISOString();
+
+      console.log(payload)
+      console.log(testStartTime)
+      console.log(testEndTime)
       setIsLoading(true);
       const response = await updateCustomerDetailsAPI(customerId, payload);
       if (response.error) {

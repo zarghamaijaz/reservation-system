@@ -15,7 +15,7 @@ const DrivingInstructorHome = () => {
             <Link to='/all-customers' className='tile'>
               <h4 className='tile-title'>All customer list</h4>
             </Link>
-            <Link to='/all-customers' className='tile'>
+            <Link to='/finished-customers' className='tile'>
               <h4 className='tile-title'>Finished Customers</h4>
             </Link>
             {/* <Link to='/booking-requests' className='tile'>
