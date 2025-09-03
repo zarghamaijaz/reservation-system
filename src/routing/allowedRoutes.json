@@ -1,7 +1,9 @@
 {
     "student":{
-        "default":"/student-home",
+        "default":"/home",
+        "dashboard": "/student-home",
         "routes": [
+            "/home",
             "/student-home",
             "/student-main",
             "/book-appointment",
@@ -9,8 +11,10 @@
         ]
     },
     "driving-instructor":{
-        "default":"/driving-instructor-home",
+        "default":"/home",
+        "dashboard": "/driving-instructor-home",
         "routes": [
+            "/home",
             "/driving-instructor-home",
             "/all-customers",
             "/finished-customers",

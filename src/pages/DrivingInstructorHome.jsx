@@ -5,7 +5,7 @@ import Header from '../components/Header';
 const DrivingInstructorHome = () => {
   return (
     <div className='flex flex-col h-screen w-screen p-4'>
-      <Header />
+      <Header backLink="/" />
       <div className='small-container'>
         <div className='row'>
           <div className='col-50'>

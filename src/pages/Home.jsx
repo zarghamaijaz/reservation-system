@@ -6,6 +6,8 @@ import { PiGraduationCapLight } from "react-icons/pi";
 import HomeFooter from "../components/HomeFooter";
 import { SlLocationPin } from "react-icons/sl";
 import { Link } from "react-router";
+import { FaViber, FaWhatsapp } from "react-icons/fa";
+import ImageGallery from "../components/ImageGallery";
 
 const Home = () => {
   return (
@@ -76,8 +78,8 @@ const Home = () => {
             <h3 className="content-title">Excellent</h3>
             <p className="content-description">You are one step closer to a safe and enjoyable driving experience. Click the button below to get started.</p>
             <div className="cta-buttons">
-              <a href="#" className="cta-button">Book a lesson</a>
-              <a href="#" className="cta-button outlined">Already booked</a>
+              <Link to="/login" className="cta-button">Book a lesson</Link>
+              {/* <a href="#" className="cta-button outlined">Already booked</a> */}
             </div>
           </div>
         </div>
@@ -118,68 +120,37 @@ const Home = () => {
       </div>
       <div className="location-container">
         <div className="location-card">
-          <div className="location-icon">
-            <SlLocationPin/>
+          <div className="location-icons">
+            <div className="location-icon">
+              <SlLocationPin/>
+            </div>
           </div>
           <h3 className="location-name">Stelios Stylianou Driving School</h3>
           <p className="location-description">Located on Epidamou 2 , 3070 in Limassol Cyprus</p>
-          <div className="location-icon">
-            <BsTelephone/>
+          <div className="location-icons">
+            <a href="https://wa.me/35797760000" className="location-icon whatsapp">
+              <FaWhatsapp/>
+            </a>
+            <a href="https://msng.link/o?35797760000=vi" className="location-icon viber">
+              <FaViber/>
+            </a>
           </div>
-          <h3 className="location-name">Stelios Stylianou</h3>
-          <a href="tel:+35797760000" className="location-description link link-primary">+357 97 760000</a>
+          <a href="tel:97760000" className="location-description link link-primary">📞 97760000</a>
+          <div className="location-icons">
+            <a href="https://wa.me/35796131370" className="location-icon whatsapp">
+              <FaWhatsapp/>
+            </a>
+            <a href="https://msng.link/o?35796131370=vi" className="location-icon viber">
+              <FaViber/>
+            </a>
+          </div>
+          <a href="tel:96131370" className="location-description link link-primary">📞 96131370</a>
         </div>
       </div>
       <div className="text-center mt-huge">
         <h2 className="secondary-title">Explore our gallery</h2>
       </div>
-      <div className="image-gallery-container">
-        <div className="image-gallery-inner horizontal">
-          <div className="image-gallery-item">
-            <img src="assets/images/gallery/cars1.jpg" alt="" />
-          </div>
-        </div>
-        <div className="image-gallery-inner">
-          <div className="image-gallery-item">
-            <img src="assets/images/gallery/cars2.jpg" alt="" />
-          </div>
-        </div>
-        <div className="image-gallery-inner">
-          <div className="image-gallery-item">
-            <img src="assets/images/gallery/suzuki1.jpg" alt="" />
-          </div>
-        </div>
-        <div className="image-gallery-inner">
-          <div className="image-gallery-item">
-            <img src="assets/images/gallery/suzuki2.jpg" alt="" />
-          </div>
-        </div>
-        <div className="image-gallery-inner">
-          <div className="image-gallery-item">
-            <img src="assets/images/gallery/toyota1.jpg" alt="" />
-          </div>
-        </div>
-        <div className="image-gallery-inner">
-          <div className="image-gallery-item">
-            <img src="assets/images/gallery/toyota2.jpg" alt="" />
-          </div>
-        </div>
-        <div className="image-gallery-inner">
-          <div className="image-gallery-item">
-            <img src="assets/images/gallery/truck1.jpg" alt="" />
-          </div>
-        </div>
-        <div className="image-gallery-inner">
-          <div className="image-gallery-item">
-            <img src="assets/images/gallery/bike1.jpg" alt="" />
-          </div>
-        </div>
-        <div className="image-gallery-inner horizontal">
-          <div className="image-gallery-item">
-            <img src="assets/images/gallery/truck2.jpg" alt="" />
-          </div>
-        </div>
-      </div>
+      <ImageGallery/>
       <HomeFooter/>
     </div>
   );

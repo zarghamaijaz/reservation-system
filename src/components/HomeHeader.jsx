@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router";
+import { getJwtData } from "../../utils/jwtData.utils";
+import allowedRoutes from "../routing/allowedRoutes.json";
 
 const HomeHeader = () => {
+  const jwtData = getJwtData();
   function scrollToById(id) {
     return function(e){
       e.preventDefault();
@@ -20,8 +23,8 @@ const HomeHeader = () => {
         <Link className="link" onClick={scrollToById("location")}>Contact & location</Link>
       </div>
       <div className="home-header-buttons">
-        <Link to="/login-types" className="button button-primary">
-          Login
+        <Link to={jwtData ? allowedRoutes[jwtData.role].dashboard : "/login"} className="button button-primary">
+          {jwtData ? "Dashboard" : "Login"}
         </Link>
         <a href="assets/guides/road-signs.pdf" target="_blank"  className="button button-primary-outline">
           Download road signs

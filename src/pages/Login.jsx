@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router';
 import { getJwtData } from '../../utils/jwtData.utils';
 import Swal from 'sweetalert2';
-import { loginAPI } from '../service/api'
+import { genericLoginAPI } from '../service/api'
 import Input from '../components/form-elements/Input';
 import FullPageLoader from '../components/FullPageLoader';
 
@@ -21,7 +21,7 @@ const Login = () => {
     try{
       console.log("sending request")
       setIsLoading(true);
-      const response = await loginAPI(formData);
+      const response = await genericLoginAPI(formData);
       setIsLoading(false);
       console.log("Login response => ", response);
       if(response.token){

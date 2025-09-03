@@ -52,6 +52,56 @@ export function loginAPI(data) {
     }, 1000);
   });
 }
+export function genericLoginAPI(data) {
+  const { username, password } = data;
+
+  // Actual API
+  return request({
+      url: `${API_URL}/generic-auth/login`,
+      method: "POST",
+      data
+  })
+
+  // Mock API
+  const studentData = {
+    username: "john",
+    role: "student",
+  };
+  const signInstructorData = {
+    username: "lisa",
+    role: "sign-instructor",
+  };
+  const drivingInstructorData = {
+    username: "dave",
+    role: "driving-instructor",
+  };
+  const responseData = {
+    success: true,
+    data: null,
+  };
+  if (username === "john") {
+    responseData.data = JSON.stringify(studentData);
+  } else if (username === "lisa") {
+    responseData.data = JSON.stringify(signInstructorData);
+  } else if (username === "dave") {
+    responseData.data = JSON.stringify(drivingInstructorData);
+  } else {
+    responseData.success = false;
+  }
+
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res(responseData);
+    }, 1000);
+  });
+}
+
+export function getMyInformationAPI(){
+  return request({
+    url: `${API_URL}/auth/me`,
+    method: "GET",
+  })
+}
 
 // Customers
 export function addNewCustomerAPI(data) {

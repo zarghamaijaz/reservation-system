@@ -57,13 +57,13 @@ function App() {
       
       {/* Routes for logged out users only */}
       <Route path='/' element={<GuestRoute/>}>
-        <Route path='/home' element={<Home/>} />
-        <Route path='/about' element={<About/>} />
-        <Route path='/login-types' element={<LoginTypes/>} />
-        <Route path='/admin-login' element={<AdminLogin/>} />
+        {/* <Route path='/login-types' element={<LoginTypes/>} /> */}
+        {/* <Route path='/admin-login' element={<AdminLogin/>} /> */}
         <Route path='/login' element={<Login/>} />
       </Route>
 
+      <Route path='/home' element={<Home/>} />
+      <Route path='/about' element={<About/>} />
       <Route path='/logout' element={<Logout/>} />
       <Route path='/not-allowed' element={<NotAllowed/>} />
       <Route path='*' element={<NotFound/>} />

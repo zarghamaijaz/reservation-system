@@ -18,8 +18,9 @@ const BookAppointment = () => {
     try {
       setIsLoading(true);
       const payload = {
-        date: selectedDate.toISOString().split("T")[0],
+        date: selectedDate.toLocaleDateString("en-CA"),
       };
+      console.log(payload)
       const response = await getBookingListByDateAPI(payload);
       setIsLoading(false);
       if (response.time_slots) {

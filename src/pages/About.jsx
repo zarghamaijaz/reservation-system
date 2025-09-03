@@ -21,7 +21,7 @@ const About = () => {
                 Many new drivers do not feel confident which can affect their
                 ability to drive safely. Stelios felt that by using his previous
                 experience and becoming a qualified driving instructor he could
-                make a positive change towards improving road safety in Limassol.
+                make a positive change towards improving road safety.
               </p>
               <p className="description">
                 Stelios is a very patient and calm instructor. He loves his job
