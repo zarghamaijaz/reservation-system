@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import { Link } from "react-router";
+import { useSearchParams } from "react-router";
 import Header from "../components/Header";
 import { MdCancel } from "react-icons/md";
 import { cancelBookingAPI, getMyBookingsAPI } from "../service/api";
@@ -7,6 +7,8 @@ import FullPageLoader from "../components/FullPageLoader";
 import Swal from "sweetalert2";
 
 const MyAppointments = () => {
+    const [searchParams] = useSearchParams();
+    const customerId = searchParams.get("customer_id");
     const [isLoading, setIsLoading] = useState(false);
     const [bookings, setBookings] = useState([]);
     async function getMyBookings(){
@@ -62,7 +64,7 @@ const MyAppointments = () => {
     <>
     {isLoading && <FullPageLoader />}
     <div className="flex flex-col h-screen w-screen p-4">
-      <Header backLink="/student-main" />
+      <Header backLink={`/student-main?customer_id=${customerId}`} />
       <div className="small-container">
         <div className="card">
             <div className="table-container">
@@ -78,8 +80,8 @@ const MyAppointments = () => {
                             <th>
                                 <div className="table-cell">End time</div>
                             </th>
-                            <th>
-                                <div className="table-action-head">Action</div>
+                            <th className="table-action-head">
+                                <div>Action</div>
                             </th>
                         </tr>
                     </thead>
@@ -87,7 +89,7 @@ const MyAppointments = () => {
                         {bookings.map(item => (
                             <tr key={item.lesson_id}>
                                 <td>
-                                    <div className="table-cell">{item.date}</div>
+                                    <div style={{whiteSpace: "nowrap"}} className="table-cell">{item.date}</div>
                                 </td>
                                 <td>
                                     <div className="table-cell">{item.start_time}</div>

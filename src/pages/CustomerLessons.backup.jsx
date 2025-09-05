@@ -57,7 +57,7 @@ const CustomerLessons = () => {
               />
               <div className="input-container">
                 <label className="label">Date of birth</label>
-                <DatePicker onChange={setStartDate} value={startDate} />
+                <DatePicker format="dd/MM/yyyy" onChange={setStartDate} value={startDate} />
               </div>
               <div className="input-container custom-time-picker">
                 <label className="label">Start time</label>

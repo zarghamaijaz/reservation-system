@@ -63,7 +63,7 @@ const FinishedCustomers = () => {
       <FullPageLoader />
     )}
     <div className='flex flex-col h-screen w-screen p-4'>
-      <Header backLink='/' />
+      <Header backLink='/driving-instructor-home' />
       <div className='table-container'>
         {/* <div className='table-filters'>
           <form onSubmit={handleSubmit} className='table-filter'>
@@ -132,7 +132,7 @@ const FinishedCustomers = () => {
         </table>
       </div>
       <div className='button-group'>
-        <Link to="/" className='button button-primary-outline'>Back</Link>
+        <Link to="/driving-instructor-home" className='button button-primary-outline'>Back</Link>
       </div>
     </div>
     </>

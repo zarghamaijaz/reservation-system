@@ -54,12 +54,6 @@
 .mt-huge{
     margin-top: 100px;
 }
-@media screen and (max-width: 769px) {
-    .mt-huge{
-        margin-top: 50px;
-    }
-    
-}
 .mb-medium{
     margin-bottom: 33px;
 }
@@ -142,4 +136,21 @@
 .col-100{
     padding: 0.5rem;
     width: 100%;
+}
+
+
+@media screen and (max-width: 769px) {
+    .mt-huge{
+        margin-top: 50px;
+    }
+    .mobile-col-100{
+        width: 100%;
+    }
+    .mobile-col-60{
+        width: 60%;
+    }
+    .mobile-col-40{
+        width: 40%;
+    }
+    
 }

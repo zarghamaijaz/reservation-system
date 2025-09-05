@@ -90,4 +90,54 @@
     .founders-description{
         font-size: 0.875rem;
     }
+    .tile{
+        padding: 10px;
+    }
+    .tile-title{
+        font-size: 0.875rem;
+    }
+    .header-links{
+        font-size: 0.875rem;
+        flex-wrap: wrap;
+    }
+    .header-username{
+        margin-top: 1rem;
+        order: 1;
+        flex-grow: 1;
+        width: 100%;
+    }
+    .card{
+        padding: 10px;
+    }
+    .card-title{
+        font-size: 1.2rem;
+    }
+    .table-container{
+        overflow-x: auto;
+    }
+    .table{
+        min-width: 100px;
+        table-layout: auto;
+        font-size: 0.875rem;
+    }
+    .table-action-head{
+        position: sticky;
+        right: 0px;
+        background-color: white;
+    }
+    .table tr td:last-child{
+        position: sticky;
+        right: 0px;
+        background-color: white;
+    }
+    .section-title{
+        font-size: 1.5rem;
+    }
+    .button{
+        padding: 0.5em 1em;
+        font-size: 0.75rem;
+    }
+    .table-action{
+        font-size: 0.875rem;
+    }
 }

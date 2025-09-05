@@ -216,6 +216,7 @@ const Expenses = () => {
                       Date
                     </label>
                     <DatePicker
+                      format="dd/MM/yyyy"
                       value={addNewDailyExpense.date}
                       onChange={(value) =>
                         setAddNewDailyExpense((prev) => ({
@@ -288,25 +289,25 @@ const Expenses = () => {
         </div>
       )}
       <div className="flex flex-col h-screen w-screen p-4">
-        <Header backLink="/" />
+        <Header backLink="/driving-instructor-home" />
         {option === "all" ? (
           <>
-          <div className="table-container">
-            <div className="row">
-              <div className="col-50">
-                <div className="input-container">
-                    <label className="label">From</label>
-                    <DatePicker onChange={setStartDate} value={startDate} />
-                </div>
-                </div>
-              <div className="col-50">
-                <div className="input-container">
-                    <label className="label">Till</label>
-                    <DatePicker onChange={setEndDate} value={endDate} />
-                </div>
+          <div className="row">
+            <div className="col-50">
+              <div className="input-container">
+                  <label className="label">From</label>
+                  <DatePicker format="dd/MM/yyyy" onChange={setStartDate} value={startDate} />
+              </div>
+              </div>
+            <div className="col-50">
+              <div className="input-container">
+                  <label className="label">Till</label>
+                  <DatePicker format="dd/MM/yyyy" onChange={setEndDate} value={endDate} />
               </div>
             </div>
-            <h2 className="section-title">Daily expenses</h2>
+          </div>
+          <h2 className="section-title">Daily expenses</h2>
+          <div className="table-container">
             <table className="table bordered">
               <thead>
                 <tr>
@@ -362,7 +363,9 @@ const Expenses = () => {
                 )})}
               </tbody>
             </table>
-            <h2 className="section-title">Monthly expenses</h2>
+          </div>
+          <h2 className="section-title">Monthly expenses</h2>
+          <div className="table-container">
             <table className="table bordered">
               <thead>
                 <tr>
@@ -446,20 +449,20 @@ const Expenses = () => {
                   </tr>
                 )})}
             </table>
-            <div className="button-group">
-              <button
-                onClick={() => setOption("")}
-                className="button button-primary-outline"
-              >
-                Back
-              </button>
-              <button
-                onClick={getExpense}
-                className="button button-primary"
-              >
-                Find
-              </button>
-            </div>
+          </div>
+          <div className="button-group">
+            <button
+              onClick={() => setOption("")}
+              className="button button-primary-outline"
+            >
+              Back
+            </button>
+            <button
+              onClick={getExpense}
+              className="button button-primary"
+            >
+              Find
+            </button>
           </div>
           </>
         ) : option === "standart" ? (
@@ -468,6 +471,7 @@ const Expenses = () => {
               <div className="row">
                 <div className="col-100">
                   <DatePicker
+                    format="dd/MM/yyyy"
                     onChange={(date) =>
                       setFormData((prev) => ({ ...prev, date: date }))
                     }

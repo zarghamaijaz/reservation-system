@@ -167,7 +167,7 @@ const CustomerLessons = () => {
                     </td>
                     <td>
                       <div className="table-cell">
-                          <DatePicker onChange={value => {
+                          <DatePicker format="dd/MM/yyyy" onChange={value => {
                               const newData = tableRows.map((row, i)=>{
                                   if(i === index){
                                       return {...row, date: value?.toISOString().split("T")[0]}

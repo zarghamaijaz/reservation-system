@@ -207,6 +207,7 @@ const CustomerDetails = () => {
                     <div className="input-container">
                       <label className="label">Date of birth</label>
                       <DatePicker
+                        format="dd/MM/yyyy"
                         onChange={setDateOfBirth}
                         value={dateOfBirth}
                       />
@@ -215,13 +216,14 @@ const CustomerDetails = () => {
                   <div className="col-100">
                     <div className="input-container">
                       <label className="label">Visa expire</label>
-                      <DatePicker onChange={setVisaExpire} value={visaExpire} />
+                      <DatePicker format="dd/MM/yyyy" onChange={setVisaExpire} value={visaExpire} />
                     </div>
                   </div>
                   <div className="col-100">
                     <div className="input-container">
                       <label className="label">Learning expire</label>
                       <DatePicker
+                        format="dd/MM/yyyy"
                         onChange={setLearningExpire}
                         value={learningExpire}
                       />
@@ -263,6 +265,7 @@ const CustomerDetails = () => {
                     <div className="input-container">
                       <label className="label">Test date</label>
                       <DatePicker
+                        format="dd/MM/yyyy"
                         onChange={setTestDate}
                         value={testDate}
                       />

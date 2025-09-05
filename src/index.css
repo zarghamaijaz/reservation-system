@@ -67,6 +67,7 @@ img{
 }
 
 .modal-container{
+  padding: 1rem;
   position: fixed;
   z-index: 2;
   inset: 0;
@@ -327,6 +328,7 @@ img{
   display: flex;
   justify-content: space-between;
 }
+.header-username{text-align: center;}
 
 /* .table-container{
   margin-top: 2rem;
@@ -367,6 +369,7 @@ img{
 
 .table th {
   text-align: start;
+  white-space: nowrap;
 }
 .table-action-head {
   width: 100px;

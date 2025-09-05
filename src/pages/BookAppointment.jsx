@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router";
+import { useSearchParams } from "react-router";
 import Header from "../components/Header";
 import Calendar from "react-calendar";
 import { getBookingListByDateAPI, bookSlotAPI } from "../service/api";
@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import FullPageLoader from "../components/FullPageLoader";
 
 const BookAppointment = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const customerId = searchParams.get("customer_id");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [timeSlots, setTimeSlots] = useState([]);
@@ -77,9 +79,9 @@ const BookAppointment = () => {
     <>
       {isLoading && <FullPageLoader />}
       <div className="flex flex-col h-screen w-screen p-4">
-        <Header backLink="/student-main" />
+        <Header backLink={`/student-main?customer_id=${customerId}`} />
         <div className="row">
-          <div className="col-33">
+          <div className="col-33 mobile-col-100">
             <Calendar
               onChange={setSelectedDate}
               value={selectedDate}
@@ -87,7 +89,7 @@ const BookAppointment = () => {
               maxDate={twoWeeksLater}
             />
           </div>
-          <div className="col-66">
+          <div className="col-66 mobile-col-100">
             {selectedDate && (
               <div className="booking-list-container">
                 <div className="booking-header">

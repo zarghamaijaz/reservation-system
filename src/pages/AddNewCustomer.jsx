@@ -72,7 +72,7 @@ const AddNewCustomer = () => {
     <>
       {isLoading && <FullPageLoader />}
       <div className="flex flex-col h-screen w-screen p-4">
-        <Header backLink="/" />
+        <Header backLink="/driving-instructor-home" />
         <div className="small-container">
           <div className="card">
             <h2 className="card-title">Add customer</h2>
@@ -112,19 +112,20 @@ const AddNewCustomer = () => {
                 <div className="col-100">
                   <div className="input-container">
                     <label className="label">Date of birth</label>
-                    <DatePicker onChange={setDateOfBirth} value={dateOfBirth} />
+                    <DatePicker onChange={setDateOfBirth} value={dateOfBirth} format="dd/MM/yyyy" />
                   </div>
                 </div>
                 <div className="col-100">
                   <div className="input-container">
                     <label className="label">Visa expire</label>
-                    <DatePicker onChange={setVisaExpire} value={visaExpire} />
+                    <DatePicker onChange={setVisaExpire} value={visaExpire} format="dd/MM/yyyy" />
                   </div>
                 </div>
                 <div className="col-100">
                   <div className="input-container">
                     <label className="label">Learning expire</label>
                     <DatePicker
+                      format="dd/MM/yyyy"
                       onChange={setLearningExpire}
                       value={learningExpire}
                     />

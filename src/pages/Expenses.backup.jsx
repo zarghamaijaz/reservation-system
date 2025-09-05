@@ -117,6 +117,7 @@ const Expenses = () => {
                     <td>
                       <div className="table-cell">
                         <DatePicker
+                          format="dd/MM/yyyy"
                           onChange={(value) => {
                             const newData = tableRows.map((row, i) => {
                               if (i === index) {
@@ -264,6 +265,7 @@ const Expenses = () => {
               <div className="row">
                 <div className="col-100">
                   <DatePicker
+                    format="dd/MM/yyyy"
                     onChange={(date) =>
                       setFormData((prev) => ({ ...prev, date: date }))
                     }

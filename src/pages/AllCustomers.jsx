@@ -86,7 +86,7 @@ const AllCustomers = () => {
       <FullPageLoader />
     )}
     <div className='flex flex-col h-screen w-screen p-4'>
-      <Header backLink='/' />
+      <Header backLink='/driving-instructor-home' />
       <div className='aside-links mb-4'>
         <Link to='/add-customer' className='button button-primary-outline button-fit flex items-center gap-2'>
         <IoPersonAdd/> Add new customer</Link>
@@ -167,7 +167,7 @@ const AllCustomers = () => {
         </table>
       </div>
       <div className='button-group'>
-        <Link to="/" className='button button-primary-outline'>Back</Link>
+        <Link to="/driving-instructor-home" className='button button-primary-outline'>Back</Link>
         <button onClick={exportNeedTest} className='button button-primary flex items-center gap-2'>
           <IoMdPrint />
           <span>Print need test</span>

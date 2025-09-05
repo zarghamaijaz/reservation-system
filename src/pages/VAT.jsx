@@ -32,7 +32,7 @@ const VAT = () => {
       <FullPageLoader />
     )}
     <div className="flex flex-col h-screen w-screen p-4">
-        <Header backLink="/" />
+        <Header backLink="/driving-instructor-home" />
         {data ? (
             <>
             <div className="table-container">
@@ -136,18 +136,18 @@ const VAT = () => {
                 <div className="col-50">
                 <div className="input-container">
                     <label className="label">From</label>
-                    <DatePicker onChange={setStartDate} value={startDate} />
+                    <DatePicker format="dd/MM/yyyy" onChange={setStartDate} value={startDate} />
                 </div>
                 </div>
                 <div className="col-50">
                 <div className="input-container">
                     <label className="label">Till</label>
-                    <DatePicker onChange={setEndDate} value={endDate} />
+                    <DatePicker format="dd/MM/yyyy" onChange={setEndDate} value={endDate} />
                 </div>
                 </div>
                 <div className="col-100">
                     <div className="button-group">
-                        <button onClick={()=>navigate("/")} className="button button-primary-outline">Cancel</button>
+                        <button onClick={()=>navigate("/driving-instructor-home")} className="button button-primary-outline">Cancel</button>
                         <button onClick={handleSubmit} className="button button-primary">Find</button>
                     </div>
                 </div>

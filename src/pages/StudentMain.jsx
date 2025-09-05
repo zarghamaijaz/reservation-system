@@ -31,13 +31,13 @@ const StudentMain = () => {
     <>
     {isLoading && <FullPageLoader />}
     <div className="flex flex-col h-screen w-screen p-4">
-      <Header backLink="/student-home" />
+      <Header backLink={`/student-home?customer_id=${customerId}`} />
       <div className="small-container">
         <div className="card">
           <div className="card-title mb-8">Hi</div>
           <div className="button-group">
-            <Link to="/book-appointment" className="button button-primary">Choose appointment</Link>
-            <Link to="/my-appointments" className="button button-primary-outline">Cancel appointment</Link>
+            <Link to={`/book-appointment?customer_id=${customerId}`} className="button button-primary">Choose appointment</Link>
+            <Link to={`/my-appointments?customer_id=${customerId}`} className="button button-primary-outline">Cancel appointment</Link>
           </div>
           <div className="text-center">
             <span className="font-bold">Unpaid amount:</span> {myPaymentInfo.unpaid_amount}
