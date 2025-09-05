@@ -5,6 +5,7 @@ import Calendar from "react-calendar";
 import { getBookingListByDateAPI, bookSlotAPI } from "../service/api";
 import Swal from "sweetalert2";
 import FullPageLoader from "../components/FullPageLoader";
+import { format } from 'date-fns';
 
 const BookAppointment = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -20,7 +21,7 @@ const BookAppointment = () => {
     try {
       setIsLoading(true);
       const payload = {
-        date: selectedDate.toLocaleDateString("en-CA"),
+        date: format(selectedDate, "yyyy-MM-dd"),
       };
       console.log(payload)
       const response = await getBookingListByDateAPI(payload);
@@ -49,12 +50,13 @@ const BookAppointment = () => {
         }).then(async (result) => {
         if (result.isConfirmed) {
             try{
-                const payload = {
-                    date: selectedDate.toISOString().split("T")[0],
-                    description: "Booked by customer.",
-                    notes: "Add notes here",
-                    time_slot: data.slot,
-                }
+              const payload = {
+                date: format(selectedDate, "yyyy-MM-dd"),
+                description: "Booked by customer.",
+                notes: "Add notes here",
+                time_slot: data.slot,
+              }
+              console.log(payload)
                 setIsLoading(true);
                 const response = await bookSlotAPI(payload);
                 getBookingsByDate();
