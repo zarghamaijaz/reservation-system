@@ -57,10 +57,10 @@ const BookAppointment = () => {
                 time_slot: data.slot,
               }
               console.log(payload)
-                // setIsLoading(true);
-                // const response = await bookSlotAPI(payload);
-                // getBookingsByDate();
-                // setIsLoading(false);
+                setIsLoading(true);
+                const response = await bookSlotAPI(payload);
+                getBookingsByDate();
+                setIsLoading(false);
     
             }catch (err) {
             setIsLoading(false);
