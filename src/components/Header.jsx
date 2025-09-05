@@ -12,7 +12,7 @@ const Header = ({ backLink }) => {
           <Link className="link link-primary" to={backLink}>
             Go back
           </Link>
-          <div className="header-username">Logged in as {`${name ? name : username} (${role})`}</div>
+          <div className="header-username">Logged in as {`${name ? name : username ? username : ""} (${role})`}</div>
           <Link to="/logout" className="link link-danger">
             Logout
           </Link>
