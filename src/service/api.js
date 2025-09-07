@@ -162,6 +162,12 @@ export function getCustomersListAPI() {
     }, 1000);
   });
 }
+export function getInvoicesListAPI(data) {
+  return request({
+    url: `${API_URL}/invoices/list/date-range?start_date=${data.start_date}&end_date=${data.end_date}`,
+    method: "GET",
+  });
+}
 export function getFinishedCustomersListAPI() {
   return request({
     url: `${API_URL}/students/finished`,
@@ -265,14 +271,19 @@ export function updateCustomerDetailsAPI(customerId, data) {
     url: `${API_URL}/students/${customerId}`,
     data,
   });
-  const response = {
-    success: true,
-    message: "Customer updated successfully",
-  };
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      res(response);
-    }, 1000);
+}
+export function markCustomerAsFinishedAPI(customerId) {
+  return request({
+    method: "PUT",
+    url: `${API_URL}/students/${customerId}`,
+    data:{option: "finished"},
+  });
+}
+export function markCustomerAsActiveAPI(customerId) {
+  return request({
+    method: "PUT",
+    url: `${API_URL}/students/${customerId}`,
+    data:{option: ""},
   });
 }
 export function printNeedTestAPI() {
@@ -289,6 +300,29 @@ export function printCustomerInvoiceAPI(studentId) {
     method: "GET",
     responseType: "blob",
     withCredentials: true,
+  });
+}
+export function printInvoiceAPI(invoicenumber) {
+  return request({
+    url: `${API_URL}/invoices/download-pdf/${invoicenumber}`,
+    method: "GET",
+    responseType: "blob",
+    withCredentials: true,
+  });
+}
+export function printInvoiceByRangeAPI(data) {
+  return request({
+    url: `${API_URL}/invoices/export/excel?start_date=${data.start_date}&end_date=${data.end_date}`,
+    method: "GET",
+    responseType: "blob",
+    withCredentials: true,
+  });
+}
+export function createCustomerInvoiceAPI(data) {
+  return request({
+    url: `${API_URL}/invoices/generate`,
+    method: "POST",
+    data
   });
 }
 
@@ -402,6 +436,12 @@ export function getBookingListByDateAPI(data) {
     method: "POST",
     url: `${API_URL}/bookings/availability`,
     data,
+  })
+}
+export function getAdminBookingListByDateAPI(bookingDate) {
+  return request({
+    method: "GET",
+    url: `${API_URL}/bookings/admin/bookings/${bookingDate}`,
   })
 }
 export function getMyBookingsAPI(data) {

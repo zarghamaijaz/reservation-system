@@ -29,6 +29,9 @@ import LoginTypes from './pages/LoginTypes';
 import Home from './pages/Home';
 import About from './pages/About';
 import FinishedCustomers from './pages/FinishedCustomers';
+import CreateInvoice from './pages/CreateInvoice';
+import AllInvoices from './pages/AllInvoices';
+import ViewAppointments from './pages/ViewAppointments';
 
 function App() {
 
@@ -45,6 +48,9 @@ function App() {
         <Route path='/expenses' element={<Expenses/>} />
         <Route path='/profit-loss' element={<ProfitLoss/>} />
         <Route path='/vat' element={<VAT/>} />
+        <Route path='/create-invoice' element={<CreateInvoice/>} />
+        <Route path='/all-invoices' element={<AllInvoices/>} />
+        <Route path='/all-appointments' element={<ViewAppointments/>} />
 
         {/* Student routes */}
         <Route path='/student-home' element={<StudentHome/>} />

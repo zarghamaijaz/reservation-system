@@ -6,8 +6,9 @@ import { PiGraduationCapLight } from "react-icons/pi";
 import HomeFooter from "../components/HomeFooter";
 import { SlLocationPin } from "react-icons/sl";
 import { Link } from "react-router";
-import { FaViber, FaWhatsapp } from "react-icons/fa";
+import { FaFacebookSquare, FaInstagramSquare, FaViber, FaWhatsapp } from "react-icons/fa";
 import ImageGallery from "../components/ImageGallery";
+import { AiFillTikTok } from "react-icons/ai";
 
 const Home = () => {
   return (
@@ -116,7 +117,7 @@ const Home = () => {
         </div> */}
       </div>
       <div  id="location" className="text-center mt-huge">
-        <h2 className="secondary-title">Our location</h2>
+        <h2 className="secondary-title">Our location & contact</h2>
       </div>
       <div className="location-container">
         <div className="location-card">
@@ -127,6 +128,7 @@ const Home = () => {
           </div>
           <h3 className="location-name">Stelios Stylianou Driving School</h3>
           <p className="location-description">Located on Epidamou 2 , 3070 in Limassol Cyprus</p>
+          <a href="https://maps.app.goo.gl/ox8i8gFfsKtS4Z5Z8" target="_blank" className="link link-primary mb-8">View on map</a>
           <div className="location-icons">
             <a href="https://wa.me/35797760000" className="location-icon whatsapp">
               <FaWhatsapp/>
@@ -145,6 +147,17 @@ const Home = () => {
             </a>
           </div>
           <a href="tel:96131370" className="location-description link link-primary">📞 96131370</a>
+          <div className="location-icons">
+            <a href="https://www.facebook.com/share/177u4eVgWP/" className="location-icon facebook">
+              <FaFacebookSquare/>
+            </a>
+            <a href="https://www.instagram.com/steliosdrivigschool?igsh=MWQ2cDMyeGE5ZW9pMw==" className="location-icon instagram">
+              <FaInstagramSquare/>
+            </a>
+            <a href="https://www.tiktok.com/@stelios.driving.s?_t=ZN-8zN0Iah4EgY&_r=1" className="location-icon tiktok">
+              <AiFillTikTok/>
+            </a>
+          </div>
         </div>
       </div>
       <div className="text-center mt-huge">

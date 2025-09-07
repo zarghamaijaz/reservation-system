@@ -3,13 +3,14 @@ import Header from '../components/Header'
 import { BiDetail } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from 'react-router';
-import { getFinishedCustomersListAPI, deleteCustomerAPI, printNeedTestAPI } from '../service/api';
+import { getFinishedCustomersListAPI, deleteCustomerAPI, markCustomerAsActiveAPI } from '../service/api';
 import { IoPersonAdd } from "react-icons/io5"
 import { IoMdPrint } from "react-icons/io";
 import FullPageLoader from '../components/FullPageLoader';
 import Pill from "../components/Pill"
 import Swal from 'sweetalert2';
 import { countDaysFromNow, getLocalStringDateFromUTCString } from '../../utils/date.utils';
+import { AiOutlineRollback } from 'react-icons/ai';
 
 const FinishedCustomers = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,9 +29,13 @@ const FinishedCustomers = () => {
       if(response.students && response.students.length > 0){
         setStudentsList(response.students);
       }
-      else return Swal.fire("No customers found", "Unable to find any customer in the database", "error");
+      else {
+        setStudentsList([]);
+        return Swal.fire("No customers found", "Unable to find any customer in the database", "error");
+      }
     }catch(err){
       console.error(err);
+      setStudentsList([]);
       setIsLoading(false);
     }
   }
@@ -49,6 +54,23 @@ const FinishedCustomers = () => {
         if (result.isConfirmed) {
           Swal.fire("Saved!", "", "success");
           const response = await deleteCustomerAPI(customerId);
+          getStudentsList();
+        }
+      });
+    }
+  }
+  function handleBackToCustomer(customerId) {
+    return function(e){
+      e.preventDefault();
+      Swal.fire({
+        title: "Move customer back to active?",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        denyButtonText: `Cancel`
+      }).then(async (result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          const response = await markCustomerAsActiveAPI(customerId);
           getStudentsList();
         }
       });
@@ -116,9 +138,9 @@ const FinishedCustomers = () => {
                 <td>
                   <div className='table-cell'>
                     <div className='table-actions'>
-                      <Link to={`/customer-details?customer-id=${item.id}`} className='table-action action-primary'>
-                        <BiDetail />
-                      </Link>
+                      <button onClick={handleBackToCustomer(item.id)} className='table-action action-primary'>
+                        <AiOutlineRollback/>
+                      </button>
                       <button onClick={handleDelete(item.id)} className='table-action action-danger'>
                         <RiDeleteBin6Line />
                       </button>

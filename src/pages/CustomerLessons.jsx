@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
-import Checkbox from "../components/form-elements/Checkbox"
+import Checkbox from "../components/form-elements/Checkbox";
 import { IoMdPrint } from "react-icons/io";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { PiStudentFill } from "react-icons/pi";
@@ -8,19 +8,26 @@ import TimePicker from "react-time-picker";
 import DatePicker from "react-date-picker";
 import Input from "../components/form-elements/Input";
 import { useNavigate, useSearchParams } from "react-router";
-import { addCustomerLessonsAPI, getCustomerLessonsAPI, updateCustomerDetailsAPI, printCustomerInvoiceAPI } from "../service/api";
+import {
+  addCustomerLessonsAPI,
+  getCustomerLessonsAPI,
+  markCustomerAsFinishedAPI,
+  printCustomerInvoiceAPI,
+} from "../service/api";
 import Swal from "sweetalert2";
 import FullPageLoader from "../components/FullPageLoader";
+import { format } from "date-fns";
 
 const INITIAL_LESSON_ROW_DATA = {
-  description:"",
+  description: "",
   date: "",
   from: "",
   to: "",
   notes: "",
-  amount:"",
+  amount: "",
+  type: "lesson",
   paidStatus: false,
-}
+};
 
 const CustomerLessons = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,16 +35,16 @@ const CustomerLessons = () => {
   const customerId = searchParams.get("customer-id");
   const navigate = useNavigate();
   const [tableRows, setTableRows] = useState([]);
-  if(!customerId){
+  if (!customerId) {
     navigate("/all-customers");
   }
-  async function printInvoice(e){
+  async function printInvoice(e) {
     e.preventDefault();
     setIsLoading(true);
     const response = await printCustomerInvoiceAPI(customerId);
     setIsLoading(false);
     // Extract filename from headers (if provided)
-    let filename = "Customers-need-test.pdf";
+    let filename = "Customers-invoice.pdf";
 
     // Create a Blob from the response
     const blob = new Blob([response], { type: "application/pdf" });
@@ -55,32 +62,36 @@ const CustomerLessons = () => {
     window.URL.revokeObjectURL(url);
   }
 
-  async function getCustomerLessons(){
+  async function getCustomerLessons() {
     setIsLoading(true);
     const response = await getCustomerLessonsAPI(customerId);
     setIsLoading(false);
-    if(response.lessons && response.lessons.length > 0){
-      setTableRows(response.lessons)
+    if (response.lessons && response.lessons.length > 0) {
+      setTableRows(response.lessons);
     }
-    console.log(response)
+    console.log(response);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getCustomerLessons();
-  }, [])
+  }, []);
 
-  async function handleSubmit(e){
-    try{
+  async function handleSubmit(e) {
+    try {
       setIsLoading(true);
       const payload = {
-        lessons: tableRows.map(item => ({...item, date: item.date}))
-      }
-      console.log(payload)
+        lessons: tableRows.map((item) => ({ ...item, date: format(item.date, "yyyy-MM-dd") })),
+      };
+      console.log(payload);
       const response = await addCustomerLessonsAPI(customerId, payload);
-      Swal.fire("Lessons updated", "The lessons are updated successfully", "success");
+      Swal.fire(
+        "Lessons updated",
+        "The lessons are updated successfully",
+        "success"
+      );
       setIsLoading(false);
       console.log(response);
-    }catch(err){
+    } catch (err) {
       setIsLoading(false);
       console.error(err);
       return Swal.fire("Error", "An error occured", "error");
@@ -95,17 +106,14 @@ const CustomerLessons = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes"
+      confirmButtonText: "Yes",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        try{
-          const payload = {
-            option: "finished"
-          }
+        try {
           setIsLoading(true);
-          const response = await updateCustomerDetailsAPI(customerId, payload);
+          const response = await markCustomerAsFinishedAPI(customerId);
           setIsLoading(false);
-        }catch(err){
+        } catch (err) {
           setIsLoading(false);
           console.error(err);
           return Swal.fire("Error", "An error occured", "error");
@@ -116,7 +124,7 @@ const CustomerLessons = () => {
 
   return (
     <>
-      {isLoading && <FullPageLoader/>}
+      {isLoading && <FullPageLoader />}
       <div className="flex flex-col h-screen w-screen p-4">
         <Header backLink="/customer-details" />
         <div className="student-details-container">
@@ -143,39 +151,53 @@ const CustomerLessons = () => {
                   <th>
                     <div className="table-cell">Amount (€)</div>
                   </th>
+                  <th>
+                    <div className="table-cell">Type</div>
+                  </th>
                   <th className="table-action-head">
                     <div className="table-cell">Paid</div>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {tableRows.map((item, index )=> (
+                {tableRows.map((item, index) => (
                   <tr key={index}>
                     <td>
                       <div className="table-cell">
-                        <Input placeholder="E.g. Parallel parking etc" containerClass="m-0" type="text" value={item.description} onChange={e=>{
-                          const value = e.target.value;
-                          const newData = tableRows.map((row, i) => {
-                            if(i === index){
-                              return {...row, description: value}
-                            }
-                            else return row;
-                          });
-                          setTableRows(newData);
-                        }}/>
+                        <Input
+                          placeholder="E.g. Parallel parking etc"
+                          containerClass="m-0"
+                          type="text"
+                          value={item.description}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const newData = tableRows.map((row, i) => {
+                              if (i === index) {
+                                return { ...row, description: value };
+                              } else return row;
+                            });
+                            setTableRows(newData);
+                          }}
+                        />
                       </div>
                     </td>
                     <td>
                       <div className="table-cell">
-                          <DatePicker format="dd/MM/yyyy" onChange={value => {
-                              const newData = tableRows.map((row, i)=>{
-                                  if(i === index){
-                                      return {...row, date: value?.toISOString().split("T")[0]}
-                                  }
-                                  else return row;
-                              })
-                              setTableRows(newData);
-                          }} value={item.date} />
+                        <DatePicker
+                          format="dd/MM/yyyy"
+                          onChange={(value) => {
+                            const newData = tableRows.map((row, i) => {
+                              if (i === index) {
+                                return {
+                                  ...row,
+                                  date: value,
+                                };
+                              } else return row;
+                            });
+                            setTableRows(newData);
+                          }}
+                          value={item.date}
+                        />
                       </div>
                     </td>
                     <td>
@@ -183,14 +205,13 @@ const CustomerLessons = () => {
                         <TimePicker
                           format="HH:mm"
                           value={item.from}
-                          onChange={value => {
-                              const newData = tableRows.map((row, i)=>{
-                                  if(i === index){
-                                      return {...row, from: value}
-                                  }
-                                  else return row;
-                              })
-                              setTableRows(newData);
+                          onChange={(value) => {
+                            const newData = tableRows.map((row, i) => {
+                              if (i === index) {
+                                return { ...row, from: value };
+                              } else return row;
+                            });
+                            setTableRows(newData);
                           }}
                         />
                       </div>
@@ -200,44 +221,76 @@ const CustomerLessons = () => {
                         <TimePicker
                           format="HH:mm"
                           value={item.to}
-                          onChange={value => {
-                              const newData = tableRows.map((row, i)=>{
-                                  if(i === index){
-                                      return {...row, to: value}
-                                  }
-                                  else return row;
-                              })
-                              setTableRows(newData);
+                          onChange={(value) => {
+                            const newData = tableRows.map((row, i) => {
+                              if (i === index) {
+                                return { ...row, to: value };
+                              } else return row;
+                            });
+                            setTableRows(newData);
                           }}
                         />
                       </div>
                     </td>
                     <td>
                       <div className="table-cell">
-                        <Input placeholder="Leave a note for customer" containerClass="m-0" type="text" value={item.notes} onChange={e=>{
-                          const value = e.target.value;
-                          const newData = tableRows.map((row, i) => {
-                            if(i === index){
-                              return {...row, notes: value}
-                            }
-                            else return row;
-                          });
-                          setTableRows(newData);
-                        }}/>
+                        <Input
+                          placeholder="Leave a note for customer"
+                          containerClass="m-0"
+                          type="text"
+                          value={item.notes}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const newData = tableRows.map((row, i) => {
+                              if (i === index) {
+                                return { ...row, notes: value };
+                              } else return row;
+                            });
+                            setTableRows(newData);
+                          }}
+                        />
                       </div>
                     </td>
                     <td>
                       <div className="table-cell">
-                        <Input placeholder="Amount in €" containerClass="m-0" type="number" value={item.amount} onChange={e=>{
-                          const value = e.target.value;
-                          const newData = tableRows.map((row, i) => {
-                            if(i === index){
-                              return {...row, amount: value}
-                            }
-                            else return row;
-                          });
-                          setTableRows(newData);
-                        }}/>
+                        <Input
+                          placeholder="Amount in €"
+                          containerClass="m-0"
+                          type="number"
+                          value={item.amount}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const newData = tableRows.map((row, i) => {
+                              if (i === index) {
+                                return { ...row, amount: value };
+                              } else return row;
+                            });
+                            setTableRows(newData);
+                          }}
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div className="table-cell">
+                        <select
+                          value={item.type}
+                          name="type"
+                          id=""
+                          className="input"
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const newData = tableRows.map((row, i) => {
+                              if (i === index) {
+                                return { ...row, type: value };
+                              } else return row;
+                            });
+                            setTableRows(newData);
+                          }}
+                        >
+                          <option value="lesson">Lesson</option>
+                          <option value="test">Test</option>
+                          <option value="booking">Booking</option>
+                        </select>
                       </div>
                     </td>
                     <td>
@@ -245,27 +298,31 @@ const CustomerLessons = () => {
                         <div className="table-actions">
                           <Checkbox
                             checked={item.paidStatus}
-                            onClick={e => {
+                            onClick={(e) => {
                               const newData = tableRows.map((row, i) => {
-                                if(i === index){
-                                  return {...row, paidStatus: !row.paidStatus}
-                                }
-                                else return row;
+                                if (i === index) {
+                                  return {
+                                    ...row,
+                                    paidStatus: !row.paidStatus,
+                                  };
+                                } else return row;
                               });
                               setTableRows(newData);
                             }}
                           />
-                          <button onClick={e => {
-                            const newData = tableRows.filter((_, i) => {
-                                if(i === index){
+                          <button
+                            onClick={(e) => {
+                              const newData = tableRows.filter((_, i) => {
+                                if (i === index) {
                                   return false;
-                                }
-                                else return true;
-                            });
-                            setTableRows(newData);
-                        }} className='table-action action-danger'>
+                                } else return true;
+                              });
+                              setTableRows(newData);
+                            }}
+                            className="table-action action-danger"
+                          >
                             <RiDeleteBin6Line />
-                        </button>
+                          </button>
                         </div>
                       </div>
                     </td>
@@ -274,18 +331,38 @@ const CustomerLessons = () => {
               </tbody>
             </table>
             <div className="button-group">
-              <button onClick={()=>setTableRows(prev => [...prev, INITIAL_LESSON_ROW_DATA])} className="button button-primary-outline" >Add new lesson</button>
-              <button onClick={handleSubmit} className="button button-primary" >Save details</button>
+              <button
+                onClick={() =>
+                  setTableRows((prev) => [...prev, INITIAL_LESSON_ROW_DATA])
+                }
+                className="button button-primary-outline"
+              >
+                Add new lesson
+              </button>
+              <button onClick={handleSubmit} className="button button-primary">
+                Save details
+              </button>
             </div>
           </div>
         </div>
         <div className="button-group">
-          <button onClick={(e) => navigate("/customer-details")} className="button button-primary-outline" >Back</button>
-          <button onClick={printInvoice} className="button button-primary-outline flex items-center gap-2" >
+          <button
+            onClick={(e) => navigate("/customer-details")}
+            className="button button-primary-outline"
+          >
+            Back
+          </button>
+          <button
+            onClick={printInvoice}
+            className="button button-primary-outline flex items-center gap-2"
+          >
             <IoMdPrint />
             <span>Print invoice</span>
           </button>
-          <button onClick={markCustomerToFinished} className="button button-primary flex items-center gap-2">
+          <button
+            onClick={markCustomerToFinished}
+            className="button button-primary flex items-center gap-2"
+          >
             <PiStudentFill />
             <span>Finish</span>
           </button>

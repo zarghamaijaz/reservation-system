@@ -10,6 +10,7 @@ import FullPageLoader from '../components/FullPageLoader';
 import Pill from "../components/Pill"
 import Swal from 'sweetalert2';
 import { convertUTCToLocal, countDaysFromNow } from '../../utils/date.utils';
+import { format } from 'date-fns';
 
 const AllCustomers = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -125,7 +126,7 @@ const AllCustomers = () => {
                   <div className='table-cell'>{item.idDigit}-{item.idValue}</div>
                 </td>
                 <td>
-                  <div className='table-cell'>{convertUTCToLocal(item.dateOfBirth, "date")}</div>
+                  <div className='table-cell'>{format(item.dateOfBirth, "dd/MM/yyyy")}</div>
                 </td>
                 <td>
                   <div className='table-cell'>{item.category}</div>
@@ -137,7 +138,7 @@ const AllCustomers = () => {
                   <div className='table-cell'><Pill active={item.option && item.option.includes("needtest")}/></div>
                 </td>
                 <td>
-                  <div className='table-cell'>{convertUTCToLocal(item.testDate, "date")}</div>
+                  <div className='table-cell'>{format(item.testDate, "dd/MM/yyyy")}</div>
                 </td>
                 <td>
                   <div className='table-cell'>{convertUTCToLocal(item.testStartTime, "time")}</div>

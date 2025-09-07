@@ -19,6 +19,9 @@
   --clr-danger: #FF9800;
   --clr-whatsapp: #25D366;
   --clr-viber: #7B5195;
+  --clr-facebook: #3b5998;
+  --clr-tiktok: #000000;
+  --clr-instagram: #c13584;
 }
 
 a {
@@ -853,6 +856,15 @@ img{
 }
 .location-icon.viber{
   color: var(--clr-viber)
+}
+.location-icon.facebook{
+  color: var(--clr-facebook)
+}
+.location-icon.tiktok{
+  color: var(--clr-tiktok)
+}
+.location-icon.instagram{
+  color: var(--clr-instagram)
 }
 
 .location-name{

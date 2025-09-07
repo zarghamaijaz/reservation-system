@@ -100,25 +100,17 @@ const CustomerDetails = () => {
         dateOfBirth,
         visaExpire,
         learningExpire,
-        testDate,
-        testStartTime,
-        testEndTime,
         option,
       };
-      // if(payload.testDate === "" || payload.testDate === null || payload.testDate === undefined){
-        //   payload.testDate = undefined
-        // }
-      if(payload.testDate){
-        if(!payload.testStartTime){
-          return Swal.fire("validation error", "Please specify a test start time", "error");
-        }
-        if(!payload.testEndTime){
-          return Swal.fire("validation error", "Please specify a test end time", "error");
-        }
-      }
 
-      payload.testStartTime = combineDateTimeToUTC(testDate, testStartTime).toISOString();
-      payload.testEndTime = combineDateTimeToUTC(testDate, testEndTime).toISOString();
+      // if(testDate){
+      //   if(!testStartTime){
+      //     return Swal.fire("validation error", "Please specify a test start time", "error");
+      //   }
+      //   if(!testEndTime){
+      //     return Swal.fire("validation error", "Please specify a test end time", "error");
+      //   }
+      // }
 
       console.log(payload)
       console.log(testStartTime)
@@ -157,6 +149,19 @@ const CustomerDetails = () => {
         return setFormData((prev) => ({ ...prev, [name]: input }));
       }
     };
+  }
+
+  function handleOptionChange(value) {
+    return function(e){
+      setOption(prev => {
+        if(prev === value){
+          return "";
+        }
+        else{
+          return value;
+        }
+      });
+    }
   }
 
   return (
@@ -231,7 +236,6 @@ const CustomerDetails = () => {
                   </div>
                   <div className="col-20">
                     <Input
-                      limit={2}
                       type="text"
                       placeholder="2 digit"
                       label="Category"
@@ -261,7 +265,7 @@ const CustomerDetails = () => {
                       onChange={handleChange("phoneNumber", "phoneNumber")}
                     />
                   </div>
-                  <div className="col-100">
+                  {/* <div className="col-100">
                     <div className="input-container">
                       <label className="label">Test date</label>
                       <DatePicker
@@ -270,8 +274,8 @@ const CustomerDetails = () => {
                         value={testDate}
                       />
                     </div>
-                  </div>
-                  <div className="col-50">
+                  </div> */}
+                  {/* <div className="col-50">
                     <div className="input-container">
                       <label className="label">Test start time</label>
                       <TimePicker
@@ -280,8 +284,8 @@ const CustomerDetails = () => {
                         value={testStartTime}
                       />
                     </div>
-                  </div>
-                  <div className="col-50">
+                  </div> */}
+                  {/* <div className="col-50">
                     <div className="input-container">
                       <label className="label">Test end time</label>
                       <TimePicker
@@ -290,25 +294,25 @@ const CustomerDetails = () => {
                         value={testEndTime}
                       />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-33">
                     <Checkbox
                       label="Need Test 1"
-                      onClick={(e) => setOption("needtest1")}
+                      onClick={handleOptionChange("needtest1")}
                       checked={option === "needtest1"}
                     />
                   </div>
                   <div className="col-33">
                     <Checkbox
                       label="Test 2"
-                      onClick={(e) => setOption("needtest2")}
+                      onClick={handleOptionChange("needtest2")}
                       checked={option === "needtest2"}
                     />
                   </div>
                   <div className="col-33">
                     <Checkbox
                       label="Test 3"
-                      onClick={(e) => setOption("needtest3")}
+                      onClick={handleOptionChange("needtest3")}
                       checked={option === "needtest3"}
                     />
                   </div>

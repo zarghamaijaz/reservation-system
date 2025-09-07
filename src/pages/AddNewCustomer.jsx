@@ -67,6 +67,18 @@ const AddNewCustomer = () => {
       }
     };
   }
+  function handleOptionChange(value) {
+    return function(e){
+      setOption(prev => {
+        if(prev === value){
+          return "";
+        }
+        else{
+          return value;
+        }
+      });
+    }
+  }
 
   return (
     <>
@@ -133,9 +145,8 @@ const AddNewCustomer = () => {
                 </div>
                 <div className="col-20">
                   <Input
-                    limit={2}
                     type="text"
-                    placeholder="2 digit"
+                    placeholder=""
                     label="Category"
                     id="category"
                     value={formData.category}
@@ -164,13 +175,13 @@ const AddNewCustomer = () => {
                   />
                 </div>
                 <div className="col-33">
-                  <Checkbox label="Need Test 1" onClick={e=>setOption("needtest1")} checked={option === "needtest1"}/>
+                  <Checkbox label="Need Test 1" onClick={handleOptionChange("needtest1")} checked={option === "needtest1"}/>
                 </div>
                 <div className="col-33">
-                  <Checkbox label="Test 2" onClick={e=>setOption("needtest2")} checked={option === "needtest2"}/>
+                  <Checkbox label="Test 2" onClick={handleOptionChange("needtest2")} checked={option === "needtest2"}/>
                 </div>
                 <div className="col-33">
-                  <Checkbox label="Test 3" onClick={e=>setOption("needtest3")} checked={option === "needtest3"}/>
+                  <Checkbox label="Test 3" onClick={handleOptionChange("needtest3")} checked={option === "needtest3"}/>
                 </div>
                 <div className="col-100">
                   <div className="input-container mt-8">

@@ -18,6 +18,9 @@ const DrivingInstructorHome = () => {
             <Link to='/finished-customers' className='tile'>
               <h4 className='tile-title'>Finished Customers</h4>
             </Link>
+            <Link to='/all-appointments' className='tile'>
+              <h4 className='tile-title'>View appointments</h4>
+            </Link>
             {/* <Link to='/booking-requests' className='tile'>
               <h4 className='tile-title'>Booking requests</h4>
               <p className='tile-description'>
@@ -32,12 +35,12 @@ const DrivingInstructorHome = () => {
             </Link> */}
           </div>
           <div className='col-50'>
-            {/* <Link className='tile'>
+            <Link to="/create-invoice" className='tile'>
               <h4 className='tile-title'>Create Invoice</h4>
             </Link>
-            <Link className='tile'>
+            <Link to="/all-invoices" className='tile'>
               <h4 className='tile-title'>Invoices Folder</h4>
-            </Link> */}
+            </Link>
             <Link to="/expenses" className='tile'>
               <h4 className='tile-title'>Expenses</h4>
             </Link>

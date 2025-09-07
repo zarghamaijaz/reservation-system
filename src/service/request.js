@@ -22,7 +22,7 @@ axios.interceptors.response.use(responseInterceptor, (error) => {
   try{
     if(error.response.status === 401){
         console.log('Logout user here.')
-      window.location.replace('/logout?tokenExpired=true');
+      // window.location.replace('/logout?tokenExpired=true');
       return Promise.reject(error.response.data);
     }
     else{

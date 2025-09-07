@@ -30,7 +30,7 @@ const ImageGallery = () => {
         <div className='gallery-inner'>
             {GALLERY_IMAGES.map((image, index) => (
                 <button onClick={() => setSelectedImage(image)} className="gallery-item">
-                    <img src={image} alt="" key={index} />
+                    <img src={image} alt="" key={image} />
                 </button>
             ))}
         </div>
