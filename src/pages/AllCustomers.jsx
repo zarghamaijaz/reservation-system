@@ -15,6 +15,8 @@ import { format } from 'date-fns';
 const AllCustomers = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [studentsList, setStudentsList] = useState([]);
+  const [pagesCount, setPagesCount] = useState(1);
+  const [page, setPage] = useState(1);
   async function handleSubmit(e) {
     e.preventDefault();
     console.log('==== Implement search logic here ====')
@@ -47,10 +49,11 @@ const AllCustomers = () => {
   async function getStudentsList(){
     try{
       setIsLoading(true);
-      const response = await getCustomersListAPI();
+      const response = await getCustomersListAPI(page);
       setIsLoading(false);
       if(response.students && response.students.length > 0){
         setStudentsList(response.students);
+        setPagesCount(response.pages);
       }
       else return Swal.fire("No customers found", "Unable to find any customer in the database", "error");
     }catch(err){
@@ -80,7 +83,7 @@ const AllCustomers = () => {
   }
   useEffect(()=>{
     getStudentsList();
-  }, []);
+  }, [page]);
   return (
     <>
     {isLoading && (
@@ -168,11 +171,20 @@ const AllCustomers = () => {
         </table>
       </div>
       <div className='button-group'>
-        <Link to="/driving-instructor-home" className='button button-primary-outline'>Back</Link>
         <button onClick={exportNeedTest} className='button button-primary flex items-center gap-2'>
           <IoMdPrint />
           <span>Print need test</span>
         </button>
+        {page !== pagesCount && (
+          <button onClick={()=>setPage(prev => prev - 1)} className='button button-primary flex items-center gap-2'>
+            Previous page
+          </button>
+        )}
+        {page !== pagesCount && (
+          <button onClick={()=>setPage(prev => prev + 1)} className='button button-primary flex items-center gap-2'>
+            Next page
+          </button>
+        )}
       </div>
     </div>
     </>

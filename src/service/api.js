@@ -121,9 +121,9 @@ export function addNewCustomerAPI(data) {
     }, 1000);
   });
 }
-export function getCustomersListAPI() {
+export function getCustomersListAPI(page) {
   return request({
-    url: `${API_URL}/students`,
+    url: `${API_URL}/students?page=${page}`,
     method: "GET",
   });
   const responseData = {
