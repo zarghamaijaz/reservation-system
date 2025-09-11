@@ -30,7 +30,7 @@ const VAT = () => {
   return (
     <>
       {isLoading && <FullPageLoader />}
-      <div className="flex flex-col h-screen w-screen p-4">
+      <div className="p-4">
         <Header backLink="/driving-instructor-home" />
 
         <div className="small-container">
@@ -125,13 +125,22 @@ const VAT = () => {
                 </tbody>
               </table>
             </div>
-            {/* <div className="small-container">
+            <div className="small-container">
                 <div className="card mt-8">
-                    <div>Total VAT collected: {data.total_vat_collected}</div>
-                    <div>Total VAT paid: {data.total_vat_paid}</div>
-                    <div>Total VAT due: {data.net_vat_due}</div>
+                  <div className="detail-container">
+                    <div className="detail-name">VAT from expenses:</div>
+                    <div className="detail-value">{data.vat_from_expenses}</div>
+                  </div>
+                  <div className="detail-container">
+                    <div className="detail-name">VAT from revenue:</div>
+                    <div className="detail-value">{data.vat_from_revenue}</div>
+                  </div>
+                  <div className="detail-container">
+                    <div className="detail-name">VAT to pay Government:</div>
+                    <div className="detail-value">{data.vat_to_pay_government}</div>
+                  </div>
                 </div>
-            </div> */}
+            </div>
             <div className="button-group">
               <button
                 onClick={() => setData(null)}
