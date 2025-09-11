@@ -103,19 +103,19 @@ const AllCustomers = () => {
           </form>
           <div className='table-record-count'>Total records based on search: 100</div>
         </div> */}
-        <table className='table bordered'>
+        <table className='table bordered small-headings'>
           <thead>
             <tr>
               <th><div className='table-cell'>Name</div></th>
               <th><div className='table-cell'>ID</div></th>
               <th><div className='table-cell'>D|Birth</div></th>
-              <th><div className='table-cell'>Category</div></th>
+              <th width="50"><div className='table-cell'>Category</div></th>
               <th><div className='table-cell'>No plate</div></th>
-              <th><div className='table-cell'>Need test</div></th>
+              <th width="50"><div className='table-cell'>N.Test</div></th>
               <th><div className='table-cell'>Have test</div></th>
-              <th><div className='table-cell'>Start time</div></th>
-              <th><div className='table-cell'>End time</div></th>
-              <th><div className='table-cell'>Alert</div></th>
+              <th width="50"><div className='table-cell'>Start</div></th>
+              <th width="50"><div className='table-cell'>End</div></th>
+              <th width="50"><div className='table-cell'>Alert</div></th>
               <th className='table-action-head'><div className='table-cell'>Open</div></th>
             </tr>
           </thead>
@@ -170,17 +170,17 @@ const AllCustomers = () => {
           </tbody>
         </table>
       </div>
-      <div className='button-group'>
-        <button onClick={exportNeedTest} className='button button-primary flex items-center gap-2'>
+      <div className='button-group p-4'>
+        <button onClick={exportNeedTest} className='button button-primary-outline flex items-center gap-2'>
           <IoMdPrint />
           <span>Print need test</span>
         </button>
-        {page !== pagesCount && (
+        {page > 1 && (
           <button onClick={()=>setPage(prev => prev - 1)} className='button button-primary flex items-center gap-2'>
             Previous page
           </button>
         )}
-        {page !== pagesCount && (
+        {page < pagesCount && (
           <button onClick={()=>setPage(prev => prev + 1)} className='button button-primary flex items-center gap-2'>
             Next page
           </button>

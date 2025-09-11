@@ -31,7 +31,7 @@ const About = () => {
               <h2 className="card-title">Want to book a lesson?</h2>
               <p className="description">Please feel free to give us a call to ask any questions or book a lesson.</p>
               <h2 className="card-title">Our location</h2>
-              <p className="description">Stelios Stylianou Driving School, located on Epidamou 2 , 3070 in Limassol Cyprus, is a premier driving institution dedicated to fostering safe and responsible driving skills. Currently operational, the school has earned an impressive average rating highlighting its commitment to excellence and student satisfaction.</p>
+              <p className="description">Stelios Stylianou Driving School, located on Epidamou 2 , 3070 in Limassol Cyprus, is a premier driving institution dedicated to fostering safe and responsible driving skills. Currently operational, the school has earned an impressive rating highlighting its commitment to excellence and student satisfaction.</p>
             </div>
           </div>
         </div>

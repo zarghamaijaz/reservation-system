@@ -374,6 +374,9 @@ img{
   text-align: start;
   white-space: nowrap;
 }
+.table.small-headings th{
+  font-size: 0.75rem;
+}
 .table-action-head {
   width: 100px;
 }
@@ -411,6 +414,7 @@ img{
 
 .table-cell {
   padding: 0.5rem;
+  overflow: hidden;
 }
 .table tr {
   background-color: var(--clr-elements);
