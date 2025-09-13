@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { Link } from "react-router";
-import { getInvoicesListAPI, printInvoiceAPI, printInvoiceByRangeAPI } from "../service/api";
+import { getInvoicesListAPI, searchInvoicesAPI, printInvoiceAPI, printInvoiceByRangeAPI } from "../service/api";
 import { IoMdPrint } from "react-icons/io";
 import FullPageLoader from "../components/FullPageLoader";
 import Swal from "sweetalert2";
 import DatePicker from "react-date-picker";
 import { format } from "date-fns";
+import { debounce } from "../../utils/helpers";
 
 const AllInvoices = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [invoicesList, setInvoicesList] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -89,7 +91,24 @@ const AllInvoices = () => {
       link.remove();
       window.URL.revokeObjectURL(url);
     }
+    async function searchInvoices(){
+        try{
+          setIsLoading(true);
+          const response = await searchInvoicesAPI(searchQuery);
+          setIsLoading(false);
+          setStudentsList(response);
+          setPagesCount(1);
+        }catch(err){
+          console.error(err);
+          setIsLoading(false);
+        }
+      }
 
+    useEffect(()=>{
+    if(searchQuery.length > 0) {searchInvoices();}
+    
+    else {getInvoicesList();}
+  }, [searchQuery]);
   return (
     <>
       {isLoading && <FullPageLoader />}
@@ -134,13 +153,11 @@ const AllInvoices = () => {
           </div>
         </div>
         <div className="table-container">
-          {/* <div className='table-filters'>
-          <form onSubmit={handleSubmit} className='table-filter'>
-            <input type="text" name="" id="" className='table-filter-input' placeholder='Search by name, username, or phone number' />
-            <button className='table-filter-button'>Search</button>
+          <div className='table-filters'>
+          <form className='table-filter'>
+            <input onChange={debounce((e) => setSearchQuery(e.target.value), 500)} type="text" name="" id="" className='table-filter-input' placeholder='Search by name, username, or phone number' />
           </form>
-          <div className='table-record-count'>Total records based on search: 100</div>
-        </div> */}
+        </div>
           <table className="table bordered">
             <thead>
               <tr>

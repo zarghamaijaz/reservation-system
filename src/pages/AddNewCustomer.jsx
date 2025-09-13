@@ -50,6 +50,14 @@ const AddNewCustomer = () => {
     } catch (err) {
       console.error(err);
       setIsLoading(false);
+      if(err.error){
+        const {errors} = err.error.details;
+        return Swal.fire({
+          title: "Validation error",
+          html: errors.map((error) => `<p>${error.message}</p>`).join(""),
+          icon: "error"
+        })
+      }
       const {error} = err;
       return Swal.fire(error.type, error.message, "error");
     }

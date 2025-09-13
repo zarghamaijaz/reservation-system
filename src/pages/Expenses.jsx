@@ -47,6 +47,7 @@ const Expenses = () => {
   const [formData, setFormData] = useState(INTITIAL_FORMDATA);
   const [dailyExpenses, setDailyExpenses] = useState([]);
   const [monthlyExpenses, setMonthlyExpenses] = useState([]);
+  const [totalData, setTotalData] = useState({});
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [addNewDailyExpense, setAddNewDailyExpense] = useState(false);
@@ -118,6 +119,7 @@ const Expenses = () => {
       if(response.monthly_expenses){
         setMonthlyExpenses(response.monthly_expenses)
       }
+      setTotalData(response);
     }catch(err){
       setIsLoading(false);
       Swal.fire("Error", "An error occured", "error");
@@ -449,6 +451,26 @@ const Expenses = () => {
                   </tr>
                 )})}
             </table>
+          </div>
+          <div className="small-container">
+            <div className="card mt-8">
+              <div className="detail-container">
+                <div className="detail-name">Total daily:</div>
+                <div className="detail-value">{totalData.total_daily}</div>
+              </div>
+              <div className="detail-container">
+                <div className="detail-name">Total monthly:</div>
+                <div className="detail-value">{totalData.total_monthly}</div>
+              </div>
+              <div className="detail-container">
+                <div className="detail-name">Total VAT:</div>
+                <div className="detail-value">{totalData.total_vat}</div>
+              </div>
+              <div className="detail-container">
+                <div className="detail-name">Total amount:</div>
+                <div className="detail-value">{totalData.total_amount}</div>
+              </div>
+            </div>
           </div>
           <div className="button-group">
             <button

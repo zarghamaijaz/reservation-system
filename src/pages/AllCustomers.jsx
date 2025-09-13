@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import { BiDetail } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from 'react-router';
-import { getCustomersListAPI, deleteCustomerAPI, printNeedTestAPI } from '../service/api';
+import { getCustomersListAPI, searchCustomersAPI, deleteCustomerAPI, printNeedTestAPI } from '../service/api';
 import { IoPersonAdd } from "react-icons/io5"
 import { IoMdPrint } from "react-icons/io";
 import FullPageLoader from '../components/FullPageLoader';
@@ -11,17 +11,15 @@ import Pill from "../components/Pill"
 import Swal from 'sweetalert2';
 import { convertUTCToLocal, countDaysFromNow } from '../../utils/date.utils';
 import { format } from 'date-fns';
+import { debounce } from "../../utils/helpers";
 
 const AllCustomers = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [studentsList, setStudentsList] = useState([]);
   const [pagesCount, setPagesCount] = useState(1);
   const [page, setPage] = useState(1);
-  async function handleSubmit(e) {
-    e.preventDefault();
-    console.log('==== Implement search logic here ====')
-    
-  }
+
   async function exportNeedTest(e){
     e.preventDefault();
     setIsLoading(true);
@@ -61,6 +59,18 @@ const AllCustomers = () => {
       setIsLoading(false);
     }
   }
+  async function searchStudents(){
+    try{
+      setIsLoading(true);
+      const response = await searchCustomersAPI(searchQuery);
+      setIsLoading(false);
+      setStudentsList(response);
+      setPagesCount(1);
+    }catch(err){
+      console.error(err);
+      setIsLoading(false);
+    }
+  }
 
   function handleDelete(customerId) {
     return function(e){
@@ -84,6 +94,11 @@ const AllCustomers = () => {
   useEffect(()=>{
     getStudentsList();
   }, [page]);
+  useEffect(()=>{
+    if(searchQuery.length > 0) {searchStudents();}
+    
+    else {getStudentsList();}
+  }, [searchQuery]);
   return (
     <>
     {isLoading && (
@@ -96,13 +111,11 @@ const AllCustomers = () => {
         <IoPersonAdd/> Add new customer</Link>
       </div>
       <div className='table-container'>
-        {/* <div className='table-filters'>
-          <form onSubmit={handleSubmit} className='table-filter'>
-            <input type="text" name="" id="" className='table-filter-input' placeholder='Search by name, username, or phone number' />
-            <button className='table-filter-button'>Search</button>
+        <div className='table-filters'>
+          <form className='table-filter'>
+            <input onChange={debounce((e) => setSearchQuery(e.target.value), 500)} type="text" name="" id="" className='table-filter-input' placeholder='Search by name, username, or phone number' />
           </form>
-          <div className='table-record-count'>Total records based on search: 100</div>
-        </div> */}
+        </div>
         <table className='table bordered small-headings'>
           <thead>
             <tr>

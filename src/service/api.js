@@ -126,45 +126,22 @@ export function getCustomersListAPI(page) {
     url: `${API_URL}/students?page=${page}`,
     method: "GET",
   });
-  const responseData = {
-    success: true,
-    message: "Students list fetched",
-    data: [
-      {
-        id: "databaseId_1",
-        name: "Zargham",
-        phoneNumber: "03238404499",
-        category: "A1",
-        carNoPlate: "9965",
-        dateOfBirth: "1999-04-02",
-        idCardNumber: "12345-1234-123-1",
-        needTest: true,
-        haveTest: "2025-07-01",
-        visaExpire: "2025-07-01",
-      },
-      {
-        id: "databaseId_2",
-        name: "Usama",
-        phoneNumber: "03238404410",
-        category: "A1",
-        carNoPlate: "9965",
-        dateOfBirth: "1999-04-02",
-        idCardNumber: "12345-1234-123-1",
-        needTest: false,
-        haveTest: "2025-07-01",
-        visaExpire: "2025-07-01",
-      },
-    ],
-  };
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      res(responseData);
-    }, 1000);
+}
+export function searchCustomersAPI(query) {
+  return request({
+    url: `${API_URL}/students/search/query?q=${query}`,
+    method: "GET",
   });
 }
 export function getInvoicesListAPI(data) {
   return request({
     url: `${API_URL}/invoices/list/date-range?start_date=${data.start_date}&end_date=${data.end_date}`,
+    method: "GET",
+  });
+}
+export function searchInvoicesAPI(query) {
+  return request({
+    url: `${API_URL}/invoices/search/query?q=${query}`,
     method: "GET",
   });
 }
