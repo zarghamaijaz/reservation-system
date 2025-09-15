@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Checkbox from "../components/form-elements/Checkbox";
-import { IoMdPrint } from "react-icons/io";
+import { IoMdClose, IoMdPrint } from "react-icons/io";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { PiStudentFill } from "react-icons/pi";
 import TimePicker from "react-time-picker";
@@ -9,7 +9,9 @@ import DatePicker from "react-date-picker";
 import Input from "../components/form-elements/Input";
 import { useNavigate, useSearchParams } from "react-router";
 import {
-  addCustomerLessonsAPI,
+  deleteCustomerLessonAPI,
+  createCustomerLessonAPI,
+  markCustomerLessonAPI,
   getCustomerLessonsAPI,
   markCustomerAsFinishedAPI,
   printCustomerInvoiceAPI,
@@ -18,25 +20,54 @@ import Swal from "sweetalert2";
 import FullPageLoader from "../components/FullPageLoader";
 import { format } from "date-fns";
 
-const INITIAL_LESSON_ROW_DATA = {
-  description: "",
-  date: "",
-  from: "",
-  to: "",
-  notes: "",
-  amount: "",
-  type: "lesson",
-  paidStatus: false,
-};
-
 const CustomerLessons = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [addLessonForm, setAddLessonForm] = useState(false);
   const [searchParams] = useSearchParams();
+  const [formData, setFormData] = useState({
+    description: "",
+    amount: "",
+    notes: "",
+    startDate: "",
+    from: "",
+    to: "",
+    type: "lesson",
+    paidStatus: false,
+  });
   const customerId = searchParams.get("customer-id");
   const navigate = useNavigate();
   const [tableRows, setTableRows] = useState([]);
   if (!customerId) {
     navigate("/all-customers");
+  }
+  function handleChange(name, type) {
+    return function (e) {
+      const input = e.target.value;
+      // Only allow digits
+      if (type === "phoneNumber") {
+        if (/^\d*$/.test(input)) {
+          return setFormData((prev) => ({ ...prev, [name]: input }));
+        }
+      } else {
+        return setFormData((prev) => ({ ...prev, [name]: input }));
+      }
+    };
+  }
+  function handleTimeChange(name) {
+    return function (e) {
+      if (e === null) {
+        return setFormData((prev) => ({ ...prev, [name]: "" }));
+      }
+      return setFormData((prev) => ({ ...prev, [name]: e }));
+    };
+  }
+  function handleDateChange(name) {
+    return function (e) {
+      if (e === null) {
+        return setFormData((prev) => ({ ...prev, [name]: "" }));
+      }
+      return setFormData((prev) => ({ ...prev, [name]: e }));
+    };
   }
   async function printInvoice(e) {
     e.preventDefault();
@@ -66,7 +97,7 @@ const CustomerLessons = () => {
     setIsLoading(true);
     const response = await getCustomerLessonsAPI(customerId);
     setIsLoading(false);
-    if (response.lessons && response.lessons.length > 0) {
+    if (response.lessons) {
       setTableRows(response.lessons);
     }
     console.log(response);
@@ -80,21 +111,66 @@ const CustomerLessons = () => {
     try {
       setIsLoading(true);
       const payload = {
-        lessons: tableRows.map((item) => ({ ...item, date: format(item.date, "yyyy-MM-dd") })),
+        ...formData,
+        date: format(formData.startDate, "yyyy-MM-dd"),
+        studentId: customerId,
       };
       console.log(payload);
-      const response = await addCustomerLessonsAPI(customerId, payload);
+      const response = await createCustomerLessonAPI(payload);
       Swal.fire(
         "Lessons updated",
         "The lessons are updated successfully",
         "success"
       );
       setIsLoading(false);
-      console.log(response);
+      setAddLessonForm(false);
+      getCustomerLessons();
     } catch (err) {
       setIsLoading(false);
       console.error(err);
       return Swal.fire("Error", "An error occured", "error");
+    }
+  }
+
+  function deleteCustomerLesson(id) {
+    return function (e) {
+      e.preventDefault();
+      Swal.fire({
+        title: "Delete lesson?",
+        text: "This will permanently delete the lesson. Are you sure?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            setIsLoading(true);
+            const response = await deleteCustomerLessonAPI(id);
+            setIsLoading(false);
+            getCustomerLessons();
+          } catch (err) {
+            setIsLoading(false);
+            console.error(err);
+            return Swal.fire("Error", "An error occured", "error");
+          }
+        }
+      });
+    };
+  }
+
+  function markLesson(id, status){
+    return async function () {
+      try {
+        setIsLoading(true);
+        const response = await markCustomerLessonAPI(id, status);
+        setIsLoading(false);
+        getCustomerLessons();
+      } catch (err) {
+        setIsLoading(false);
+        console.error(err);
+        return Swal.fire("Error", "An error occured", "error");
+      }
     }
   }
 
@@ -125,6 +201,108 @@ const CustomerLessons = () => {
   return (
     <>
       {isLoading && <FullPageLoader />}
+      {addLessonForm && (
+        <div className="modal-container">
+          <div className="small-container">
+            <div className="card">
+              <button
+                onClick={(e) => setAddLessonForm(false)}
+                className="modal-close"
+              >
+                <IoMdClose />
+              </button>
+              <h1 className="card-title">Add lesson</h1>
+              <p className="card-description">
+                Create a lesson for this customer
+              </p>
+              <Input
+                label="Description"
+                onChange={handleChange("description")}
+                value={formData.description}
+                className="input"
+                type="text"
+                placeholder="Enter description"
+              />
+              <Input
+                label="Notes"
+                onChange={handleChange("notes")}
+                value={formData.notes}
+                className="input"
+                type="text"
+                placeholder="Enter additional notes"
+              />
+              <div className="input-container">
+                <label htmlFor="" className="label">
+                  Type
+                </label>
+                <select
+                  value={formData.type}
+                  name="type"
+                  id=""
+                  className="input"
+                  onChange={handleChange("type")}
+                >
+                  <option value="lesson">Lesson</option>
+                  <option value="test">Test</option>
+                  <option value="booking">Booking</option>
+                </select>
+              </div>
+              <div className="input-container">
+                <label className="label">Start date</label>
+                <DatePicker
+                  format="dd/MM/yyyy"
+                  onChange={handleDateChange("startDate")}
+                  value={formData.startDate}
+                />
+              </div>
+              <div className="input-container custom-time-picker">
+                <label className="label">Start time</label>
+                <TimePicker
+                  value={formData.from}
+                  onChange={handleTimeChange("from")}
+                />
+              </div>
+              <div className="input-container custom-time-picker">
+                <label className="label">End time</label>
+                <TimePicker
+                  value={formData.to}
+                  onChange={handleTimeChange("to")}
+                />
+              </div>
+              <Input
+                label="Amount (€)"
+                onChange={handleChange("amount", "phoneNumber")}
+                value={formData.amount}
+                className="input"
+                type="text"
+                placeholder="Enter lesson amount"
+              />
+              <div className="input-container">
+                <label htmlFor="" className="label">
+                  Paid?
+                </label>
+                <Checkbox
+                  checked={formData.paidStatus}
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      paidStatus: !prev.paidStatus,
+                    }))
+                  }
+                />
+              </div>
+              <div className="input-container">
+                <button
+                  onClick={handleSubmit}
+                  className="button button-primary"
+                >
+                  Add lesson
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col h-screen w-screen p-4">
         <Header backLink="/customer-details" />
         <div className="student-details-container">
@@ -163,162 +341,35 @@ const CustomerLessons = () => {
                 {tableRows.map((item, index) => (
                   <tr key={index}>
                     <td>
-                      <div className="table-cell">
-                        <Input
-                          placeholder="E.g. Parallel parking etc"
-                          containerClass="m-0"
-                          type="text"
-                          value={item.description}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            const newData = tableRows.map((row, i) => {
-                              if (i === index) {
-                                return { ...row, description: value };
-                              } else return row;
-                            });
-                            setTableRows(newData);
-                          }}
-                        />
-                      </div>
+                      <div className="table-cell">{item.description}</div>
                     </td>
                     <td>
-                      <div className="table-cell">
-                        <DatePicker
-                          format="dd/MM/yyyy"
-                          onChange={(value) => {
-                            const newData = tableRows.map((row, i) => {
-                              if (i === index) {
-                                return {
-                                  ...row,
-                                  date: value,
-                                };
-                              } else return row;
-                            });
-                            setTableRows(newData);
-                          }}
-                          value={item.date}
-                        />
-                      </div>
+                      <div className="table-cell">{item.date}</div>
                     </td>
                     <td>
-                      <div className="table-cell">
-                        <TimePicker
-                          format="HH:mm"
-                          value={item.from}
-                          onChange={(value) => {
-                            const newData = tableRows.map((row, i) => {
-                              if (i === index) {
-                                return { ...row, from: value };
-                              } else return row;
-                            });
-                            setTableRows(newData);
-                          }}
-                        />
-                      </div>
+                      <div className="table-cell">{item.from}</div>
                     </td>
                     <td>
-                      <div className="table-cell">
-                        <TimePicker
-                          format="HH:mm"
-                          value={item.to}
-                          onChange={(value) => {
-                            const newData = tableRows.map((row, i) => {
-                              if (i === index) {
-                                return { ...row, to: value };
-                              } else return row;
-                            });
-                            setTableRows(newData);
-                          }}
-                        />
-                      </div>
+                      <div className="table-cell">{item.to}</div>
                     </td>
                     <td>
-                      <div className="table-cell">
-                        <Input
-                          placeholder="Leave a note for customer"
-                          containerClass="m-0"
-                          type="text"
-                          value={item.notes}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            const newData = tableRows.map((row, i) => {
-                              if (i === index) {
-                                return { ...row, notes: value };
-                              } else return row;
-                            });
-                            setTableRows(newData);
-                          }}
-                        />
-                      </div>
+                      <div className="table-cell">{item.notes}</div>
                     </td>
                     <td>
-                      <div className="table-cell">
-                        <Input
-                          placeholder="Amount in €"
-                          containerClass="m-0"
-                          type="number"
-                          value={item.amount}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            const newData = tableRows.map((row, i) => {
-                              if (i === index) {
-                                return { ...row, amount: value };
-                              } else return row;
-                            });
-                            setTableRows(newData);
-                          }}
-                        />
-                      </div>
+                      <div className="table-cell">{item.amount}</div>
                     </td>
                     <td>
-                      <div className="table-cell">
-                        <select
-                          value={item.type}
-                          name="type"
-                          id=""
-                          className="input"
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            const newData = tableRows.map((row, i) => {
-                              if (i === index) {
-                                return { ...row, type: value };
-                              } else return row;
-                            });
-                            setTableRows(newData);
-                          }}
-                        >
-                          <option value="lesson">Lesson</option>
-                          <option value="test">Test</option>
-                          <option value="booking">Booking</option>
-                        </select>
-                      </div>
+                      <div className="table-cell">{item.type}</div>
                     </td>
                     <td>
                       <div className="table-cell">
                         <div className="table-actions">
                           <Checkbox
                             checked={item.paidStatus}
-                            onClick={(e) => {
-                              const newData = tableRows.map((row, i) => {
-                                if (i === index) {
-                                  return {
-                                    ...row,
-                                    paidStatus: !row.paidStatus,
-                                  };
-                                } else return row;
-                              });
-                              setTableRows(newData);
-                            }}
+                            onClick={markLesson(item.id, item.paidStatus ? "unpay" : "pay")}
                           />
                           <button
-                            onClick={(e) => {
-                              const newData = tableRows.filter((_, i) => {
-                                if (i === index) {
-                                  return false;
-                                } else return true;
-                              });
-                              setTableRows(newData);
-                            }}
+                            onClick={deleteCustomerLesson(item.id)}
                             className="table-action action-danger"
                           >
                             <RiDeleteBin6Line />
@@ -332,9 +383,7 @@ const CustomerLessons = () => {
             </table>
             <div className="button-group">
               <button
-                onClick={() =>
-                  setTableRows((prev) => [...prev, INITIAL_LESSON_ROW_DATA])
-                }
+                onClick={(e) => setAddLessonForm(true)}
                 className="button button-primary-outline"
               >
                 Add new lesson

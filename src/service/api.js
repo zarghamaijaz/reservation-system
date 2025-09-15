@@ -311,6 +311,29 @@ export function getCustomerLessonsAPI(customerId) {
     url: `${API_URL}/lessons?studentId=${customerId}`,
   });
 }
+
+export function createCustomerLessonAPI(data) {
+  return request({
+    method: "POST",
+    url: `${API_URL}/lessons`,
+    data,
+  });
+}
+
+export function deleteCustomerLessonAPI(lessonId){
+  return request({
+    method: "DELETE",
+    url: `${API_URL}/lessons/${lessonId}`,
+  });
+}
+
+export function markCustomerLessonAPI(lessonId, status){
+  return request({
+    method: "PUT",
+    url: `${API_URL}/lessons/${lessonId}/${status}`,
+  });
+}
+
 export function addCustomerLessonsAPI(customerId, data) {
   return request({
     method: "POST",

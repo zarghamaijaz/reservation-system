@@ -10,11 +10,17 @@ import Swal from "sweetalert2";
 import {format} from 'date-fns';
 
 const INTITIAL_FORMDATA = {
-  amount: "",
-  description: "",
+  amount_1: "",
+  amount_2: "",
+  amount_3: "",
+  description_1: "",
+  description_2: "",
+  description_3: "",
   notes: "",
   student_name: "",
   vat_rate: "",
+  vat_rate_2: "",
+  vat_rate_3: "",
 };
 
 const CreateInvoice = () => {
@@ -81,18 +87,38 @@ const CreateInvoice = () => {
                 <div className="col-100">
                   <Input
                     type="text"
-                    placeholder="Amount"
-                    label="Amount"
-                    id="amount"
-                    value={formData.amount}
-                    onChange={handleChange("amount")}
+                    placeholder="Amount 1"
+                    label="Amount 1"
+                    id="amount_1"
+                    value={formData.amount_1}
+                    onChange={handleChange("amount_1")}
                   />
                 </div>
                 <div className="col-100">
                   <Input
                     type="text"
-                    placeholder="VAT"
-                    label="VAT"
+                    placeholder="Amount 2"
+                    label="Amount 2"
+                    id="amount_2"
+                    value={formData.amount_2}
+                    onChange={handleChange("amount_2")}
+                  />
+                </div>
+                <div className="col-100">
+                  <Input
+                    type="text"
+                    placeholder="Amount 3"
+                    label="Amount 3"
+                    id="amount_3"
+                    value={formData.amount_3}
+                    onChange={handleChange("amount_3")}
+                  />
+                </div>
+                <div className="col-100">
+                  <Input
+                    type="text"
+                    placeholder="VAT 1"
+                    label="VAT 1"
                     id="vat_rate"
                     value={formData.vat_rate}
                     onChange={handleChange("vat_rate")}
@@ -101,11 +127,51 @@ const CreateInvoice = () => {
                 <div className="col-100">
                   <Input
                     type="text"
-                    placeholder="Description"
-                    label="Description"
+                    placeholder="VAT 2"
+                    label="VAT 2"
+                    id="vat_rate_2"
+                    value={formData.vat_rate_2}
+                    onChange={handleChange("vat_rate_2")}
+                  />
+                </div>
+                <div className="col-100">
+                  <Input
+                    type="text"
+                    placeholder="VAT 3"
+                    label="VAT 3"
+                    id="vat_rate_3"
+                    value={formData.vat_rate_3}
+                    onChange={handleChange("vat_rate_3")}
+                  />
+                </div>
+                <div className="col-100">
+                  <Input
+                    type="text"
+                    placeholder="Description 1"
+                    label="Description 1"
+                    id="description_1"
+                    value={formData.description_1}
+                    onChange={handleChange("description_1")}
+                  />
+                </div>
+                <div className="col-100">
+                  <Input
+                    type="text"
+                    placeholder="Description 2"
+                    label="Description 2"
                     id="description"
-                    value={formData.description}
-                    onChange={handleChange("description")}
+                    value={formData.description_2}
+                    onChange={handleChange("description_2")}
+                  />
+                </div>
+                <div className="col-100">
+                  <Input
+                    type="text"
+                    placeholder="Description 3"
+                    label="Description 3"
+                    id="description_3"
+                    value={formData.description_3}
+                    onChange={handleChange("description_3")}
                   />
                 </div>
                 <div className="col-100">

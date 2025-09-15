@@ -208,22 +208,30 @@ const AllInvoices = () => {
                     <div className="table-cell">{item.student_name}</div>
                   </td>
                   <td>
-                    <div className="table-cell">{item.description}</div>
+                    <div className="table-cell">{item.description_1}</div>
+                    <div className="table-cell">{item.description_2}</div>
+                    <div className="table-cell">{item.description_3}</div>
                   </td>
                   <td>
                     <div className="table-cell">{item.notes}</div>
                   </td>
                   <td>
                     <div className="table-cell">{item.vat_amount}</div>
+                    <div className="table-cell">{item.vat_amount_2}</div>
+                    <div className="table-cell">{item.vat_amount_3}</div>
                   </td>
                   <td>
                     <div className="table-cell">{item.vat_rate}</div>
                   </td>
                   <td>
                     <div className="table-cell">{item.amount}</div>
+                    <div className="table-cell">{item.amount_2}</div>
+                    <div className="table-cell">{item.amount_3}</div>
                   </td>
                   <td>
                     <div className="table-cell">{item.net_amount}</div>
+                    <div className="table-cell">{item.net_amount_2}</div>
+                    <div className="table-cell">{item.net_amount_3}</div>
                   </td>
                   <td>
                     <div className="table-cell">
