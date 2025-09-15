@@ -18,13 +18,10 @@ import {
 } from "../service/api";
 import Swal from "sweetalert2";
 import FullPageLoader from "../components/FullPageLoader";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 
-const CustomerLessons = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [addLessonForm, setAddLessonForm] = useState(false);
-  const [searchParams] = useSearchParams();
-  const [formData, setFormData] = useState({
+
+const INTITIAL_FORMDATA = {
     description: "",
     amount: "",
     notes: "",
@@ -33,7 +30,12 @@ const CustomerLessons = () => {
     to: "",
     type: "lesson",
     paidStatus: false,
-  });
+  }
+const CustomerLessons = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [addLessonForm, setAddLessonForm] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [formData, setFormData] = useState(INTITIAL_FORMDATA);
   const customerId = searchParams.get("customer-id");
   const navigate = useNavigate();
   const [tableRows, setTableRows] = useState([]);
@@ -124,6 +126,7 @@ const CustomerLessons = () => {
       );
       setIsLoading(false);
       setAddLessonForm(false);
+      setFormData(INTITIAL_FORMDATA);
       getCustomerLessons();
     } catch (err) {
       setIsLoading(false);
@@ -387,9 +390,6 @@ const CustomerLessons = () => {
                 className="button button-primary-outline"
               >
                 Add new lesson
-              </button>
-              <button onClick={handleSubmit} className="button button-primary">
-                Save details
               </button>
             </div>
           </div>
