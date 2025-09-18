@@ -97,9 +97,9 @@ const CustomerDetails = () => {
         idValue: formData.idValue,
         category: formData.category,
         carNoPlate: formData.carNoPlate,
-        dateOfBirth,
-        visaExpire,
-        learningExpire,
+        dateOfBirth: formData.dateOfBirth.toLocaleDateString("en-CA"),
+        visaExpire: formData.visaExpire.toLocaleDateString("en-CA"),
+        learningExpire: formData.learningExpire.toLocaleDateString("en-CA"),
         option,
       };
 

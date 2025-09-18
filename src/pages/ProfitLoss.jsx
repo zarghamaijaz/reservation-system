@@ -16,8 +16,8 @@ const ProfitLoss = () => {
       setIsLoading(true);
       e.preventDefault();
       const payload = {
-        start_date: startDate,
-        end_date: endDate,
+        start_date: startDate.toLocaleDateString("en-CA"),
+        end_date: endDate.toLocaleDateString("en-CA"),
       }
       const response = await getProfitLossStatsAPI(payload);
       setIsLoading(false);

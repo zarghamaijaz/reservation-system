@@ -32,9 +32,9 @@ const AddNewCustomer = () => {
       setIsLoading(true);
       const payload = {
         ...formData,
-        dateOfBirth,
-        visaExpire,
-        learningExpire,
+        dateOfBirth: dateOfBirth.toLocaleDateString("en-CA"),
+        visaExpire: visaExpire.toLocaleDateString("en-CA"),
+        learningExpire: learningExpire.toLocaleDateString("en-CA"),
         option,
       }
       const response = await addNewCustomerAPI(payload);

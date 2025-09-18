@@ -89,7 +89,7 @@ const Expenses = () => {
         expense_type: "daily",
         year: addNewDailyExpense.date.getFullYear(),
         month: addNewDailyExpense.date.getUTCMonth() + 1,
-        date: addNewDailyExpense.date.toISOString(),
+        date: addNewDailyExpense.date.toLocaleDateString("en-CA"),
         description: addNewDailyExpense.description,
         amount: addNewDailyExpense.amount,
         vat_percentage: addNewDailyExpense.vat,
