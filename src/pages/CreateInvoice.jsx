@@ -13,6 +13,9 @@ const INTITIAL_FORMDATA = {
   amount_1: "",
   amount_2: "",
   amount_3: "",
+  quantity_1: "",
+  quantity_2: "",
+  quantity_3: "",
   description_1: "",
   description_2: "",
   description_3: "",
@@ -38,6 +41,7 @@ const CreateInvoice = () => {
         date: format(date, 'yyyy-MM-dd'),
       };
       const response = await createCustomerInvoiceAPI(payload);
+      // console.log(payload)
       setIsLoading(false);
       if (response.detail) {
         return Swal.fire("Error", response.detail, "error");
@@ -112,6 +116,36 @@ const CreateInvoice = () => {
                     id="amount_3"
                     value={formData.amount_3}
                     onChange={handleChange("amount_3")}
+                  />
+                </div>
+                <div className="col-100">
+                  <Input
+                    type="text"
+                    placeholder="Quantity 1"
+                    label="Quantity 1"
+                    id="quantity_1"
+                    value={formData.quantity_1}
+                    onChange={handleChange("quantity_1")}
+                  />
+                </div>
+                <div className="col-100">
+                  <Input
+                    type="text"
+                    placeholder="Quantity 2"
+                    label="Quantity 2"
+                    id="quantity_2"
+                    value={formData.quantity_2}
+                    onChange={handleChange("quantity_2")}
+                  />
+                </div>
+                <div className="col-100">
+                  <Input
+                    type="text"
+                    placeholder="Quantity 3"
+                    label="Quantity 3"
+                    id="quantity_3"
+                    value={formData.quantity_3}
+                    onChange={handleChange("quantity_3")}
                   />
                 </div>
                 <div className="col-100">

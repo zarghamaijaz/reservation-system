@@ -186,6 +186,9 @@ const AllInvoices = () => {
                   <div className="table-cell">Amount</div>
                 </th>
                 <th>
+                  <div className="table-cell">Quantity</div>
+                </th>
+                <th>
                   <div className="table-cell">Net mount</div>
                 </th>
                 <th className="table-action-head">
@@ -227,6 +230,11 @@ const AllInvoices = () => {
                     <div className="table-cell">{item.amount}</div>
                     <div className="table-cell">{item.amount_2}</div>
                     <div className="table-cell">{item.amount_3}</div>
+                  </td>
+                  <td>
+                    <div className="table-cell">{item.quantity_1}</div>
+                    <div className="table-cell">{item.quantity_2}</div>
+                    <div className="table-cell">{item.quantity_3}</div>
                   </td>
                   <td>
                     <div className="table-cell">{item.net_amount}</div>
