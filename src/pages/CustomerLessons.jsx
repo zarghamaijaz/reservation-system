@@ -345,6 +345,7 @@ const CustomerLessons = () => {
                 <TimePicker
                   value={formData.from}
                   onChange={handleTimeChange("from")}
+                  format="HH:mm" // 24-hour format
                 />
               </div>
               <div className="input-container custom-time-picker">
@@ -352,6 +353,7 @@ const CustomerLessons = () => {
                 <TimePicker
                   value={formData.to}
                   onChange={handleTimeChange("to")}
+                  format="HH:mm" // 24-hour format
                 />
               </div>
               <Input
@@ -447,6 +449,7 @@ const CustomerLessons = () => {
                 <TimePicker
                   value={editFormData.from}
                   onChange={handleEditTimeChange("from")}
+                  format="HH:mm" // 24-hour format
                 />
               </div>
               <div className="input-container custom-time-picker">
@@ -454,6 +457,7 @@ const CustomerLessons = () => {
                 <TimePicker
                   value={editFormData.to}
                   onChange={handleEditTimeChange("to")}
+                  format="HH:mm" // 24-hour format
                 />
               </div>
               <Input

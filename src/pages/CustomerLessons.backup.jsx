@@ -63,6 +63,7 @@ const CustomerLessons = () => {
                 <label className="label">Start time</label>
                 <TimePicker
                   value={formData.startTime}
+                  format="HH:mm" // 24-hour format
                   onChange={(e) => {
                     handleChange("startTime", e);
                   }}
@@ -72,6 +73,7 @@ const CustomerLessons = () => {
                 <label className="label">End time</label>
                 <TimePicker
                   value={formData.endTime}
+                  format="HH:mm" // 24-hour format
                   onChange={(e) => {
                     handleChange("endTime", e);
                   }}
