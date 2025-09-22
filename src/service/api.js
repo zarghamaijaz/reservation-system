@@ -287,6 +287,12 @@ export function printInvoiceAPI(invoicenumber) {
     withCredentials: true,
   });
 }
+export function deleteInvoiceAPI(invoicenumber) {
+  return request({
+    url: `${API_URL}/invoices/${invoicenumber}`,
+    method: "DELETE"
+  });
+}
 export function printInvoiceByRangeAPI(data) {
   return request({
     url: `${API_URL}/invoices/export/excel?start_date=${data.start_date}&end_date=${data.end_date}`,
@@ -311,11 +317,24 @@ export function getCustomerLessonsAPI(customerId) {
     url: `${API_URL}/lessons?studentId=${customerId}`,
   });
 }
+export function getCustomerLessonsDetailsAPI(lessonId) {
+  return request({
+    method: "GET",
+    url: `${API_URL}/lessons/${lessonId}`,
+  });
+}
 
 export function createCustomerLessonAPI(data) {
   return request({
     method: "POST",
     url: `${API_URL}/lessons`,
+    data,
+  });
+}
+export function updateCustomerLessonAPI(lessonId, data) {
+  return request({
+    method: "PUT",
+    url: `${API_URL}/lessons/${lessonId}`,
     data,
   });
 }

@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Header from "../components/Header";
 import Checkbox from "../components/form-elements/Checkbox";
 import { IoMdClose, IoMdPrint } from "react-icons/io";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { FiEdit } from "react-icons/fi";
 import { PiStudentFill } from "react-icons/pi";
 import TimePicker from "react-time-picker";
 import DatePicker from "react-date-picker";
@@ -13,12 +14,15 @@ import {
   createCustomerLessonAPI,
   markCustomerLessonAPI,
   getCustomerLessonsAPI,
+  updateCustomerLessonsAPI,
+  getCustomerLessonsDetailsAPI,
   markCustomerAsFinishedAPI,
   printCustomerInvoiceAPI,
 } from "../service/api";
 import Swal from "sweetalert2";
 import FullPageLoader from "../components/FullPageLoader";
 import { format, set } from "date-fns";
+// import { getLocalStringDateFromUTCString } from "../../utils/date.utils";
 
 
 const INTITIAL_FORMDATA = {
@@ -31,11 +35,22 @@ const INTITIAL_FORMDATA = {
     type: "lesson",
     paidStatus: false,
   }
+const INTITIAL_EDIT_FORMDATA = {
+    description: "",
+    amount: "",
+    notes: "",
+    startDate: "",
+    from: "",
+    to: "",
+    type: "lesson",
+  }
 const CustomerLessons = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [addLessonForm, setAddLessonForm] = useState(false);
+  const [editLessonForm, setEditLessonForm] = useState(false);
   const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState(INTITIAL_FORMDATA);
+  const [editFormData, setEditFormData] = useState(INTITIAL_EDIT_FORMDATA);
   const customerId = searchParams.get("customer-id");
   const navigate = useNavigate();
   const [tableRows, setTableRows] = useState([]);
@@ -55,6 +70,19 @@ const CustomerLessons = () => {
       }
     };
   }
+  function handleEditChange(name, type) {
+    return function (e) {
+      const input = e.target.value;
+      // Only allow digits
+      if (type === "phoneNumber") {
+        if (/^\d*$/.test(input)) {
+          return setEditFormData((prev) => ({ ...prev, [name]: input }));
+        }
+      } else {
+        return setEditFormData((prev) => ({ ...prev, [name]: input }));
+      }
+    };
+  }
   function handleTimeChange(name) {
     return function (e) {
       if (e === null) {
@@ -63,12 +91,28 @@ const CustomerLessons = () => {
       return setFormData((prev) => ({ ...prev, [name]: e }));
     };
   }
+  function handleEditTimeChange(name) {
+    return function (e) {
+      if (e === null) {
+        return setEditFormData((prev) => ({ ...prev, [name]: "" }));
+      }
+      return setEditFormData((prev) => ({ ...prev, [name]: e }));
+    };
+  }
   function handleDateChange(name) {
     return function (e) {
       if (e === null) {
         return setFormData((prev) => ({ ...prev, [name]: "" }));
       }
       return setFormData((prev) => ({ ...prev, [name]: e }));
+    };
+  }
+  function handleEditDateChange(name) {
+    return function (e) {
+      if (e === null) {
+        return setEditFormData((prev) => ({ ...prev, [name]: "" }));
+      }
+      return setEditFormData((prev) => ({ ...prev, [name]: e }));
     };
   }
   async function printInvoice(e) {
@@ -104,6 +148,44 @@ const CustomerLessons = () => {
     }
     console.log(response);
   }
+  async function getCustomerLessonsDetails() {
+    setIsLoading(true);
+    const response = await getCustomerLessonsDetailsAPI(editLessonForm);
+    setIsLoading(false);
+    if (response) {
+      const newDate = new Date(response.date);
+      console.log(newDate)
+      response.date = newDate;
+      setEditFormData(response);
+    }
+    console.log(response);
+  }
+  async function updateCustomerLessons() {
+    try{
+      setIsLoading(true);
+      const payload = {...editFormData, date: format(editFormData.date, "yyyy-MM-dd")};
+      const response = await updateCustomerLessonsAPI(editLessonForm, payload);
+      console.log(response);
+      Swal.fire(
+        "Lessons updated",
+        "The lessons are updated successfully",
+        "success"
+      );
+      setIsLoading(false);
+      setEditLessonForm(false);
+      setEditFormData(INTITIAL_EDIT_FORMDATA);
+      getCustomerLessons();
+    }catch(err){
+      setIsLoading(false);
+      console.error(err);
+      return Swal.fire("Error", "An error occured", "error");
+    }
+  }
+  useEffect(() => {
+    if(editLessonForm) {
+      getCustomerLessonsDetails();
+    }
+  }, [editLessonForm]);
 
   useEffect(() => {
     getCustomerLessons();
@@ -306,12 +388,100 @@ const CustomerLessons = () => {
           </div>
         </div>
       )}
+      {editLessonForm && (
+        <div className="modal-container">
+          <div className="small-container">
+            <div className="card">
+              <button
+                onClick={(e) => setEditLessonForm(false)}
+                className="modal-close"
+              >
+                <IoMdClose />
+              </button>
+              <h1 className="card-title">Edit lesson</h1>
+              <p className="card-description">
+                Edit lesson
+              </p>
+              <Input
+                label="Description"
+                onChange={handleEditChange("description")}
+                value={editFormData.description}
+                className="input"
+                type="text"
+                placeholder="Enter description"
+              />
+              <Input
+                label="Notes"
+                onChange={handleEditChange("notes")}
+                value={editFormData.notes}
+                className="input"
+                type="text"
+                placeholder="Enter additional notes"
+              />
+              <div className="input-container">
+                <label htmlFor="" className="label">
+                  Type
+                </label>
+                <select
+                  value={editFormData.type}
+                  name="type"
+                  id=""
+                  className="input"
+                  onChange={handleEditChange("type")}
+                >
+                  <option value="lesson">Lesson</option>
+                  <option value="test">Test</option>
+                  <option value="booking">Booking</option>
+                </select>
+              </div>
+              <div className="input-container">
+                <label className="label">Start date</label>
+                <DatePicker
+                  format="dd/MM/yyyy"
+                  onChange={handleEditDateChange("date")}
+                  value={editFormData.date}
+                />
+              </div>
+              <div className="input-container custom-time-picker">
+                <label className="label">Start time</label>
+                <TimePicker
+                  value={editFormData.from}
+                  onChange={handleEditTimeChange("from")}
+                />
+              </div>
+              <div className="input-container custom-time-picker">
+                <label className="label">End time</label>
+                <TimePicker
+                  value={editFormData.to}
+                  onChange={handleEditTimeChange("to")}
+                />
+              </div>
+              <Input
+                label="Amount (€)"
+                onChange={handleEditChange("amount", "phoneNumber")}
+                value={editFormData.amount}
+                className="input"
+                type="text"
+                placeholder="Enter lesson amount"
+              />
+              <div className="input-container">
+                <button
+                  onClick={updateCustomerLessons}
+                  className="button button-primary"
+                >
+                  Update lesson
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col h-screen w-screen p-4">
         <Header backLink="/customer-details" />
         <div className="student-details-container">
           <h2 className="section-title">Lesson Analysis</h2>
           <div className="table-container">
-            <table className="table bordered">
+            <table style={{tableLayout: "auto"}} className="table bordered">
               <thead>
                 <tr>
                   <th>
@@ -364,7 +534,7 @@ const CustomerLessons = () => {
                     <td>
                       <div className="table-cell">{item.type}</div>
                     </td>
-                    <td>
+                    <td style={{width: "150px"}}>
                       <div className="table-cell">
                         <div className="table-actions">
                           <Checkbox
@@ -376,6 +546,12 @@ const CustomerLessons = () => {
                             className="table-action action-danger"
                           >
                             <RiDeleteBin6Line />
+                          </button>
+                          <button
+                            onClick={()=>setEditLessonForm(item.id)}
+                            className="table-action"
+                          >
+                            <FiEdit  />
                           </button>
                         </div>
                       </div>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { Link } from "react-router";
-import { getInvoicesListAPI, searchInvoicesAPI, printInvoiceAPI, printInvoiceByRangeAPI } from "../service/api";
+import { getInvoicesListAPI, searchInvoicesAPI, printInvoiceAPI,deleteInvoiceAPI, printInvoiceByRangeAPI } from "../service/api";
 import { IoMdPrint } from "react-icons/io";
+import { RiDeleteBinLine } from "react-icons/ri";
 import FullPageLoader from "../components/FullPageLoader";
 import Swal from "sweetalert2";
 import DatePicker from "react-date-picker";
@@ -64,6 +65,31 @@ const AllInvoices = () => {
       window.URL.revokeObjectURL(url);
     };
   }
+  function deleteInvoice(invoiceNumber) {
+    return function(e){
+      Swal.fire({
+              title: "Delete invoice?",
+              text: "This will permanently delete the invoice. Are you sure?",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#d33",
+              confirmButtonText: "Yes",
+            }).then(async (result) => {
+              if (result.isConfirmed) {
+                try {
+                  setIsLoading(true);
+                  const response = await deleteInvoiceAPI(invoiceNumber);
+                  setIsLoading(false);
+                  getInvoicesList();
+                } catch (err) {
+                  setIsLoading(false);
+                  console.error(err);
+                  return Swal.fire("Error", "An error occured", "error");
+                }
+              }
+            });
+    }
+    };
 
   async function printByDate() {
       const payload = {
@@ -249,6 +275,12 @@ const AllInvoices = () => {
                           className="table-action action-danger"
                         >
                           <IoMdPrint />
+                        </button>
+                        <button
+                          onClick={deleteInvoice(item.id)}
+                          className="table-action action-danger"
+                        >
+                          <RiDeleteBinLine  />
                         </button>
                       </div>
                     </div>
