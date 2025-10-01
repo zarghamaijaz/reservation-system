@@ -141,8 +141,24 @@ export function getInvoicesListAPI(data) {
 }
 export function getAllLessonsListAPI(data, page) {
   return request({
-    url: `${API_URL}/lessons?dateFrom=${data.start_date}&dateTo=${data.end_date}&page=${page}`,
+    url: `${API_URL}/invoices/print-records?start_date=${data.start_date}&end_date=${data.end_date}&page=${page}`,
     method: "GET",
+    
+  });
+}
+export function deletePrintRecordAPI(id) {
+  return request({
+    url: `${API_URL}/invoices/print-records/${id}`,
+    method: "DELETE",
+    
+  });
+}
+export function printAllLessonsListAPI(data, page) {
+  return request({
+    url: `${API_URL}/invoices/print-records/export/excel?start_date=${data.start_date}&end_date=${data.end_date}`,
+    method: "GET",
+    responseType: "blob",
+    withCredentials: true,
   });
 }
 export function searchInvoicesAPI(query) {

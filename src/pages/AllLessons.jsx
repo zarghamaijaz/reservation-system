@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { Link } from "react-router";
-import { getAllLessonsListAPI, searchInvoicesAPI, printInvoiceAPI,deleteInvoiceAPI, printInvoiceByRangeAPI } from "../service/api";
+import { getAllLessonsListAPI, searchInvoicesAPI, printAllLessonsListAPI,deletePrintRecordAPI, printInvoiceByRangeAPI } from "../service/api";
 import { IoMdPrint } from "react-icons/io";
 import { RiDeleteBinLine } from "react-icons/ri";
 import FullPageLoader from "../components/FullPageLoader";
@@ -29,10 +29,8 @@ const AllLessons = () => {
       const response = await getAllLessonsListAPI(payload, page);
       setIsLoading(false);
       console.log(response);
-      if (response.lessons && response.lessons.length > 0) {
-        setInvoicesList(response.lessons);
-        setPagesCount(response.pages);
-      }
+      setInvoicesList(response);
+      setPagesCount(response.pages);
     } catch (err) {
       console.error(err);
       setIsLoading(false);
@@ -41,8 +39,12 @@ const AllLessons = () => {
 
   function printInvoice(invoiceNumber) {
     return async function () {
+        const payload = {
+        start_date: format(startDate, "yyyy-MM-dd"),
+        end_date: format(endDate, "yyyy-MM-dd"),
+      };
       setIsLoading(true);
-      const response = await printInvoiceAPI(invoiceNumber);
+      const response = await printAllLessonsListAPI(payload);
       setIsLoading(false);
       // Extract filename from headers (if provided)
       let filename = "Customers-invoice.pdf";
@@ -76,7 +78,7 @@ const AllLessons = () => {
               if (result.isConfirmed) {
                 try {
                   setIsLoading(true);
-                  const response = await deleteInvoiceAPI(invoiceNumber);
+                  const response = await deletePrintRecordAPI(invoiceNumber);
                   setIsLoading(false);
                   getInvoicesList();
                 } catch (err) {
@@ -167,12 +169,12 @@ const AllLessons = () => {
               >
                 Find
               </button>
-              {/* <button
+              <button
                 onClick={printByDate}
                 className="button button-primary-outline"
               >
                 Print
-              </button> */}
+              </button>
             </div>
           </div>
         </div>
@@ -186,25 +188,22 @@ const AllLessons = () => {
             <thead>
               <tr>
                 <th>
-                  <div className="table-cell">Description</div>
+                  <div className="table-cell">Invoice no</div>
                 </th>
                 <th>
-                  <div className="table-cell">Notes</div>
+                  <div className="table-cell">Student</div>
                 </th>
                 <th>
-                  <div className="table-cell">Date</div>
+                  <div className="table-cell">VAT</div>
                 </th>
                 <th>
-                  <div className="table-cell">From</div>
+                  <div className="table-cell">Net</div>
                 </th>
                 <th>
-                  <div className="table-cell">To</div>
+                  <div className="table-cell">Total</div>
                 </th>
-                <th>
-                  <div className="table-cell">Amount</div>
-                </th>
-                <th>
-                  <div className="table-cell">Type</div>
+                <th className="table-action-head">
+                  <div className="table-cell">Action</div>
                 </th>
               </tr>
             </thead>
@@ -212,25 +211,37 @@ const AllLessons = () => {
               {invoicesList.map((item) => (
                 <tr key={item.id}>
                   <td>
-                    <div className="table-cell">{item.description}</div>
+                    <div className="table-cell">{item.invoice_number}</div>
                   </td>
                   <td>
-                    <div className="table-cell">{item.notes}</div>
+                    <div className="table-cell">{item.student_name}</div>
                   </td>
                   <td>
-                    <div className="table-cell">{item.date}</div>
+                    <div className="table-cell">{item.vat_amount}</div>
                   </td>
                   <td>
-                    <div className="table-cell">{item.from}</div>
+                    <div className="table-cell">{item.net_amount}</div>
                   </td>
                   <td>
-                    <div className="table-cell">{item.to}</div>
+                    <div className="table-cell">{item.total_amount}</div>
                   </td>
                   <td>
-                    <div className="table-cell">{item.amount}</div>
-                  </td>
-                  <td>
-                    <div className="table-cell">{item.type}</div>
+                    <div className="table-cell">
+                      <div className="table-actions">
+                        <button
+                          onClick={printInvoice(item.invoice_number)}
+                          className="table-action action-danger"
+                        >
+                          <IoMdPrint />
+                        </button>
+                        <button
+                          onClick={deleteInvoice(item.id)}
+                          className="table-action action-danger"
+                        >
+                          <RiDeleteBinLine  />
+                        </button>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               ))}
