@@ -41,6 +41,9 @@ const DrivingInstructorHome = () => {
             <Link to="/all-invoices" className='tile'>
               <h4 className='tile-title'>Invoices Folder</h4>
             </Link>
+            <Link to="/all-lessons" className='tile'>
+              <h4 className='tile-title'>Lessons Folder</h4>
+            </Link>
             <Link to="/expenses" className='tile'>
               <h4 className='tile-title'>Expenses</h4>
             </Link>

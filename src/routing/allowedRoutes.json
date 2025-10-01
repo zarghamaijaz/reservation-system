@@ -29,6 +29,7 @@
             "/vat",
             "/create-invoice",
             "/all-invoices",
+            "/all-lessons",
             "/all-appointments"
         ]
     }

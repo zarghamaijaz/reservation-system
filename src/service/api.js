@@ -139,6 +139,12 @@ export function getInvoicesListAPI(data) {
     method: "GET",
   });
 }
+export function getAllLessonsListAPI(data, page) {
+  return request({
+    url: `${API_URL}/lessons?dateFrom=${data.start_date}&dateTo=${data.end_date}&page=${page}`,
+    method: "GET",
+  });
+}
 export function searchInvoicesAPI(query) {
   return request({
     url: `${API_URL}/invoices/search/query?q=${query}`,

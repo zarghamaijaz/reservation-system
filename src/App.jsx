@@ -32,6 +32,7 @@ import FinishedCustomers from './pages/FinishedCustomers';
 import CreateInvoice from './pages/CreateInvoice';
 import AllInvoices from './pages/AllInvoices';
 import ViewAppointments from './pages/ViewAppointments';
+import AllLessons from './pages/AllLessons';
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
         <Route path='/vat' element={<VAT/>} />
         <Route path='/create-invoice' element={<CreateInvoice/>} />
         <Route path='/all-invoices' element={<AllInvoices/>} />
+        <Route path='/all-lessons' element={<AllLessons/>} />
         <Route path='/all-appointments' element={<ViewAppointments/>} />
 
         {/* Student routes */}

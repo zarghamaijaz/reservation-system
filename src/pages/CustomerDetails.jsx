@@ -90,16 +90,16 @@ const CustomerDetails = () => {
       // We can store the API response from the getCustomerDetails in a different state or a variable.
       // We can compare the values with that and add only the values in the payload object that were modified.
       // This way our request will work as a PATCH instead of PUT
-      
+      console.log(formData);
       const payload = {
         name: formData.name,
         idDigit: formData.idDigit,
         idValue: formData.idValue,
         category: formData.category,
         carNoPlate: formData.carNoPlate,
-        dateOfBirth: formData.dateOfBirth.toLocaleDateString("en-CA"),
-        visaExpire: formData.visaExpire.toLocaleDateString("en-CA"),
-        learningExpire: formData.learningExpire.toLocaleDateString("en-CA"),
+        dateOfBirth: dateOfBirth.toLocaleDateString("en-CA"),
+        visaExpire: visaExpire.toLocaleDateString("en-CA"),
+        learningExpire: learningExpire.toLocaleDateString("en-CA"),
         option,
       };
 
