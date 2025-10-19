@@ -161,9 +161,23 @@ export function printAllLessonsListAPI(data, page) {
     withCredentials: true,
   });
 }
+export function printLessonAPI(invoiceNumber) {
+  return request({
+    url: `${API_URL}/invoices/print-records/download-pdf/${invoiceNumber}`,
+    method: "GET",
+    responseType: "blob",
+    withCredentials: true,
+  });
+}
 export function searchInvoicesAPI(query) {
   return request({
     url: `${API_URL}/invoices/search/query?q=${query}`,
+    method: "GET",
+  });
+}
+export function searchLessonsAPI(query) {
+  return request({
+    url: `${API_URL}/invoices/print-records/search?q=${query}`,
     method: "GET",
   });
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { Link } from "react-router";
-import { getAllLessonsListAPI, searchInvoicesAPI, printAllLessonsListAPI,deletePrintRecordAPI, printInvoiceByRangeAPI } from "../service/api";
+import { getAllLessonsListAPI, searchLessonsAPI, printLessonAPI,deletePrintRecordAPI, printInvoiceByRangeAPI } from "../service/api";
 import { IoMdPrint } from "react-icons/io";
 import { RiDeleteBinLine } from "react-icons/ri";
 import FullPageLoader from "../components/FullPageLoader";
@@ -39,30 +39,33 @@ const AllLessons = () => {
 
   function printInvoice(invoiceNumber) {
     return async function () {
-        const payload = {
-        start_date: format(startDate, "yyyy-MM-dd"),
-        end_date: format(endDate, "yyyy-MM-dd"),
-      };
-      setIsLoading(true);
-      const response = await printAllLessonsListAPI(payload);
-      setIsLoading(false);
-      // Extract filename from headers (if provided)
-      let filename = "Customers-invoice.pdf";
-
-      // Create a Blob from the response
-      const blob = new Blob([response], { type: "application/pdf" });
-      const url = window.URL.createObjectURL(blob);
-
-      // Create a link and trigger download
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", filename);
-      document.body.appendChild(link);
-      link.click();
-
-      // Cleanup
-      link.remove();
-      window.URL.revokeObjectURL(url);
+      try {
+        setIsLoading(true);
+        const response = await printLessonAPI(invoiceNumber);
+        setIsLoading(false);
+        // Extract filename from headers (if provided)
+        let filename = "Lesson-invoice.pdf";
+  
+        // Create a Blob from the response
+        const blob = new Blob([response], { type: "application/pdf" });
+        const url = window.URL.createObjectURL(blob);
+  
+        // Create a link and trigger download
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+  
+        // Cleanup
+        link.remove();
+        window.URL.revokeObjectURL(url);
+        
+      }catch(err){
+        setIsLoading(false);
+        Swal.fire("Error", "An error occured", "error");
+        
+      }
     };
   }
   function deleteInvoice(invoiceNumber) {
@@ -120,9 +123,9 @@ const AllLessons = () => {
     async function searchInvoices(){
         try{
           setIsLoading(true);
-          const response = await searchInvoicesAPI(searchQuery);
+          const response = await searchLessonsAPI(searchQuery);
           setIsLoading(false);
-          setStudentsList(response);
+          setInvoicesList(response);
           setPagesCount(1);
         }catch(err){
           console.error(err);
@@ -179,11 +182,11 @@ const AllLessons = () => {
           </div>
         </div>
         <div className="table-container">
-          {/* <div className='table-filters'>
+          <div className='table-filters'>
           <form className='table-filter'>
             <input onChange={debounce((e) => setSearchQuery(e.target.value), 500)} type="text" name="" id="" className='table-filter-input' placeholder='Search by name, username, or phone number' />
           </form>
-        </div> */}
+        </div>
           <table className="table bordered">
             <thead>
               <tr>
